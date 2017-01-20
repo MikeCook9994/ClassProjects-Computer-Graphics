@@ -3,10 +3,6 @@
     src: url("../fonts/SMBFont.ttf");
 }
 
-#coin-block {
-    border: 1px dashed black;
-}
-
 #click-message {
     font-family: 'marioFont';
     font-size: 220%;

@@ -8,41 +8,41 @@ function drawQuestionMarkBlock(coinBlockContext) {
     // bottom and right border line
     coinBlockContext.fillStyle = colorPalette['black'];
 
-    coinBlockContext.fillRect(0, 272, 256, 240);
+    coinBlockContext.fillRect(0, 288, 256, 240);
 
     // center block
     coinBlockContext.fillStyle = colorPalette['light orange'];
     
-    coinBlockContext.fillRect(16, 272, 224, 224);
+    coinBlockContext.fillRect(16, 288, 224, 224);
 
     // top and left border line
     coinBlockContext.fillStyle = colorPalette['dark orange'];
 
     // top
-    coinBlockContext.fillRect(16, 256, 224, 16);
+    coinBlockContext.fillRect(16, 272, 224, 16);
     // left
-    coinBlockContext.fillRect(0, 272, 16, 224);
+    coinBlockContext.fillRect(0, 288, 16, 224);
 
     // bolts
     coinBlockContext.fillStyle = colorPalette['black'];
 
     // top left
-    coinBlockContext.fillRect(32, 288, 16, 16);
+    coinBlockContext.fillRect(32, 304, 16, 16);
 
     // top right
-    coinBlockContext.fillRect(208, 288, 16, 16);
+    coinBlockContext.fillRect(208, 304, 16, 16);
 
     // bottom right
-    coinBlockContext.fillRect(32, 464, 16, 16);
+    coinBlockContext.fillRect(32, 480, 16, 16);
 
     // bottom left
-    coinBlockContext.fillRect(208, 464, 16, 16);
+    coinBlockContext.fillRect(208, 480, 16, 16);
 
     // black question mark
-    drawQuestionMark(coinBlockContext, 80, 336, colorPalette['black']);
+    drawQuestionMark(coinBlockContext, 80, 352, colorPalette['black']);
 
     // orange question mark
-    drawQuestionMark(coinBlockContext, 64, 320, colorPalette['dark orange']);
+    drawQuestionMark(coinBlockContext, 64, 336, colorPalette['dark orange']);
 
     /*
      * Draws a question market akin to one on the super mario bros coin block. 
@@ -140,7 +140,7 @@ function drawCoin(coinContext, originY) {
                 context.clearRect(0, 0, 256, 512);
                 drawCoin(context, i);
                 drawQuestionMarkBlock(context);
-                i--;
+                i-=14;
                 if(i >= 0) {
                     window.requestAnimationFrame(drawFrame);
                 }
@@ -148,7 +148,7 @@ function drawCoin(coinContext, originY) {
                     setTimeout(() => {
                         context.clearRect(0, 0, 256, 512);
                         drawQuestionMarkBlock(context);
-                    }, 250);
+                    }, 500);
                 }
             }
 

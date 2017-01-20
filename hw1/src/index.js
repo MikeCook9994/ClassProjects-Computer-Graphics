@@ -144,6 +144,12 @@ function drawCoin(coinContext, originY) {
                 if(i >= 0) {
                     window.requestAnimationFrame(drawFrame);
                 }
+                else {
+                    setTimeout(() => {
+                        context.clearRect(0, 0, 256, 512);
+                        drawQuestionMarkBlock(context);
+                    }, 250);
+                }
             }
 
             window.requestAnimationFrame(drawFrame);

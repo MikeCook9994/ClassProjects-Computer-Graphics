@@ -22,24 +22,51 @@ function DrawSky(context, width, height, colorPalette) {
 }
 
 function DrawGround(context, width, height, scale, colorPalette) {
-    for(let i = 0; i < width; i+=(16*scale))  {
+    context.save();
+    context.scale(scale, scale);
+    for(let i = 0; i < width; i+=16)  {
         for(let j = 2; j > 0; j--) {
-            DrawGroundBlock(context, i, (height - (16 * j * scale)), scale, colorPalette);
+            DrawGroundBlock(context, i, ((height / scale) - (j * 16)), colorPalette);
         }
     }
+    context.restore();
 }
 
-function DrawGroundBlock(context, x, y, scale, colorPalette) {
+function DrawGroundBlock(context, x, y, colorPalette) {
+    context.save()
+    context.translate(x, y)
+
     context.fillStyle = colorPalette.brown;
-    context.lineWidth = scale;
-    context.fillRect(x, y, 16 * scale, 16 * scale);
+    context.fillRect(0, 0, 16, 16);
 
     context.fillStyle = colorPalette.lightBrown;
-    context.fillRect(x + scale, y, 14 * scale, scale);
-    context.fillRect(x, y + scale, scale, scale * 14);
+    context.fillRect(1, 0, 9, 1);
+    context.fillRect(11, 0, 4, 1);
+    context.fillRect(0, 1, 1, 14);
+    context.fillRect(0, 11, 2, 1);
+    context.fillRect(2, 12, 2, 1);
+    context.fillRect(4, 13, 3, 1);
+    context.fillRect(10, 1, 1, 4);
+    context.fillRect(10, 6, 5, 1);
+    context.fillRect(10, 6, 1, 4);
+    context.fillRect(9, 10, 1, 2);
+    context.fillRect(8, 12, 1, 4);
 
     context.fillStyle = colorPalette.black;
-    context.fillRect(x + scale, y + (scale * 15), 14 * scale, scale);
-    context.fillRect(x + (scale * 15), y + scale, scale, 14 * scale);
+    context.fillRect(15, 1, 1, 4);
+    context.fillRect(15, 6, 1, 9);
+    context.fillRect(1, 15, 6, 1);
+    context.fillRect(9, 15, 6, 1);
+    context.fillRect(9, 0, 1, 10);
+    context.fillRect(8, 10, 1, 2);
+    context.fillRect(7, 12, 1, 3);
+    context.fillRect(0, 10, 2, 1);
+    context.fillRect(2, 11, 2, 1);
+    context.fillRect(4, 12, 3, 1);
+    context.fillRect(11, 4, 1, 2);
+    context.fillRect(12, 5, 3, 1);
+    context.fillRect(14, 14, 1, 1);
+
+    context.restore();
 }
 

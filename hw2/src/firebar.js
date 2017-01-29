@@ -41,7 +41,7 @@ function DrawFireballBar(context, fireballs, fireScale, currAngle) {
     context.save();
     context.translate(8, 8);
 
-    let angle = currAngle + (2 * (Math.PI / 180));
+    let angle = currAngle - (2 * (Math.PI / 180));
     context.rotate(angle);
     fireballs[0].Draw(5, fireScale);
 

@@ -8,6 +8,11 @@
     let scene = new Scene(context, canvas.height, canvas.width);
     let firebar = new Firebar(context);
 
+    let audio = new Audio("./sound/1-04-castle.mp3");
+    audio.loop = true;
+    audio.play();
+
+
     function animateFireBar(timestamp) {
         context.clearRect(0, 0, canvas.width, canvas.height);
         scene.Draw();

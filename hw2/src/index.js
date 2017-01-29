@@ -1,25 +1,19 @@
 (() => {
     let canvas = document.getElementById("canvas");
     let context = canvas.getContext('2d');
-    let blockSize = document.getElementById("blockSize");
-    let fireballAngle = document.getElementById("fireballScale");
+    
+    let fireballScale = document.getElementById("fireballScale");
+    let fireBarLocation = document.getElementById("fireBarLocation");
 
     let scene = new Scene(context, canvas.height, canvas.width);
-    let fireball = new Fireball(context);
+    let firebar = new Firebar(context);
 
-    blockSize.addEventListener('input', () => {
+    function animateFireBar(timestamp) {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        scene.Draw(blockSize.value);
-    });
-
-    scene.Draw(4);
-
-    function rotateFireball(timestamp) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        scene.Draw(blockSize.value);
-        fireball.Draw(5, fireballScale.value);
-        requestAnimationFrame(rotateFireball);
+        scene.Draw();
+        firebar.Draw(fireBarLocation.value, 5, fireballScale.value);
+        requestAnimationFrame(animateFireBar);
     }
-    requestAnimationFrame(rotateFireball);
+    requestAnimationFrame(animateFireBar);
 })();
 

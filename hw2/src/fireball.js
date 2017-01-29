@@ -12,7 +12,6 @@ function Fireball(context) {
 Fireball.prototype.Draw = function(dtheta, scale){
     this.angle += dtheta;
     this.context.save();
-    this.context.translate(256, 256);
     this.context.rotate(this.angle * Math.PI/180);
     this.context.translate(-(scale * 4), -(scale * 4));
     this.context.scale(scale, scale);

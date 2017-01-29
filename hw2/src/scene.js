@@ -11,9 +11,9 @@ function Scene(context, height, width) {
     this.width = width;
 }
 
-Scene.prototype.Draw = function(scale) {
+Scene.prototype.Draw = function() {
     DrawSky(this.context, this.width, this.height, this.colorPalette);
-    DrawGround(this.context, this.width, this.height, scale, this.colorPalette);
+    DrawGround(this.context, this.width, this.height, this.colorPalette);
 }
 
 function DrawSky(context, width, height, colorPalette) {
@@ -21,12 +21,12 @@ function DrawSky(context, width, height, colorPalette) {
     context.fillRect(0,0, width, height);
 }
 
-function DrawGround(context, width, height, scale, colorPalette) {
+function DrawGround(context, width, height, colorPalette) {
     context.save();
-    context.scale(scale, scale);
+    context.scale(4, 4);
     for(let i = 0; i < width; i+=16)  {
         for(let j = 2; j > 0; j--) {
-            DrawGroundBlock(context, i, ((height / scale) - (j * 16)), colorPalette);
+            DrawGroundBlock(context, i, ((height / 4) - (j * 16)), colorPalette);
         }
     }
     context.restore();

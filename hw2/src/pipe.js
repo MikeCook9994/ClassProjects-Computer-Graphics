@@ -11,6 +11,7 @@ function Pipe(context, canvasHeight) {
 }
 
 Pipe.prototype.Draw = function(x, height, scale) {
+    this.piranha.Draw(x, height + 15, scale);
     DrawPipeTop(this.context, this.colorPalette, x, height, this.canvasHeight, scale);
     DrawPipeBottom(this.context, this.colorPalette, x, height, this.canvasHeight, scale);
 }

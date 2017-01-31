@@ -7,6 +7,9 @@
     <body>
         <canvas id="canvas" width="1024" height="512"></canvas>
 
+        <p>There was going to be a piranha plant that animated in and out of the pipe but I didn't have the time
+            to finish it so the pipe demonstrates no hierarchial elements, save for translations occuring with respect
+            to other translations</p>
         <p>Fireball Scale Slider</p>
         <input id="fireballScale" type="range" min="1" max="4" value="1">
         <br>
@@ -14,19 +17,19 @@
         <input id="fireBarLocation" type="range" min="0" max="960" value="512">
         <br>
         <p>Pipe height</p>
-        <input id="pipeHeight" type="range" min="32" max="91" value="64">
+        <input id="pipeHeight" type="range" min="16" max="32" value="16">
         <br>
         <p>Pipe x coordinate</p>
-        <input id="pipeLocation" type="range" min="0" max="896" value="200">
+        <input id="pipeLocation" type="range" min="0" max="896" value="180">
         <br>
-        <p>Pipe x scale</p>
+        <p>Pipe scale</p>
         <input id="pipeScale" type="range" min="1" max="10" value="4">
 
         <script type="text/javascript" src="./src/scene.js"></script>
         <script type="text/javascript" src="./src/fireball.js"></script>
         <script type="text/javascript" src="./src/firebar.js"></script>
-        <script type="text/javascript" src="./src/pipe.js"></script>
         <script type="text/javascript" src="./src/piranha.js"></script>
+        <script type="text/javascript" src="./src/pipe.js"></script>
         <script type="text/javascript" src="./src/index.js"></script>
     </body>
 </html>

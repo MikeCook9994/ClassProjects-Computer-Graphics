@@ -23,7 +23,7 @@
     function animateFireBar(timestamp) {
         clearCanvas();
         scene.Draw();
-        pipe.Draw(Number(pipeLocation.value), Number(pipeHeight.value), Number(pipeScale.value));
+        pipe.Draw(Number(pipeLocation.value), Number(pipeHeight.value) * 2, Number(pipeScale.value));
         firebar.Draw(Number(fireBarLocation.value), 5, Number(fireballScale.value));
         requestAnimationFrame(animateFireBar);
     }

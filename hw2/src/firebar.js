@@ -17,6 +17,7 @@ Firebar.prototype.Draw = function(x, fireRotationDelta, fireScale) {
     this.context.save();
     this.context.translate(x, 320);
     this.context.scale(4, 4);
+
     DrawBlock(this.context, this.colorPalette);
     this.angle = DrawFireballBar(this.context,this.fireballs, fireScale, this.angle);
     this.context.restore();

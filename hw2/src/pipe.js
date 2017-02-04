@@ -28,13 +28,13 @@ function DrawPipeTop(context, colorPalette, x, pipeHeight, canvasHeight, scale) 
     context.fillRect(0, 0, 1, 15);
     context.fillRect(0, 0, 32, 1);
     context.fillRect(0, 14, 32, 1);
-    context.fillRect(32, 0, 1, 15);
+    context.fillRect(31, 0, 1, 15);
 
     context.fillStyle = colorPalette.lightGray;
     context.fillRect(1, 2, 5, 1);
     context.fillRect(4, 2, 2, 12);
     context.fillRect(12, 2, 1, 12);
-    context.fillRect(13, 2, 19, 1);
+    context.fillRect(13, 2, 18, 1);
     context.fillRect(15, 2, 10, 12);
     
     for(let i = 3; i < 14; i+=2) {

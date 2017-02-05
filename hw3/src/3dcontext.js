@@ -16,13 +16,13 @@ ThreeDimContext.prototype.closePath = function() {
 ThreeDimContext.prototype.lineTo = function(x, y, z, transformation) {
     let point = [x, y, z];
     let transformedPoint = m4.transformPoint(transformation, point);
-    this.context.lineTo(transformedPoint[0] + 250, -transformedPoint[1] + 250);
+    this.context.lineTo(transformedPoint[0], -transformedPoint[1]);
 }
 
 ThreeDimContext.prototype.moveTo = function(x, y, z, transformation) {
     let point = [x, y, z];
     let transformedPoint = m4.transformPoint(transformation, point);
-    this.context.moveTo(transformedPoint[0] + 250, -transformedPoint[1] + 250);
+    this.context.moveTo(transformedPoint[0], -transformedPoint[1]);
 }
 
 ThreeDimContext.prototype.fillRect = function(x, y, z, width, height, transformation) {

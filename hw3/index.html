@@ -5,8 +5,17 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <canvas id="canvas" width="1024" height="512"></canvas>
+        <canvas id="canvas" width="512" height="512" style="border:1pt solid black"></canvas>
+        <br>
+        <p>Camera Angle Slider</p>
+        <input id="camera-angle" type="range" min="-100" max="100">
+
         <script type="text/javascript" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+        <script type="text/javascript" src="./src/3dcontext.js"></script>
+        <script type="text/javascript" src="./src/axes.js"></script>
+        <script type="text/javascript" src="./src/rubiksCube.js"></script>
+        <script type="text/javascript" src="./src/edgePiece.js"></script>
+        <script type="text/javascript" src="./src/cornerPiece.js"></script>
         <script type="text/javascript" src="./src/index.js"></script>
     </body>
 </html>

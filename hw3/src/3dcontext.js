@@ -2,12 +2,10 @@ function ThreeDimContext(context) {
     this.context = context;
     this.strokeStyle = "rgb(0, 0, 0)";
     this.fillStyle = "rgb(0, 0, 0)";
-    this.strokeWidth = 1;
+    this.lineWidth = 1;
 }
 
 ThreeDimContext.prototype.beginPath = function() {
-    this.context.strokeStyle = this.strokeStyle;
-    this.context.strokeWidth = this.strokeWidth;
     this.context.beginPath();
 }
 
@@ -17,14 +15,14 @@ ThreeDimContext.prototype.closePath = function() {
 
 ThreeDimContext.prototype.lineTo = function(x, y, z, transformation) {
     let point = [x, y, z];
-    let transformedPoint = m4.transformPoint(point, transformation);
-    this.context.lineTo(tranformedPoint[0], transformedPoint[1]);
+    let transformedPoint = m4.transformPoint(transformation, point);
+    this.context.lineTo(transformedPoint[0] + 250, -transformedPoint[1] + 250);
 }
 
 ThreeDimContext.prototype.moveTo = function(x, y, z, transformation) {
     let point = [x, y, z];
-    let transformedPoint = m4.transformPoint(point, transformation);
-    this.context.moveTo(tranformedPoint[0], transformedPoint[1]);
+    let transformedPoint = m4.transformPoint(transformation, point);
+    this.context.moveTo(transformedPoint[0] + 250, -transformedPoint[1] + 250);
 }
 
 ThreeDimContext.prototype.fillRect = function(x, y, z, width, height, transformation) {
@@ -49,15 +47,7 @@ ThreeDimContext.prototype.fillRect = function(x, y, z, width, height, transforma
 
 
 ThreeDimContext.prototype.stroke = function() {
+    this.context.lineWidth = this.lineWidth;
+    this.context.strokeStyle = this.strokeStyle;
     this.context.stroke();
-}
-
-/*
- * Clears a 2d-square area from (x, y) to (x + width, y + height). Most
- * commonly used for clearning the canvas
- * 
- * e.g. clearRect(0, 0, canvas.width, canvas.height); 
- */
-ThreeDimContext.prototype.clearRect = function(x, y, width, height) {
-    this.context.clearRect(0, 0, width, height);
 }

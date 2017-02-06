@@ -1,6 +1,7 @@
-function RubiksCube(threeDimContext, origin) {
+function RubiksCube(threeDimContext, length, origin) {
     this.context = threeDimContext;
-    this.origin = origin
+    this.length = length;
+    this.origin = origin;
     this.centerPieces = {
         white: null,
         green: null,

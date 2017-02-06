@@ -16,7 +16,9 @@ let m4 = twgl.m4;
     let up = [0, 1, 0];
 
     let axes = new Axes(threeDimContext);
-    let rubiksCube = new RubiksCube(threeDimContext, [100, 100, 100]);
+
+    let length = 40;
+    let rubiksCube = new RubiksCube(threeDimContext, length, [-length / 2, -length / 2, -length / 2]);
 
     function update() {
         context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);

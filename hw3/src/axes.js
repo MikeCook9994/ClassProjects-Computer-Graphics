@@ -8,22 +8,22 @@ Axes.prototype.Draw = function(length, transformation) {
 
     this.context.beginPath();
     this.context.strokeStyle = "rgb(0, 0, 255)";
-    this.context.goToOrigin();
-    this.context.lineTo(length, 0, 0);
+    this.context.moveTo(-length / 2, 0, 0);
+    this.context.lineTo(length / 2, 0, 0);
     this.context.stroke();
     this.context.closePath();
 
     this.context.beginPath();
     this.context.strokeStyle = "rgb(255, 0, 0)";
-    this.context.goToOrigin();
-    this.context.lineTo(0, length, 0);
+    this.context.moveTo(0, -length / 2, 0);
+    this.context.lineTo(0, length / 2, 0);
     this.context.stroke();
     this.context.closePath();
 
     this.context.beginPath();
     this.context.strokeStyle = "rgb(0, 255, 0)"
-    this.context.goToOrigin();
-    this.context.lineTo(0, 0, length);
+    this.context.moveTo(0, 0, -length / 2);
+    this.context.lineTo(0, 0, length / 2);
     this.context.stroke();
     this.context.closePath();
 }

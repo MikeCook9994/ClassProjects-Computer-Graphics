@@ -1,0 +1,4 @@
+function RubiksCube() {
+    this.centerPieces = {};
+    
+}

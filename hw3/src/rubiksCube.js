@@ -1,5 +1,6 @@
-function RubiksCube(threeDimContext) {
+function RubiksCube(threeDimContext, origin) {
     this.context = threeDimContext;
+    this.origin = origin
     this.centerPieces = {
         white: null,
         green: null,
@@ -24,7 +25,7 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
     let blueOrangeEdge = new EdgePiece(["blue", "orange"], threeDimContext);
 
     let orangeYellowEdge = new EdgePiece(["orange", "yellow"], threeDimContext);
-    let orangeGreenEdge = new EdgePiece(["orange", "green"], threeDimContext);
+    let orangeGreenEdge = new EdgePiece(["orange", "green"], threeDimContext);``
 
     let greenYellowEdge = new EdgePiece(["green", "yellow"], threeDimContext);
     let greenRedEdge = new EdgePiece(["green", "red"], threeDimContext);
@@ -53,6 +54,33 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
     }
     centerPieces.white = new CenterPiece("white", threeDimContext, whiteChildren);
 
+    // red
+    let redChildren = {
+        left: [whiteBlueRedCorner, whiteRedEdge, whiteRedGreenCorner],
+        front: [whiteRedGreenCorner, greenRedEdge, yellowRedGreenCorner],
+        right: [yellowRedGreenCorner, redYellowEdge, yellowBlueRedCorner],
+        back: [yellowBlueRedCorner, blueRedEdge, whiteBlueRedCorner]
+    }
+    centerPieces.red = new CenterPiece("red", threeDimContext, redChildren);
+
+    // yellow
+    let yellowChildren = {
+        left: [yellowBlueRedCorner, redYellowEdge, yellowRedGreenCorner],
+        front: [yellowRedGreenCorner, greenYellowEdge, yellowOrangeGreenCorner],
+        right: [yellowOrangeGreenCorner, orangeYellowEdge, yellowOrangeBlueCorner],
+        back: [yellowOrangeBlueCorner, blueYellowEdge, yellowBlueRedCorner]
+    }
+    centerPieces.yellow = new CenterPiece("yellow", threeDimContext, yellowChildren);
+
+    // orange
+    let orangeChildren = {
+        left: [yellowOrangeBlueCorner, orangeYellowEdge, yellowOrangeGreenCorner],
+        front: [yellowOrangeGreenCorner, orangeGreenEdge, whiteOrangeGreenCorner],
+        right: [whiteOrangeGreenCorner, whiteOrangeEdge, whiteOrangeBlueCorner],
+        back: [whiteOrangeBlueCorner, blueOrangeEdge, yellowOrangeBlueCorner]
+    }
+    centerPieces.orange = new CenterPiece("orange", threeDimContext, orangeChildren);
+
     // green
     let greenChildren = {
         left: [whiteOrangeGreenCorner, orangeGreenEdge, yellowOrangeGreenCorner],
@@ -62,15 +90,6 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
     }
     centerPieces.green = new CenterPiece("green", threeDimContext, greenChildren);
 
-    // yellow
-    let yellowChildren = {
-        left: [yellowOrangeGreenCorner, orangeYellowEdge, yellowOrangeBlueCorner],
-        front: [yellowOrangeBlueCorner, blueYellowEdge, yellowBlueRedCorner],
-        right: [yellowBlueRedCorner, redYellowEdge, yellowRedGreenCorner],
-        back: [yellowRedGreenCorner, greenYellowEdge, yellowOrangeGreenCorner]
-    }
-    centerPieces.yellow = new CenterPiece("yellow", threeDimContext, yellowChildren);
-
     // blue
     let blueChildren = {
         left: [yellowOrangeBlueCorner, blueOrangeEdge, whiteOrangeBlueCorner],
@@ -79,28 +98,43 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
         back: [yellowBlueRedCorner, blueYellowEdge, yellowOrangeBlueCorner]
     }
     centerPieces.blue = new CenterPiece("blue", threeDimContext, blueChildren);
-
-    // orange
-    let orangeChildren = {
-        left: [whiteOrangeBlueCorner, blueOrangeEdge, yellowOrangeBlueCorner],
-        front: [yellowOrangeBlueCorner, orangeYellowEdge, yellowOrangeGreenCorner],
-        right: [yellowOrangeGreenCorner, orangeGreenEdge, whiteOrangeGreenCorner],
-        back: [whiteOrangeGreenCorner, whiteOrangeEdge, whiteOrangeBlueCorner]
-    }
-    centerPieces.orange = new CenterPiece("orange", threeDimContext, orangeChildren);
-
-    // red
-    let redChildren = {
-        left: [yellowRedGreenCorner, redYellowEdge, yellowBlueRedCorner],
-        front: [yellowBlueRedCorner, blueRedEdge, whiteBlueRedCorner],
-        right: [whiteBlueRedCorner, whiteRedEdge, whiteRedGreenCorner],
-        back: [whiteRedGreenCorner, greenRedEdge, yellowRedGreenCorner]
-    }
-    centerPieces.red = new CenterPiece("red", threeDimContext, redChildren);
 }
 
-RubiksCube.prototype.Draw = function() {
+RubiksCube.prototype.Draw = function(cameraTransformation) {
+    let finalTransformation = m4.multiply(cameraTransformation, m4.translation(this.origin));
+    this.context.setTransformation(finalTransformation);
 
+    this.context.strokeStyle = "black"
+    this.context.fillStyle = "rgb(177, 177, 177)"
+    this.context.lineWidth = 1;
+
+    this.context.Rect(0, 0, 0, 40, 40);
+    this.context.fillRect(0, 0, 0, 40, 40);
+
+    let rotatedTransformation = m4.axisRotate(finalTransformation, [0, 1, 0], 4.7);
+    this.context.setTransformation(rotatedTransformation);
+    this.context.fillRect(0, 0, 0, 40, 40);
+
+    this.context.setTransformation(finalTransformation);
+
+    this.context.Rect(0, 0, 40, 40, 40);
+    this.context.fillRect(0, 0, 40, 40, 40);
+
+    this.context.fillRect(0, 0, 0, 0, 40)
+
+    this.context.fillRect(40, 0, 0, 0, 40);
+    this.context.goToOrigin();
+    this.context.lineTo(0, 0, 40);
+
+    this.context.moveTo(0, 40, 0);
+    this.context.lineTo(0, 40, 40);
+
+    this.context.moveTo(40, 40, 0);
+    this.context.lineTo(40, 40, 40);
+
+    this.context.moveTo(40, 0, 0);
+    this.context.lineTo(40, 0, 40);
+    this.context.stroke();
 }
 
 RubiksCube.prototype.Rotate = function(rotation) {

@@ -4,6 +4,7 @@ function ThreeDimContext(context) {
     this.strokeStyle = "rgb(0, 0, 0)";
     this.fillStyle = "rgb(0, 0, 0)";
     this.lineWidth = 1;
+    
 }
 
 ThreeDimContext.prototype.beginPath = function() {
@@ -25,13 +26,13 @@ ThreeDimContext.prototype.goToOrigin = function() {
 ThreeDimContext.prototype.lineTo = function(x, y, z) {
     let point = [x, y, z];
     let transformedPoint = m4.transformPoint(this.transformation, point);
-    this.context.lineTo(transformedPoint[0], -transformedPoint[1]);
+    this.context.lineTo(transformedPoint[0], transformedPoint[1]);
 }
 
 ThreeDimContext.prototype.moveTo = function(x, y, z) {
     let point = [x, y, z];
     let transformedPoint = m4.transformPoint(this.transformation, point);
-    this.context.moveTo(transformedPoint[0], -transformedPoint[1]);
+    this.context.moveTo(transformedPoint[0], transformedPoint[1]);
 }
 
 ThreeDimContext.prototype.fillRect = function(x, y, z, width, height) {

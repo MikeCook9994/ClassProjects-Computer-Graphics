@@ -101,7 +101,7 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
 }
 
 RubiksCube.prototype.Draw = function(cameraTransformation) {
-    let finalTransformation = m4.multiply(cameraTransformation, m4.translation(this.origin));
+    let finalTransformation = m4.multiply(m4.translation(this.origin), cameraTransformation);
     this.context.setTransformation(finalTransformation);
 
     this.context.strokeStyle = "black"
@@ -109,20 +109,9 @@ RubiksCube.prototype.Draw = function(cameraTransformation) {
     this.context.lineWidth = 1;
 
     this.context.Rect(0, 0, 0, 40, 40);
-    this.context.fillRect(0, 0, 0, 40, 40);
-
-    let rotatedTransformation = m4.axisRotate(finalTransformation, [0, 1, 0], 4.7);
-    this.context.setTransformation(rotatedTransformation);
-    this.context.fillRect(0, 0, 0, 40, 40);
-
-    this.context.setTransformation(finalTransformation);
 
     this.context.Rect(0, 0, 40, 40, 40);
-    this.context.fillRect(0, 0, 40, 40, 40);
 
-    this.context.fillRect(0, 0, 0, 0, 40)
-
-    this.context.fillRect(40, 0, 0, 0, 40);
     this.context.goToOrigin();
     this.context.lineTo(0, 0, 40);
 

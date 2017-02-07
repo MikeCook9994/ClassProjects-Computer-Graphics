@@ -50,71 +50,130 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
     let redYellowEdge = new EdgePiece(["red", "gold"], threeDimContext);
     let yellowRedEdge = new EdgePiece(["gold", "red"], threeDimContext);
 
-
-    // Initialize 8 corner pieces
-    let whiteOrangeGreenCorner = new CornerPiece(["lightGray", "orange", "green"], threeDimContext);
-    let whiteOrangeBlueCorner = new CornerPiece(["lightGray", "orange", "blue"], threeDimContext);
-    let whiteBlueRedCorner = new CornerPiece(["lightGray", "blue", "red"], threeDimContext);
-    let whiteRedGreenCorner = new CornerPiece(["lightGray", "red", "green"], threeDimContext);
-
-    let yellowOrangeGreenCorner = new CornerPiece(["gold", "orange", "green"], threeDimContext);
-    let yellowOrangeBlueCorner = new CornerPiece(["gold", "orange", "blue"], threeDimContext);
-    let yellowBlueRedCorner = new CornerPiece(["gold", "blue", "red"], threeDimContext);
-    let yellowRedGreenCorner = new CornerPiece(["gold", "red", "green"], threeDimContext);
-
-    // Intialize 6 center pieces
-
+    // Initialize Center and  Corner Pieces
     // white
+    let whiteOrangeBlueLeftCorner = new LeftCornerPiece(["blue", "orange", "lightGray"], threeDimContext);
+    let whiteOrangeBlueRightCorner = new RightCornerPiece(["blue", "orange", "lightGray"], threeDimContext);
+
+    let whiteOrangeGreenLeftCorner = new LeftCornerPiece(["orange", "green", "lightGray"], threeDimContext);
+    let whiteOrangeGreenRightCorner = new RightCornerPiece(["orange", "green", "lightGray"], threeDimContext);
+
+    let whiteGreenRedLeftCorner = new LeftCornerPiece(["green", "red", "lightGray"], threeDimContext);
+    let whiteGreenRedRightCorner = new RightCornerPiece(["green", "red", "lightGray"], threeDimContext);
+
+    let whiteRedBlueLeftCorner = new LeftCornerPiece(["red", "blue", "lightGray"], threeDimContext);
+    let whiteRedBlueRightCorner = new RightCornerPiece(["red", "blue", "lightGray"], threeDimContext);
+
     let whiteChildren = {
-        left: [whiteOrangeBlueCorner, whiteOrangeEdge, whiteOrangeGreenCorner],
-        front: [whiteOrangeGreenCorner, whiteGreenEdge, whiteRedGreenCorner],
-        right: [whiteRedGreenCorner, whiteRedEdge, whiteBlueRedCorner],
-        back: [whiteBlueRedCorner, whiteBlueEdge, whiteOrangeBlueCorner]
+        left: [whiteOrangeBlueLeftCorner, whiteOrangeEdge, whiteOrangeGreenRightCorner],
+        front: [whiteOrangeGreenLeftCorner, whiteGreenEdge, whiteGreenRedRightCorner],
+        right: [whiteGreenRedLeftCorner, whiteRedEdge, whiteRedBlueRightCorner],
+        back: [whiteRedBlueLeftCorner, whiteBlueEdge, whiteOrangeBlueRightCorner]
     }
     centerPieces.white = new CenterPiece("lightGray", threeDimContext, whiteChildren);
 
+    let redBlueWhiteLeftCorner = new LeftCornerPiece(["blue", "lightGray", "red"], threeDimContext);
+    let redBlueWhiteRightCorner = new RightCornerPiece(["blue", "lightGray", "red"], threeDimContext);
+
+    let redWhiteGreenLeftCorner = new LeftCornerPiece(["lightGray", "green", "red"], threeDimContext);
+    let redWhiteGreenRightCorner = new RightCornerPiece(["lightGray", "green", "red"], threeDimContext);
+
+    let redYellowGreenLeftCorner = new LeftCornerPiece(["green", "gold", "red"], threeDimContext);
+    let redYellowGreenRightCorner = new RightCornerPiece(["green", "gold", "red"], threeDimContext);
+
+    let redBlueYellowLeftCorner = new LeftCornerPiece(["gold", "blue", "red"], threeDimContext);
+    let redBlueYellowRightCorner = new RightCornerPiece(["gold", "blue", "red"], threeDimContext);
+
     // red
     let redChildren = {
-        left: [whiteBlueRedCorner, redWhiteEdge, whiteRedGreenCorner],
-        front: [whiteRedGreenCorner, redGreenEdge, yellowRedGreenCorner],
-        right: [yellowRedGreenCorner, redYellowEdge, yellowBlueRedCorner],
-        back: [yellowBlueRedCorner, redBlueEdge, whiteBlueRedCorner]
+        left: [redBlueWhiteLeftCorner, redWhiteEdge, redWhiteGreenRightCorner],
+        front: [redWhiteGreenLeftCorner, redGreenEdge, redYellowGreenRightCorner],
+        right: [redYellowGreenLeftCorner, redYellowEdge, redBlueYellowRightCorner],
+        back: [redBlueYellowLeftCorner, redBlueEdge, redBlueWhiteRightCorner]
     }
     centerPieces.red = new CenterPiece("red", threeDimContext, redChildren);
 
     // yellow
+    let yellowBlueRedLeftCorner = new LeftCornerPiece(["blue", "red", "gold"], threeDimContext);
+    let yellowBlueRedRightCorner = new RightCornerPiece(["blue", "red", "gold"], threeDimContext);
+
+    let yellowRedGreenLeftCorner = new LeftCornerPiece(["red", "green", "gold"], threeDimContext);
+    let yellowRedGreenRightCorner = new RightCornerPiece(["red", "green", "gold"], threeDimContext);
+
+    let yellowOrangeGreenLeftCorner = new LeftCornerPiece(["green", "orange", "gold"], threeDimContext);
+    let yellowOrangeGreenRightCorner = new RightCornerPiece(["green", "orange", "gold"], threeDimContext);
+
+    let yellowOrangeBlueLeftCorner = new LeftCornerPiece(["orange", "blue", "gold"], threeDimContext);
+    let yellowOrangeBlueRightCorner = new RightCornerPiece(["orange", "blue", "gold"], threeDimContext);
+
     let yellowChildren = {
-        left: [yellowBlueRedCorner, yellowRedEdge, yellowRedGreenCorner],
-        front: [yellowRedGreenCorner, yellowGreenEdge, yellowOrangeGreenCorner],
-        right: [yellowOrangeGreenCorner, yellowOrangeEdge, yellowOrangeBlueCorner],
-        back: [yellowOrangeBlueCorner, yellowBlueEdge, yellowBlueRedCorner]
+        left: [yellowBlueRedLeftCorner, yellowRedEdge, yellowRedGreenRightCorner],
+        front: [yellowRedGreenLeftCorner, yellowGreenEdge, yellowOrangeGreenRightCorner],
+        right: [yellowOrangeGreenLeftCorner, yellowOrangeEdge, yellowOrangeBlueRightCorner],
+        back: [yellowOrangeBlueLeftCorner, yellowBlueEdge, yellowBlueRedRightCorner]
     }
     centerPieces.yellow = new CenterPiece("gold", threeDimContext, yellowChildren);
 
     // orange
+    let orangeBlueYellowLeftCorner = new LeftCornerPiece(["blue", "gold", "orange"], threeDimContext);
+    let orangeBlueYellowRightCorner = new RightCornerPiece(["blue", "gold", "orange"], threeDimContext);
+
+    let orangeYellowGreenLeftCorner = new LeftCornerPiece(["gold", "green", "orange"], threeDimContext);
+    let orangeYellowGreenRightCorner = new RightCornerPiece(["gold", "green", "orange"], threeDimContext);
+
+    let orangeGreenWhiteLeftCorner = new LeftCornerPiece(["green", "lightGray", "orange"], threeDimContext);
+    let orangeGreenWhiteRightCorner = new RightCornerPiece(["green", "lightGray", "orange"], threeDimContext);
+
+    let orangeWhiteBlueLeftCorner = new LeftCornerPiece(["lightGray", "blue", "orange"], threeDimContext);
+    let orangeWhiteBlueRightCorner = new RightCornerPiece(["lightGray", "blue", "orange"], threeDimContext);
+    
     let orangeChildren = {
-        left: [yellowOrangeBlueCorner, orangeYellowEdge, yellowOrangeGreenCorner],
-        front: [yellowOrangeGreenCorner, orangeGreenEdge, whiteOrangeGreenCorner],
-        right: [whiteOrangeGreenCorner, orangeWhiteEdge, whiteOrangeBlueCorner],
-        back: [whiteOrangeBlueCorner, orangeBlueEdge, yellowOrangeBlueCorner]
+        left: [orangeBlueYellowLeftCorner, orangeYellowEdge, orangeYellowGreenRightCorner],
+        front: [orangeYellowGreenLeftCorner, orangeGreenEdge, orangeGreenWhiteRightCorner],
+        right: [orangeGreenWhiteLeftCorner, orangeWhiteEdge, orangeWhiteBlueRightCorner],
+        back: [orangeWhiteBlueLeftCorner, orangeBlueEdge, orangeBlueYellowRightCorner]
     }
     centerPieces.orange = new CenterPiece("orange", threeDimContext, orangeChildren);
 
     // green
+    let greenWhiteOrangeLeftCorner = new LeftCornerPiece(["lightGray", "orange", "green"], threeDimContext);
+    let greenWhiteOrangeRightCorner = new RightCornerPiece(["lightGray", "orange", "green"], threeDimContext);
+
+    let greenOrangeYellowLeftCorner = new LeftCornerPiece(["orange", "gold", "green"], threeDimContext);
+    let greenOrangeYellowRightCorner = new RightCornerPiece(["orange", "gold", "green"], threeDimContext);
+
+    let greenYellowRedLeftCorner = new LeftCornerPiece(["gold", "red", "green"], threeDimContext);
+    let greenYellowRedRightCorner = new RightCornerPiece(["gold", "red", "green"], threeDimContext);
+
+    let greenRedWhiteLeftCorner = new LeftCornerPiece(["red", "lightGray", "green"], threeDimContext);
+    let greenRedWhiteRightCorner = new RightCornerPiece(["red", "lightGray", "green"], threeDimContext);
+
     let greenChildren = {
-        left: [whiteOrangeGreenCorner, greenOrangeEdge, yellowOrangeGreenCorner],
-        front: [yellowOrangeGreenCorner, greenYellowEdge, yellowRedGreenCorner],
-        right: [yellowRedGreenCorner, greenRedEdge, whiteRedGreenCorner],
-        back: [whiteRedGreenCorner, greenWhiteEdge, whiteOrangeGreenCorner]
+        left: [greenWhiteOrangeLeftCorner, greenOrangeEdge, greenRedWhiteRightCorner],
+        front: [greenOrangeYellowLeftCorner, greenYellowEdge, greenWhiteOrangeRightCorner],
+        right: [greenYellowRedLeftCorner, greenRedEdge, greenOrangeYellowRightCorner],
+        back: [greenRedWhiteLeftCorner, greenWhiteEdge, greenYellowRedRightCorner]
     }
     centerPieces.green = new CenterPiece("green", threeDimContext, greenChildren);
 
     // blue
+    let blueYellowOrangeLeftCorner = new LeftCornerPiece(["gold", "orange", "blue"], threeDimContext);
+    let blueYellowOrangeRightCorner = new RightCornerPiece(["gold", "orange", "blue"], threeDimContext);
+
+    let blueOrangeWhiteLeftCorner = new LeftCornerPiece(["orange", "lightGray", "blue"], threeDimContext);
+    let blueOrangeWhiteRightCorner = new RightCornerPiece(["orange", "lightGray", "blue"], threeDimContext);
+
+    let blueWhiteRedLeftCorner = new LeftCornerPiece(["lightGray", "red", "blue"], threeDimContext);
+    let blueWhiteRedRightCorner = new RightCornerPiece(["lightGray", "red", "blue"], threeDimContext);
+
+    let blueRedYellowLeftCorner = new LeftCornerPiece(["red", "gold", "blue"], threeDimContext);
+    let blueRedYellowRightCorner = new RightCornerPiece(["red", "gold", "blue"], threeDimContext);
+
     let blueChildren = {
-        left: [yellowOrangeBlueCorner, blueOrangeEdge, whiteOrangeBlueCorner],
-        front: [whiteOrangeBlueCorner, blueWhiteEdge, whiteBlueRedCorner],
-        right: [whiteBlueRedCorner, blueRedEdge, yellowBlueRedCorner],
-        back: [yellowBlueRedCorner, blueYellowEdge, yellowOrangeBlueCorner]
+        left: [blueYellowOrangeLeftCorner, blueOrangeEdge, blueRedYellowRightCorner],
+        front: [blueOrangeWhiteLeftCorner, blueWhiteEdge, blueYellowOrangeRightCorner],
+        right: [blueWhiteRedLeftCorner, blueRedEdge, blueOrangeWhiteRightCorner],
+        back: [blueRedYellowLeftCorner, blueYellowEdge, blueWhiteRedRightCorner]
     }
     centerPieces.blue = new CenterPiece("blue", threeDimContext, blueChildren);
 }

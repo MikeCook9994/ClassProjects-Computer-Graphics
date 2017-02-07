@@ -54,12 +54,12 @@ function DrawCenterCube(context, color) {
 }
 
 function DrawRow(context, row, transformation) {
-    // context.setTransformation(transformation);
-    // row[0].Draw();
+    context.setTransformation(transformation);
+    row[2].Draw();
 
     context.setTransformation(m4.multiply(m4.translation([0, 40, 0]), transformation));
     row[1].Draw();
 
-    // context.setTransformation(m4.multiply(m4.translation([0, 80, 0]), transformation));
-    // row[2].Draw();
+    context.setTransformation(m4.multiply(m4.translation([0, 80, 0]), transformation));
+    row[0].Draw();
 }

@@ -10,7 +10,7 @@ let m4 = twgl.m4;
     centerCanvas(context);
 
     let rubiksCube = new RubiksCube(threeDimContext);
-    let axes = new Axes(threeDimContext);
+    //let axes = new Axes(threeDimContext);
 
     function update() {
         context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
@@ -18,7 +18,7 @@ let m4 = twgl.m4;
         let cameraTransformation = GetCameraTransformation(cameraAngle.value);
         let scale = blockScale.value;
 
-        axes.Draw(200, cameraTransformation);
+        //axes.Draw(200, cameraTransformation);
         rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
 
         requestAnimationFrame(update);

@@ -3,7 +3,7 @@ function RubiksCube(threeDimContext) {
     this.centerPieces = {
         white: null,
         green: null,
-        orange: null,
+        yellow: null,
         blue: null,
         red: null,
         orange: null
@@ -51,7 +51,7 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
         right: [whiteRedGreenCorner, whiteRedEdge, whiteBlueRedCorner],
         back: [whiteBlueRedCorner, whiteBlueEdge, whiteOrangeBlueCorner]
     }
-    centerPieces.white = new CenterPiece("white", threeDimContext, whiteChildren);
+    centerPieces.white = new CenterPiece("lightGray", threeDimContext, whiteChildren);
 
     // red
     let redChildren = {
@@ -69,7 +69,7 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
         right: [yellowOrangeGreenCorner, orangeYellowEdge, yellowOrangeBlueCorner],
         back: [yellowOrangeBlueCorner, blueYellowEdge, yellowBlueRedCorner]
     }
-    centerPieces.yellow = new CenterPiece("yellow", threeDimContext, yellowChildren);
+    centerPieces.yellow = new CenterPiece("gold", threeDimContext, yellowChildren);
 
     // orange
     let orangeChildren = {
@@ -100,32 +100,34 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
 }
 
 RubiksCube.prototype.Draw = function(cameraTransformation, origin, scale) {
-    let translation = m4.translation(origin);
-    let scaling = m4.scaling([scale, scale, scale]);
-    let finalTransformation = m4.multiply(translation, m4.multiply(scaling, cameraTransformation));
+    let finalTransformation = 
+        m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
 
     this.context.setTransformation(finalTransformation);
 
     this.context.strokeStyle = "black"
-    this.context.fillStyle = "rgb(177, 177, 177)"
-    this.context.lineWidth = 1;
+    drawSingleCube(this.context);
 
-    this.context.Rect(0, 0, 0, 10, 10);
+    let adjustedOrigin = [origin[0], origin[1] + 12, origin[2]];
+    let elevatedTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
 
-    this.context.Rect(0, 0, 10, 10, 10);
+    let whiteTransformation = elevatedTransformation;
+    this.centerPieces.white.Draw(whiteTransformation);
 
-    this.context.goToOrigin();
-    this.context.lineTo(0, 0, 10);
+    let redTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateX(cameraTransformation, degreesToRadians(90))));
+    this.centerPieces.red.Draw(redTransformation);
 
-    this.context.moveTo(0, 10, 0);
-    this.context.lineTo(0, 10, 10);
+    let yellowTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateX(cameraTransformation, degreesToRadians(180))));
+    this.centerPieces.yellow.Draw(yellowTransformation);
 
-    this.context.moveTo(10, 10, 0);
-    this.context.lineTo(10, 10, 10);
+    let orangeTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateX(cameraTransformation, degreesToRadians(270))));
+    this.centerPieces.orange.Draw(orangeTransformation);
 
-    this.context.moveTo(10, 0, 0);
-    this.context.lineTo(10, 0, 10);
-    this.context.stroke();
+    let greenTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(cameraTransformation, degreesToRadians(90))));
+    this.centerPieces.green.Draw(greenTransformation);
+
+    let blueTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(cameraTransformation, degreesToRadians(270))));
+    this.centerPieces.blue.Draw(blueTransformation);
 }
 
 RubiksCube.prototype.Rotate = function(rotation) {
@@ -155,4 +157,29 @@ RubiksCube.prototype.Rotate = function(rotation) {
         case "bottom prime":
             break; 
     }
+}
+
+function drawSingleCube(context) {
+    context.lineWidth = 1;
+
+    context.Rect(0, 0, 0, 10, 10);
+
+    context.Rect(0, 0, 10, 10, 10);
+
+    context.goToOrigin();
+    context.lineTo(0, 0, 10);
+
+    context.moveTo(0, 10, 0);
+    context.lineTo(0, 10, 10);
+
+    context.moveTo(10, 10, 0);
+    context.lineTo(10, 10, 10);
+
+    context.moveTo(10, 0, 0);
+    context.lineTo(10, 0, 10);
+    context.stroke();
+}
+
+function degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
 }

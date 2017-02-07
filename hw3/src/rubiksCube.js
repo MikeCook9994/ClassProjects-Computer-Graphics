@@ -218,14 +218,15 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
                     requestAnimationFrame(() => {topRotation(centerPieces, context, callback)});
                 }
                 else {
-                    let tempLeft = this.centerPieces.white.children.left;
-                    let tempFront = this.centerPieces.white.children.front;
-                    let tempRight = this.centerPieces.white.children.right;
+                    console.log("updating edges");
+                    let tempLeft = centerPieces.white.children.left;
+                    let tempFront = centerPieces.white.children.front;
+                    let tempRight = centerPieces.white.children.right;
 
-                    this.centerPieces.white.children.left = this.centerPieces.white.children.back;
-                    this.centerPieces.white.children.front = tempLeft;
-                    this.centerPieces.white.children.right = tempFront;
-                    this.centerPieces.white.children.back = tempRight;
+                    centerPieces.white.children.left = centerPieces.white.children.back;
+                    centerPieces.white.children.front = tempLeft;
+                    centerPieces.white.children.right = tempFront;
+                    centerPieces.white.children.back = tempRight;
                 }
             }
 

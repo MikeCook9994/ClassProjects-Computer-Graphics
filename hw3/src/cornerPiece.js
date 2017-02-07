@@ -3,7 +3,6 @@ function CornerPiece(colors, threeDimContext) {
     this.colors = colors;
 }
 
-CornerPiece.prototype.Draw = function() {
+CornerPiece.prototype.Draw = function(transformation) {
     this.context.setTransformation(transformation);
-    drawSingleCube(this.context);
 }

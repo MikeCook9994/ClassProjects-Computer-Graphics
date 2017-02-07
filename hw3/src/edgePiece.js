@@ -3,7 +3,6 @@ function EdgePiece(colors, threeDimContext) {
     this.color = colors;
 }
 
-EdgePiece.prototype.Draw = function() {
+EdgePiece.prototype.Draw = function(transformation) {
     this.context.setTransformation(transformation);
-    drawSingleCube(this.context);
 }

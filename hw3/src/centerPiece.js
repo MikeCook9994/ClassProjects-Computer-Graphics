@@ -11,13 +11,13 @@ CenterPiece.prototype.Draw = function(transformation) {
     let leftTransformation = m4.multiply(m4.translation([-40, -40, 0]), transformation);
     DrawRow(this.context, this.children.left, leftTransformation);
 
-    let frontTransformation = m4.rotateZ(m4.multiply(m4.translation([-40, -30, 0]), transformation), DegreesToRadians(270));
+    let frontTransformation = m4.rotateZ(m4.multiply(m4.translation([50, -40, 0]), transformation), DegreesToRadians(90));
     DrawRow(this.context, this.children.front, frontTransformation);
 
     let rightTransformation = m4.rotateZ(m4.multiply(m4.translation([50, 50, 0]), transformation), DegreesToRadians(180));
     DrawRow(this.context, this.children.right, rightTransformation);
 
-    let backTransformation = m4.rotateZ(m4.multiply(m4.translation([50, 40, 0]), transformation), DegreesToRadians(90));
+    let backTransformation = m4.rotateZ(m4.multiply(m4.translation([-40, 50, 0]), transformation), DegreesToRadians(270));
     DrawRow(this.context, this.children.back, backTransformation);
 }
 
@@ -54,12 +54,12 @@ function DrawCenterCube(context, color) {
 }
 
 function DrawRow(context, row, transformation) {
-    context.setTransformation(transformation);
-    DrawCenterCube(context, "black");
+    // context.setTransformation(transformation);
+    // row[0].Draw();
 
     context.setTransformation(m4.multiply(m4.translation([0, 40, 0]), transformation));
-    DrawCenterCube(context, "black");
+    row[1].Draw();
 
-    context.setTransformation(m4.multiply(m4.translation([0, 80, 0]), transformation));
-    DrawCenterCube(context, "black");
+    // context.setTransformation(m4.multiply(m4.translation([0, 80, 0]), transformation));
+    // row[2].Draw();
 }

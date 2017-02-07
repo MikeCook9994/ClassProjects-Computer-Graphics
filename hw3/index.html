@@ -5,12 +5,17 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <canvas id="canvas" width="512" height="512" style="border:1pt solid black"></canvas>
-        <br>
-        <p>Camera Angle Slider</p>
-        <input id="camera-angle" type="range" min=-100 max=100 value=-16>
-        <p>Block Scale Slider</p>
-        <input id="block-scale" type="range" min=1 max=20 value=3>
+        
+        <div style="float: right">
+            <canvas id="canvas" width="1024" height="1024" style="border:1pt solid black"></canvas>
+        </div>
+        
+        <div>
+            <p>Camera Angle Slider</p>
+            <input id="camera-angle" type="range" min=-100 max=100 value=-16>
+            <p>Zoom</p>
+            <input id="block-scale" type="range" min=1 max=20 value=7>
+        </div>
 
         <script type="text/javascript" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
         <script type="text/javascript" src="./src/3dcontext.js"></script>

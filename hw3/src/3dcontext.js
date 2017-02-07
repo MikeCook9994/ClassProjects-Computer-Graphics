@@ -80,3 +80,7 @@ ThreeDimContext.prototype.stroke = function() {
     this.context.strokeStyle = this.strokeStyle;
     this.context.stroke();
 }
+
+ThreeDimContext.prototype.clearRect = function(x, y, height, width) {
+    this.context.clearRect(x, y, height, width);
+}

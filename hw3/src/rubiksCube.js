@@ -186,43 +186,71 @@ RubiksCube.prototype.Draw = function(cameraTransformation, origin, scale) {
     DrawCenterCubes(this.centerPieces, this.context, origin, scale, cameraTransformation)
 }
 
-RubiksCube.prototype.Rotate = function(rotation) {
+RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, scale, canvasHeight, canvasWidth) {
     switch(rotation) {
         case 'left':
-            console.log(rotation);
             break;
         case 'left prime':
-            console.log(rotation);
             break;
         case 'front':
-            console.log(rotation);
             break;
         case 'front prime':
-            console.log(rotation);
             break;
         case 'right':
-            console.log(rotation);
             break;
         case 'right prime':
-            console.log(rotation);
             break;
         case 'back':
-            console.log(rotation);
             break;
         case 'back prime':
-            console.log(rotation);
             break;
         case 'top':
-            console.log(rotation);
+            let i = 1;
+            let topRotation = function(centerPieces, context, callback) {
+                console.log("clearing the canvas");
+                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(i * 2)); 
+                DrawWhiteLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
+                callback();
+                i++
+                console.log(i);
+                if(i <= 45) {
+                    requestAnimationFrame(() => {topRotation(centerPieces, context, callback)});
+                }
+                else {
+                    let tempLeft = this.centerPieces.white.children.left;
+                    let tempFront = this.centerPieces.white.children.front;
+                    let tempRight = this.centerPieces.white.children.right;
+
+                    this.centerPieces.white.children.left = this.centerPieces.white.children.back;
+                    this.centerPieces.white.children.front = tempLeft;
+                    this.centerPieces.white.children.right = tempFront;
+                    this.centerPieces.white.children.back = tempRight;
+                }
+            }
+
+            requestAnimationFrame(() => {
+                topRotation(this.centerPieces, this.context, (() => {
+                    console.log("drawing the rest of the square");
+                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
+                    this.context.setTransformation(finalTransformation);
+                    DrawMainCube(this.context);
+
+                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+                    //  DrawRedLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                    DrawYellowLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                    // DrawOrangeLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                    // DrawGreenLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                    // DrawBlueLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                }));
+            });
+
             break;
         case 'top prime':
-            console.log(rotation);
             break;
         case 'bottom':
-            console.log(rotation);
             break;
         case 'bottom prime':
-            console.log(rotation);
             break; 
     }
 }
@@ -251,23 +279,41 @@ function DrawMainCube(context) {
 
 function DrawCenterCubes(centerPieces, context, origin, scale, cameraTransformation) {
     let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+    DrawWhiteLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    DrawRedLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    DrawYellowLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    DrawOrangeLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    DrawGreenLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    DrawBlueLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+}
 
-    let whiteTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateX(cameraTransformation, DegreesToRadians(270)), DegreesToRadians(90))));
+function DrawWhiteLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let whiteTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateX(cameraTransformation, DegreesToRadians(270)), DegreesToRadians(90))));
     centerPieces.white.Draw(whiteTransformation);
+}
 
-    let redTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateY(cameraTransformation, DegreesToRadians(180)), DegreesToRadians(270))));
+function DrawRedLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let redTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateY(cameraTransformation, DegreesToRadians(180)), DegreesToRadians(270))));
     centerPieces.red.Draw(redTransformation);
+}
 
-    let yellowTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateX(cameraTransformation, DegreesToRadians(90)), DegreesToRadians(90))));
+function DrawYellowLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let yellowTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateX(cameraTransformation, DegreesToRadians(90)), DegreesToRadians(90))));
     centerPieces.yellow.Draw(yellowTransformation);
+}
 
-    let orangeTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateY(cameraTransformation, DegreesToRadians(0)), DegreesToRadians(90))));
+function DrawOrangeLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let orangeTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateZ(m4.rotateY(cameraTransformation, DegreesToRadians(0)), DegreesToRadians(90))));
     centerPieces.orange.Draw(orangeTransformation);
+}
 
-    let greenTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateY(cameraTransformation, DegreesToRadians(90))));
+function DrawGreenLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let greenTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateY(cameraTransformation, DegreesToRadians(90))));
     centerPieces.green.Draw(greenTransformation);
+}
 
-    let blueTransformation = m4.multiply(m4.translation(adjustedOrigin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateY(m4.rotateX(cameraTransformation, DegreesToRadians(180)), DegreesToRadians(270))));
+function DrawBlueLayer(centerPieces, context, origin, scale, cameraTransformation) {
+    let blueTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), m4.rotateY(m4.rotateX(cameraTransformation, DegreesToRadians(180)), DegreesToRadians(270))));
     centerPieces.blue.Draw(blueTransformation);
 }
 

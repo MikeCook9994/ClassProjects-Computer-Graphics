@@ -19,11 +19,9 @@ let m4 = twgl.m4;
         buttons[i].addEventListener("click", () => {
             context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 
-            rubiksCube.Rotate(buttons[i].value);
-
             cameraTransformation = GetCameraTransformation(cameraAngle.value);
             scale = blockScale.value;
-            rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
+            rubiksCube.Rotate(buttons[i].value, cameraTransformation, [-5, -5, -5], scale, canvas.width, canvas.height);
         });
     }
 

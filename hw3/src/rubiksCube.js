@@ -1,7 +1,5 @@
-function RubiksCube(threeDimContext, length, origin) {
+function RubiksCube(threeDimContext) {
     this.context = threeDimContext;
-    this.length = length;
-    this.origin = origin;
     this.centerPieces = {
         white: null,
         green: null,
@@ -101,29 +99,32 @@ function InitializeCubePieces(centerPieces, threeDimContext) {
     centerPieces.blue = new CenterPiece("blue", threeDimContext, blueChildren);
 }
 
-RubiksCube.prototype.Draw = function(cameraTransformation) {
-    let finalTransformation = m4.multiply(m4.translation(this.origin), cameraTransformation);
+RubiksCube.prototype.Draw = function(cameraTransformation, origin, scale) {
+    let translation = m4.translation(origin);
+    let scaling = m4.scaling([scale, scale, scale]);
+    let finalTransformation = m4.multiply(translation, m4.multiply(scaling, cameraTransformation));
+
     this.context.setTransformation(finalTransformation);
 
     this.context.strokeStyle = "black"
     this.context.fillStyle = "rgb(177, 177, 177)"
     this.context.lineWidth = 1;
 
-    this.context.Rect(0, 0, 0, 40, 40);
+    this.context.Rect(0, 0, 0, 10, 10);
 
-    this.context.Rect(0, 0, 40, 40, 40);
+    this.context.Rect(0, 0, 10, 10, 10);
 
     this.context.goToOrigin();
-    this.context.lineTo(0, 0, 40);
+    this.context.lineTo(0, 0, 10);
 
-    this.context.moveTo(0, 40, 0);
-    this.context.lineTo(0, 40, 40);
+    this.context.moveTo(0, 10, 0);
+    this.context.lineTo(0, 10, 10);
 
-    this.context.moveTo(40, 40, 0);
-    this.context.lineTo(40, 40, 40);
+    this.context.moveTo(10, 10, 0);
+    this.context.lineTo(10, 10, 10);
 
-    this.context.moveTo(40, 0, 0);
-    this.context.lineTo(40, 0, 40);
+    this.context.moveTo(10, 0, 0);
+    this.context.lineTo(10, 0, 10);
     this.context.stroke();
 }
 

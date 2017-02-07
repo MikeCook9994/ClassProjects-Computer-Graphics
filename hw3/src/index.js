@@ -2,28 +2,41 @@ let m4 = twgl.m4;
 
 (() => {
     let canvas = document.getElementById("canvas");
-    let cameraAngle = document.getElementById("camera-angle");
-    let blockScale = document.getElementById("block-scale");
-
     let context = canvas.getContext('2d');
     let threeDimContext = new ThreeDimContext(context);
     centerCanvas(context);
 
+    let cameraAngle = document.getElementById("camera-angle");
+    let blockScale = document.getElementById("block-scale");
+
     let rubiksCube = new RubiksCube(threeDimContext);
-    //let axes = new Axes(threeDimContext);
+    let cameraTransformation = GetCameraTransformation(cameraAngle.value);
+    let scale = blockScale.value;
+    rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
 
-    function update() {
-        context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+    let buttons = document.getElementsByClassName("rotate-button");
+    for(let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", () => {
+            context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
 
-        let cameraTransformation = GetCameraTransformation(cameraAngle.value);
-        let scale = blockScale.value;
+            rubiksCube.Rotate(buttons[i].value);
 
-        //axes.Draw(200, cameraTransformation);
-        rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
-
-        requestAnimationFrame(update);
+            cameraTransformation = GetCameraTransformation(cameraAngle.value);
+            scale = blockScale.value;
+            rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
+        });
     }
-    update();
+
+    let ranges = document.getElementsByClassName("range-slider");
+    for(let i = 0; i < ranges.length; i++) {
+        ranges[i].addEventListener("input", () => {
+            context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+
+            cameraTransformation = GetCameraTransformation(cameraAngle.value);
+            scale = blockScale.value;
+            rubiksCube.Draw(cameraTransformation, [-5, -5, -5], scale);
+        });
+    }
 })();
 
 function centerCanvas(context) {

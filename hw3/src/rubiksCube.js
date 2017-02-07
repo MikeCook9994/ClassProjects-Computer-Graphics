@@ -188,29 +188,41 @@ RubiksCube.prototype.Draw = function(cameraTransformation, origin, scale) {
 
 RubiksCube.prototype.Rotate = function(rotation) {
     switch(rotation) {
-        case "left":
+        case 'left':
+            console.log(rotation);
             break;
-        case "left prime":
+        case 'left prime':
+            console.log(rotation);
             break;
-        case "front":
+        case 'front':
+            console.log(rotation);
             break;
-        case "front prime":
+        case 'front prime':
+            console.log(rotation);
             break;
-        case "right":
+        case 'right':
+            console.log(rotation);
             break;
-        case "right prime":
+        case 'right prime':
+            console.log(rotation);
             break;
-        case "back":
+        case 'back':
+            console.log(rotation);
             break;
-        case "back prime":
+        case 'back prime':
+            console.log(rotation);
             break;
-        case "top":
+        case 'top':
+            console.log(rotation);
             break;
-        case "top prime":
+        case 'top prime':
+            console.log(rotation);
             break;
-        case "bottom":
+        case 'bottom':
+            console.log(rotation);
             break;
-        case "bottom prime":
+        case 'bottom prime':
+            console.log(rotation);
             break; 
     }
 }

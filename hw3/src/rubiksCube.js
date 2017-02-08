@@ -187,6 +187,7 @@ RubiksCube.prototype.Draw = function(cameraTransformation, origin, scale) {
 }
 
 RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, scale, canvasHeight, canvasWidth) {
+    let i = 1;
     switch(rotation) {
         case 'left':
             break;
@@ -205,20 +206,17 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
         case 'back prime':
             break;
         case 'top':
-            let i = 1;
+            i = 1;
             let topRotation = function(centerPieces, context, callback) {
-                console.log("clearing the canvas");
                 context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
                 let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(i * 2)); 
                 DrawWhiteLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
                 callback();
                 i++
-                console.log(i);
                 if(i <= 45) {
                     requestAnimationFrame(() => {topRotation(centerPieces, context, callback)});
                 }
                 else {
-                    console.log("updating edges");
                     let tempLeft = centerPieces.white.children.left;
                     let tempFront = centerPieces.white.children.front;
                     let tempRight = centerPieces.white.children.right;
@@ -232,26 +230,120 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
 
             requestAnimationFrame(() => {
                 topRotation(this.centerPieces, this.context, (() => {
-                    console.log("drawing the rest of the square");
+
                     let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
                     this.context.setTransformation(finalTransformation);
                     DrawMainCube(this.context);
 
                     let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
-                    //  DrawRedLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
                     DrawYellowLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
-                    // DrawOrangeLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
-                    // DrawGreenLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
-                    // DrawBlueLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
                 }));
             });
-
             break;
         case 'top prime':
+            i = 1;
+            let topPrimeRotation = function(centerPieces, context, callback) {
+                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians((-i * 2))); 
+                DrawWhiteLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
+                callback();
+                i++
+                if(i <= 45) {
+                    requestAnimationFrame(() => {topPrimeRotation(centerPieces, context, callback)});
+                }
+                else {
+                    let tempLeft = centerPieces.white.children.left;
+                    let tempBack = centerPieces.white.children.back;
+                    let tempRight = centerPieces.white.children.right;
+
+                    centerPieces.white.children.left = centerPieces.white.children.front;
+                    centerPieces.white.children.front = tempRight;
+                    centerPieces.white.children.right = tempBack;
+                    centerPieces.white.children.back = tempLeft;
+                }
+            }
+
+            requestAnimationFrame(() => {
+                topPrimeRotation(this.centerPieces, this.context, (() => {
+
+                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
+                    this.context.setTransformation(finalTransformation);
+                    DrawMainCube(this.context);
+
+                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+                    DrawYellowLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                }));
+            });
             break;
         case 'bottom':
+            i = 1;
+            let bottomRotation = function(centerPieces, context, callback) {
+                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(i * 2)); 
+                DrawYellowLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
+                callback();
+                i++
+                if(i <= 45) {
+                    requestAnimationFrame(() => {bottomRotation(centerPieces, context, callback)});
+                }
+                else {
+                    let tempLeft = centerPieces.white.children.left;
+                    let tempFront = centerPieces.white.children.front;
+                    let tempRight = centerPieces.white.children.right;
+
+                    centerPieces.yellow.children.left = centerPieces.yellow.children.back;
+                    centerPieces.yellow.children.front = tempLeft;
+                    centerPieces.yellow.children.right = tempFront;
+                    centerPieces.yellow.children.back = tempRight;
+                }
+            }
+
+            requestAnimationFrame(() => {
+                bottomRotation(this.centerPieces, this.context, (() => {
+
+                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
+                    this.context.setTransformation(finalTransformation);
+                    DrawMainCube(this.context);
+
+                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+                    DrawWhiteLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                }));
+            });          
             break;
         case 'bottom prime':
+            i = 1;
+            let bottomPrimeRotation = function(centerPieces, context, callback) {
+                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians((-i * 2))); 
+                DrawYellowLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
+                callback();
+                i++
+                if(i <= 45) {
+                    requestAnimationFrame(() => {bottomPrimeRotation(centerPieces, context, callback)});
+                }
+                else {
+                    let tempLeft = centerPieces.white.children.left;
+                    let tempBack = centerPieces.white.children.back;
+                    let tempRight = centerPieces.white.children.right;
+
+                    centerPieces.yellow.children.left = centerPieces.yellow.children.front;
+                    centerPieces.yellow.children.front = tempRight;
+                    centerPieces.yellow.children.right = tempBack;
+                    centerPieces.yellow.children.back = tempLeft;
+                }
+            }
+
+            requestAnimationFrame(() => {
+                bottomPrimeRotation(this.centerPieces, this.context, (() => {
+
+                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
+                    this.context.setTransformation(finalTransformation);
+                    DrawMainCube(this.context);
+
+                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+                    DrawWhiteLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                }));
+            });  
             break; 
     }
 }
@@ -281,11 +373,11 @@ function DrawMainCube(context) {
 function DrawCenterCubes(centerPieces, context, origin, scale, cameraTransformation) {
     let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
     DrawWhiteLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
-    DrawRedLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    // DrawRedLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
     DrawYellowLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
-    DrawOrangeLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
-    DrawGreenLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
-    DrawBlueLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    // DrawOrangeLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    // DrawGreenLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
+    // DrawBlueLayer(centerPieces, context, adjustedOrigin, scale, cameraTransformation);
 }
 
 function DrawWhiteLayer(centerPieces, context, origin, scale, cameraTransformation) {

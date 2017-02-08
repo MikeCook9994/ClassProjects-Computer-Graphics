@@ -277,44 +277,9 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
             break;
         case 'bottom':
             i = 1;
-            let bottomRotation = function(centerPieces, context, callback) {
-                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
-                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(i * 2)); 
-                DrawYellowLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
-                callback();
-                i++
-                if(i <= 45) {
-                    requestAnimationFrame(() => {bottomRotation(centerPieces, context, callback)});
-                }
-                else {
-                    let tempLeft = centerPieces.white.children.left;
-                    let tempFront = centerPieces.white.children.front;
-                    let tempRight = centerPieces.white.children.right;
-
-                    centerPieces.yellow.children.left = centerPieces.yellow.children.back;
-                    centerPieces.yellow.children.front = tempLeft;
-                    centerPieces.yellow.children.right = tempFront;
-                    centerPieces.yellow.children.back = tempRight;
-                }
-            }
-
-            requestAnimationFrame(() => {
-                bottomRotation(this.centerPieces, this.context, (() => {
-
-                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
-                    this.context.setTransformation(finalTransformation);
-                    DrawMainCube(this.context);
-
-                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
-                    DrawWhiteLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
-                }));
-            });          
-            break;
-        case 'bottom prime':
-            i = 1;
             let bottomPrimeRotation = function(centerPieces, context, callback) {
                 context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
-                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians((-i * 2))); 
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(i * 2)); 
                 DrawYellowLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
                 callback();
                 i++
@@ -322,9 +287,9 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
                     requestAnimationFrame(() => {bottomPrimeRotation(centerPieces, context, callback)});
                 }
                 else {
-                    let tempLeft = centerPieces.white.children.left;
-                    let tempBack = centerPieces.white.children.back;
-                    let tempRight = centerPieces.white.children.right;
+                    let tempLeft = centerPieces.yellow.children.left;
+                    let tempBack = centerPieces.yellow.children.back;
+                    let tempRight = centerPieces.yellow.children.right;
 
                     centerPieces.yellow.children.left = centerPieces.yellow.children.front;
                     centerPieces.yellow.children.front = tempRight;
@@ -335,6 +300,41 @@ RubiksCube.prototype.Rotate = function(rotation, cameraTransformation, origin, s
 
             requestAnimationFrame(() => {
                 bottomPrimeRotation(this.centerPieces, this.context, (() => {
+
+                    let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
+                    this.context.setTransformation(finalTransformation);
+                    DrawMainCube(this.context);
+
+                    let adjustedOrigin = [origin[0], origin[1], origin[2] + 40];
+                    DrawWhiteLayer(this.centerPieces, this.context, adjustedOrigin, scale, cameraTransformation);
+                }));
+            });  
+            break;
+        case 'bottom prime':
+            i = 1;
+            let bottomRotation = function(centerPieces, context, callback) {
+                context.clearRect(-canvasWidth / 2, -canvasHeight / 2, canvas.width, canvas.height);
+                let rotation = m4.rotateY(cameraTransformation, DegreesToRadians(-(i * 2))); 
+                DrawYellowLayer(centerPieces, context, [origin[0], origin[1], origin[2] + 40], scale, rotation);
+                callback();
+                i++
+                if(i <= 45) {
+                    requestAnimationFrame(() => {bottomRotation(centerPieces, context, callback)});
+                }
+                else {
+                    let tempLeft = centerPieces.yellow.children.left;
+                    let tempFront = centerPieces.yellow.children.front;
+                    let tempRight = centerPieces.yellow.children.right;
+
+                    centerPieces.yellow.children.left = centerPieces.yellow.children.back;
+                    centerPieces.yellow.children.front = tempLeft;
+                    centerPieces.yellow.children.right = tempFront;
+                    centerPieces.yellow.children.back = tempRight;
+                }
+            }
+
+            requestAnimationFrame(() => {
+                bottomRotation(this.centerPieces, this.context, (() => {
 
                     let finalTransformation = m4.multiply(m4.translation(origin), m4.multiply(m4.scaling([scale, scale, scale]), cameraTransformation));
                     this.context.setTransformation(finalTransformation);

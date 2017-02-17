@@ -18,11 +18,11 @@ function centerCanvas(context) {
 }
 
 function GetCameraTransformation(cameraAngle) {
-        let target = [0, 0, 0];
-        let up = [0, 1, 0];
-        let angle = cameraAngle * 0.01 * Math.PI;
+    let target = [0, 0, 0];
+    let up = [0, 1, 0];
+    let angle = cameraAngle * 0.01 * Math.PI;
 
-        let eye = [500 * Math.cos(angle), 300, 500 * Math.sin(angle)];
+    let eye = [500 * Math.cos(angle), 300, 500 * Math.sin(angle)];
 
-        return m4.inverse(m4.lookAt(eye,target,up))
+    return m4.inverse(m4.lookAt(eye,target,up))
 }

@@ -14,5 +14,12 @@ RubiksCube.prototype.Draw = function(transformation) {
 }
 
 function InitializePieces(cubePieces, threeDimContext) {
-	cubePieces.middle[1][1] = new CorePiece(threeDimContext);
+	Object.keys(cubePieces).forEach((slice => {
+		cubePieces[slice].forEach((row) => {
+			row[0] = new CorePiece(threeDimContext);
+			row[1] = new CorePiece(threeDimContext);
+			row[2] = new CorePiece(threeDimContext);
+		});
+	}));
+	console.log(cubePieces);
 }

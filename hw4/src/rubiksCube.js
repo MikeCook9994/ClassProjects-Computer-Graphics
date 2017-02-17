@@ -21,5 +21,4 @@ function InitializePieces(cubePieces, threeDimContext) {
 			row[2] = new CorePiece(threeDimContext);
 		});
 	}));
-	console.log(cubePieces);
 }

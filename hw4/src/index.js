@@ -7,19 +7,19 @@ let m4 = twgl.m4;
     centerCanvas(context);
 
     let cameraAngleSlider = document.getElementById("angle-slider");
-    // let cameraHeightSlider = document.getElementById("height-slider");
 
     let axes = new Axes(threeDimContext);
     let rubiksCube = new RubiksCube(threeDimContext, 10);
 
-    function Update() {
-        threeDimContext.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.height, canvas.width);
+    axes.Draw(400, GetCameraTransformation(cameraAngleSlider.value, 500));
+    rubiksCube.Draw(GetCameraTransformation(cameraAngleSlider.value, 500))
+    
+    cameraAngleSlider.addEventListener("input", () => {
+        context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
         let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value, 500);
         axes.Draw(400, cameraTransformation);
-        rubiksCube.Draw(cameraTransformation);       
-        requestAnimationFrame(Update);
-    }
-    requestAnimationFrame(Update);
+        rubiksCube.Draw(cameraTransformation);
+    });
 })();
 
 function centerCanvas(context) {

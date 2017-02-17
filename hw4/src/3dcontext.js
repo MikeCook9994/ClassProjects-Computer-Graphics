@@ -7,6 +7,9 @@ function ThreeDimContext(context) {
 }
 
 ThreeDimContext.prototype.beginPath = function() {
+    this.context.lineWidth = this.lineWidth;
+    this.context.strokeStyle = this.strokeStyle;
+    this.context.fillStyle = this.fillStyle;
     this.context.beginPath();
 }
 
@@ -24,8 +27,18 @@ ThreeDimContext.prototype.lineTo = function(x, y, z, transformation) {
     this.context.lineTo(transformedPoint[0], transformedPoint[1]);
 }
 
+ThreeDimContext.prototype.lineTo = function(point, transformation) {
+    let transformedPoint = m4.transformPoint(transformation, point);
+    this.context.lineTo(transformedPoint[0], transformedPoint[1]);
+}
+
 ThreeDimContext.prototype.moveTo = function(x, y, z, transformation) {
     let point = [x, y, z];
+    let transformedPoint = m4.transformPoint(transformation, point);
+    this.context.moveTo(transformedPoint[0], transformedPoint[1]);
+}
+
+ThreeDimContext.prototype.moveTo = function(point, transformation) {
     let transformedPoint = m4.transformPoint(transformation, point);
     this.context.moveTo(transformedPoint[0], transformedPoint[1]);
 }
@@ -51,14 +64,10 @@ ThreeDimContext.prototype.rect = function(x, y, z, width, height, transformation
 }
 
 ThreeDimContext.prototype.stroke = function() {
-    this.context.lineWidth = this.lineWidth;
-    this.context.strokeStyle = this.strokeStyle;
     this.context.stroke();
 }
 
 ThreeDimContext.prototype.fill = function() {
-    this.context.lineWidth = this.lineWidth;
-    this.context.fillStyle = this.fillStyle;
     this.context.fill();
 }
 
@@ -72,10 +81,10 @@ ThreeDimContext.prototype.pushGeometry = function(geometry) {
 
 ThreeDimContext.prototype.commitGeometry = function(transformation) {
     this.geometryQueue = this.geometryQueue.sort((a, b) => {
-        if(a.depth < b.depth) {
+        if(a.depth > b.depth) {
             return -1;
         }
-        else if(a.depth > b.depth) {
+        else if(a.depth < b.depth) {
             return 1;
         }
         return 0;

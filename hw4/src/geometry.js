@@ -9,10 +9,14 @@ Geometry.prototype.Draw = function(transformation) {
     this.context.fillStyle = this.color;
     this.context.strokeStyle = this.color;
     this.context.beginPath();
-    this.context.moveTo(this.vertices[0][0], this.vertices[0][1], this.vertices[0][2], transformation);
-    this.vertices.forEach((vertex) => {
-        this.context.lineTo(vertex[0], vertex[1], vertex[2], transformation);        
+    
+    this.context.moveTo(this.vertices[0], transformation); 
+    this.vertices.forEach((vertex, index) => {
+        if(index != 0) {
+            this.context.lineTo(vertex, transformation); 
+        }       
     });
+
     this.context.closePath();
     this.context.fill();
     this.context.stroke();

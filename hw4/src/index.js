@@ -7,14 +7,15 @@ let m4 = twgl.m4;
     centerCanvas(context);
 
     let cameraAngleSlider = document.getElementById("angle-slider");
+    // let cameraHeightSlider = document.getElementById("height-slider");
 
     let axes = new Axes(threeDimContext);
     let rubiksCube = new RubiksCube(threeDimContext, 10);
 
     function Update() {
         threeDimContext.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.height, canvas.width);
-        let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value);
-        axes.Draw(250, cameraTransformation);
+        let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value, 500);
+        axes.Draw(400, cameraTransformation);
         rubiksCube.Draw(cameraTransformation);       
         requestAnimationFrame(Update);
     }
@@ -23,7 +24,7 @@ let m4 = twgl.m4;
 
 function centerCanvas(context) {
     context.scale(1, -1);
-    context.translate(canvas.width / 2,- canvas.height / 2);
+    context.translate(canvas.width / 2, -canvas.height / 2);
 }
 
 function GetCameraTransformation(cameraAngle, cameraHeight) {
@@ -31,7 +32,7 @@ function GetCameraTransformation(cameraAngle, cameraHeight) {
     let up = [0, 1, 0];
     let angle = cameraAngle * 0.01 * Math.PI;
 
-    let eye = [500 * Math.cos(angle), 300, 500 * Math.sin(angle)];
+    let eye = [cameraHeight * Math.cos(angle), 300, cameraHeight * Math.sin(angle)];
 
     return m4.inverse(m4.lookAt(eye,target,up))
 }

@@ -1,57 +1,36 @@
 function CorePiece(threeDimcontext) {
     this.context = threeDimcontext;
-    this.color = "black";
+    this.planeColor = "black";
 }
 
 CorePiece.prototype.Draw = function(transformation) {
-    // back
-    this.context.pushGeometry(new Geometry(this.context, [[-5, -5, -5], [-5, 5, -5], [5, -5, -5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[5, -5, -5], [5, 5, -5], [-5, 5, -5]], this.color));
-
-    //front
-    this.context.pushGeometry(new Geometry(this.context, [[-5, -5, 5], [-5, 5, 5], [5, -5, 5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[5, -5, 5], [5, 5, 5], [-5, 5, 5]], this.color));
-
-    //left
-    this.context.pushGeometry(new Geometry(this.context, [[-5, -5, -5], [-5, 5, -5], [-5, 5, 5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[-5, -5, -5], [-5, -5, 5], [-5, 5, 5]], this.color));
-
-    //right
-    this.context.pushGeometry(new Geometry(this.context, [[5, -5, -5], [5, -5, 5], [5, 5, 5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[5, -5, -5], [5, 5, -5], [5, 5, 5]], this.color));
-
-    // top
-    this.context.pushGeometry(new Geometry(this.context, [[-5, 5, -5], [5, 5, -5], [-5, 5, 5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[5, 5, -5], [5, 5, 5], [-5, 5, 5]], this.color));
-
-    // bottom
-    this.context.pushGeometry(new Geometry(this.context, [[-5, -5, -5], [5, -5, -5], [-5, -5, 5]], this.color));
-    this.context.pushGeometry(new Geometry(this.context, [[5, -5, -5], [5, -5, 5], [-5, -5, 5]], this.color));
-
     let scaledTransform = m4.multiply(m4.scaling([10, 10, 10]), transformation);
-    DrawMainCube(this.context, scaledTransform);
-
+    DefineCubePlanes(this.context, this.planeColor);
     this.context.commitGeometry(scaledTransform);
 }
 
-function DrawMainCube(context, transformation) {
-    context.strokeStyle = "gray";
-    context.lineWidth = 1;
+function DefineCubePlanes(context, color) {
+    // back
+    context.pushGeometry(new Geometry(context, [[-5, -5, -5], [-5, 5, -5], [5, -5, -5]], color));
+    context.pushGeometry(new Geometry(context, [[5, -5, -5], [5, 5, -5], [-5, 5, -5]], color));
 
-    context.rect(-5, -5, -5, 10, 10, transformation);
+    //front
+    context.pushGeometry(new Geometry(context, [[-5, -5, 5], [-5, 5, 5], [5, -5, 5]], color));
+    context.pushGeometry(new Geometry(context, [[5, -5, 5], [5, 5, 5], [-5, 5, 5]], color));
 
-    context.rect(-5, -5, 5, 10, 10, transformation);
+    //left
+    context.pushGeometry(new Geometry(context, [[-5, -5, -5], [-5, 5, -5], [-5, 5, 5]], color));
+    context.pushGeometry(new Geometry(context, [[-5, -5, -5], [-5, -5, 5], [-5, 5, 5]], color));
 
-    context.moveTo(-5, -5, -5, transformation);
-    context.lineTo(-5, -5, 5, transformation);
+    //right
+    context.pushGeometry(new Geometry(context, [[5, -5, -5], [5, -5, 5], [5, 5, 5]], color));
+    context.pushGeometry(new Geometry(context, [[5, -5, -5], [5, 5, -5], [5, 5, 5]], color));
 
-    context.moveTo(-5, 5, -5, transformation);
-    context.lineTo(-5, 5, 5, transformation);
+    // top
+    context.pushGeometry(new Geometry(context, [[-5, 5, -5], [5, 5, -5], [-5, 5, 5]], color));
+    context.pushGeometry(new Geometry(context, [[5, 5, -5], [5, 5, 5], [-5, 5, 5]], color));
 
-    context.moveTo(5, -5, -5, transformation);
-    context.lineTo(5, -5, 5, transformation);
-
-    context.moveTo(5, 5, -5, transformation);
-    context.lineTo(5, 5, 5, transformation);
-    context.stroke();
+    // bottom
+    context.pushGeometry(new Geometry(context, [[-5, -5, -5], [5, -5, -5], [-5, -5, 5]], color));
+    context.pushGeometry(new Geometry(context, [[5, -5, -5], [5, -5, 5], [-5, -5, 5]], color));
 }

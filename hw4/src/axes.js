@@ -11,7 +11,6 @@ Axes.prototype.Draw = function(length, transformation) {
     this.context.lineTo(length / 2, 0, 0, transformation);
     this.context.stroke();
     this.context.closePath();
-    console.log("x axis is blue");
 
     this.context.beginPath();
     this.context.strokeStyle = "rgb(255, 0, 0)";
@@ -19,7 +18,6 @@ Axes.prototype.Draw = function(length, transformation) {
     this.context.lineTo(0, length / 2, 0, transformation);
     this.context.stroke();
     this.context.closePath();
-    console.log("y axis is red");
 
     this.context.beginPath();
     this.context.strokeStyle = "rgb(0, 255, 0)"
@@ -27,5 +25,4 @@ Axes.prototype.Draw = function(length, transformation) {
     this.context.lineTo(0, 0, length / 2, transformation);
     this.context.stroke();
     this.context.closePath();
-    console.log("z axis is greeen");
 }

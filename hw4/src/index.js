@@ -6,10 +6,19 @@ let m4 = twgl.m4;
     let threeDimContext = new ThreeDimContext(context);
     centerCanvas(context);
 
-    let cameraTransformation = GetCameraTransformation(40);
+    let cameraAngleSlider = document.getElementById("angle-slider");
 
     let axes = new Axes(threeDimContext);
-    axes.Draw(250, cameraTransformation);
+    let rubiksCube = new RubiksCube(threeDimContext, 10);
+
+    function Update() {
+        threeDimContext.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.height, canvas.width);
+        let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value);
+        axes.Draw(250, cameraTransformation);
+        rubiksCube.Draw(cameraTransformation);       
+        requestAnimationFrame(Update);
+    }
+    requestAnimationFrame(Update);
 })();
 
 function centerCanvas(context) {
@@ -17,7 +26,7 @@ function centerCanvas(context) {
     context.translate(canvas.width / 2,- canvas.height / 2);
 }
 
-function GetCameraTransformation(cameraAngle) {
+function GetCameraTransformation(cameraAngle, cameraHeight) {
     let target = [0, 0, 0];
     let up = [0, 1, 0];
     let angle = cameraAngle * 0.01 * Math.PI;

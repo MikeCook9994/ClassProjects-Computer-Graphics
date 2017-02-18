@@ -27,18 +27,8 @@ ThreeDimContext.prototype.lineTo = function(x, y, z, transformation) {
     this.context.lineTo(transformedPoint[0], transformedPoint[1]);
 }
 
-ThreeDimContext.prototype.lineTo = function(point, transformation) {
-    let transformedPoint = m4.transformPoint(transformation, point);
-    this.context.lineTo(transformedPoint[0], transformedPoint[1]);
-}
-
 ThreeDimContext.prototype.moveTo = function(x, y, z, transformation) {
     let point = [x, y, z];
-    let transformedPoint = m4.transformPoint(transformation, point);
-    this.context.moveTo(transformedPoint[0], transformedPoint[1]);
-}
-
-ThreeDimContext.prototype.moveTo = function(point, transformation) {
     let transformedPoint = m4.transformPoint(transformation, point);
     this.context.moveTo(transformedPoint[0], transformedPoint[1]);
 }
@@ -80,18 +70,18 @@ ThreeDimContext.prototype.pushGeometry = function(geometry) {
 }
 
 ThreeDimContext.prototype.commitGeometry = function(transformation) {
-    this.geometryQueue = this.geometryQueue.sort((a, b) => {
-        if(a.depth > b.depth) {
+    this.geometryQueue.sort((a, b) => {
+        if(a.depth < b.depth) {
             return -1;
         }
-        else if(a.depth < b.depth) {
+        else if(a.depth > b.depth) {
             return 1;
         }
         return 0;
     });
 
     this.geometryQueue.forEach((geometry) => {
-        geometry.Draw(transformation);
+        geometry.Draw();
     });
 
     this.geometryQueue = [];

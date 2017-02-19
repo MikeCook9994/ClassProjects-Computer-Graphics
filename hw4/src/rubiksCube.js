@@ -9,11 +9,10 @@ function RubiksCube(threeDimContext) {
 }
 
 RubiksCube.prototype.Draw = function(transformation, blowOutSize, drawWireFrameOnly) {
-
 	let drawHeight = 10;
 	
 	// scales and centers the origin
-	let centeringTransform = m4.multiply(m4.translation([-10, 0, 10]), m4.multiply(m4.scaling([10, 10, 10]), transformation));
+	let centeringTransform = m4.multiply(m4.translation([-10, 0, 10]), m4.multiply(m4.scaling([100, 100, 100]), transformation));
 	Object.keys(this.cubePieces).forEach((slice, sliceIndex) => {
 		
 		this.cubePieces[slice].forEach((row, rowIndex) => {			

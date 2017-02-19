@@ -5,9 +5,15 @@
     </head>
     <body>
         <canvas id="canvas" width="512" height="512"></canvas>
-
         <br>
+        <p>camera angle slider</p>
         <input id="angle-slider" type="range" min=-100 max=100 value=33>
+        <br>
+        <p>Blowout Slider</p>
+        <input id="blowout-slider" type="range" min=0 max=10 value=0>
+        <br>
+        <p>wire frame</p><input id="wireframe-checkbox" type="checkbox" checked=true>
+
 
         <script type="text/javascript" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
         <script type="text/javascript" src="./src/3dcontext.js"></script>

@@ -69,7 +69,7 @@ ThreeDimContext.prototype.pushGeometry = function(geometry) {
     this.geometryQueue.push(geometry);
 }
 
-ThreeDimContext.prototype.commitGeometry = function(transformation) {
+ThreeDimContext.prototype.commitGeometry = function(drawWireFrameOnly) {
     this.geometryQueue.sort((a, b) => {
         if(a.depth < b.depth) {
             return -1;
@@ -81,7 +81,7 @@ ThreeDimContext.prototype.commitGeometry = function(transformation) {
     });
 
     this.geometryQueue.forEach((geometry) => {
-        geometry.Draw();
+        geometry.Draw(drawWireFrameOnly);
     });
 
     this.geometryQueue = [];

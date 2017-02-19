@@ -6,7 +6,7 @@ function Geometry(threeDimContext, vertices, color, transformation) {
     this.transformation = transformation;
 }
 
-Geometry.prototype.Draw = function() {
+Geometry.prototype.Draw = function(drawOnlyWireFrame) {
     this.context.fillStyle = this.color;
     this.context.strokeStyle = this.color;
     this.context.beginPath();
@@ -19,8 +19,10 @@ Geometry.prototype.Draw = function() {
     });
 
     this.context.closePath();
-    this.context.fill();
     this.context.stroke();
+    if(drawOnlyWireFrame) {
+        this.context.fill();
+    }
 }
 
 function transformVertices(vertices, transformation) {

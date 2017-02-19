@@ -7,18 +7,22 @@ let m4 = twgl.m4;
     centerCanvas(context);
 
     let cameraAngleSlider = document.getElementById("angle-slider");
+    let wireFrameCheckbox = document.getElementById("wireframe-checkbox");
+    let blowoutSlider = document.getElementById("blowout-slider");
+    let handlers = [cameraAngleSlider, wireFrameCheckbox, blowoutSlider];
 
-    let axes = new Axes(threeDimContext);
     let rubiksCube = new RubiksCube(threeDimContext, 10);
 
-    axes.Draw(400, GetCameraTransformation(cameraAngleSlider.value, 500));
-    rubiksCube.Draw(GetCameraTransformation(cameraAngleSlider.value, 500))
+    let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value, 500);
+
+    rubiksCube.Draw(cameraTransformation, parseInt(blowoutSlider.value), wireFrameCheckbox.checked)
     
-    cameraAngleSlider.addEventListener("input", () => {
-        context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-        let cameraTransformation = GetCameraTransformation(cameraAngleSlider.value, 500);
-        axes.Draw(400, cameraTransformation);
-        rubiksCube.Draw(cameraTransformation);
+    handlers.forEach((handler) => {
+        handler.addEventListener(((handler.type != "checkbox") ? "input" : "click"), () => {
+            context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+            cameraTransformation = GetCameraTransformation(cameraAngleSlider.value, 500);
+            rubiksCube.Draw(cameraTransformation, parseInt(blowoutSlider.value), wireFrameCheckbox.checked);
+        });
     });
 })();
 
@@ -34,5 +38,5 @@ function GetCameraTransformation(cameraAngle, cameraHeight) {
 
     let eye = [cameraHeight * Math.cos(angle), 300, cameraHeight * Math.sin(angle)];
 
-    return m4.inverse(m4.lookAt(eye,target,up))
+    return m4.inverse(m4.lookAt(eye,target,up));
 }

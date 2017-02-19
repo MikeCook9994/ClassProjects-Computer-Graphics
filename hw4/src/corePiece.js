@@ -1,12 +1,10 @@
-function CorePiece(threeDimcontext) {
+function CorePiece(threeDimcontext, planeColor) {
     this.context = threeDimcontext;
-    this.planeColor = "black";
+    this.planeColor = planeColor;
 }
 
 CorePiece.prototype.Draw = function(transformation) {
-    let scaledTransform = m4.multiply(m4.scaling([10, 10, 10]), transformation);
-    DefineCubePlanes(this.context, this.planeColor, scaledTransform);
-    this.context.commitGeometry(scaledTransform);
+    DefineCubePlanes(this.context, this.planeColor, transformation);
 }
 
 function DefineCubePlanes(context, color, transformation) {
@@ -15,14 +13,8 @@ function DefineCubePlanes(context, color, transformation) {
     DefineCubeCorners(context, color, transformation);
 }
 
-function GetRandomColor() {
-    return "rgb(" + 
-        Math.floor(Math.random() * 255) + ", " + 
-        Math.floor(Math.random() * 255) + ", " + 
-        Math.floor(Math.random() * 255) + ")"
-}
-
 function DefineCubeEdges(context, color, transformation) {
+
     // front edges
     context.pushGeometry(new Geometry(context, [[-4, -4, 5], [-5, -4, 4], [-5, 4, 4]], color, transformation));
     context.pushGeometry(new Geometry(context, [[-4, 4, 5], [-5, 4, 4], [-4, -4, 5]], color, transformation)); 
@@ -61,28 +53,28 @@ function DefineCubeEdges(context, color, transformation) {
 function DefineCubeSides(context, color, transformation) {
 
     // front
-    context.pushGeometry(new Geometry(context, [[-4, -4, 5], [-4, 4, 5], [4, -4, 5]], "green", transformation));
-    context.pushGeometry(new Geometry(context, [[4, -4, 5], [4, 4, 5], [-4, 4, 5]], "green", transformation));
+    context.pushGeometry(new Geometry(context, [[-4, -4, 5], [-4, 4, 5], [4, -4, 5]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[4, -4, 5], [4, 4, 5], [-4, 4, 5]], color, transformation));
 
     // back
-    context.pushGeometry(new Geometry(context, [[-4, -4, -5], [-4, 4, -5], [4, -4, -5]], "blue", transformation));
-    context.pushGeometry(new Geometry(context, [[4, -4, -5], [4, 4, -5], [-4, 4, -5]], "blue", transformation));
+    context.pushGeometry(new Geometry(context, [[-4, -4, -5], [-4, 4, -5], [4, -4, -5]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[4, -4, -5], [4, 4, -5], [-4, 4, -5]], color, transformation));
 
     // top
-    context.pushGeometry(new Geometry(context, [[-4, 5, -4], [4, 5, -4], [-4, 5, 4]], "gray", transformation));
-    context.pushGeometry(new Geometry(context, [[4, 5, -4], [4, 5, 4], [-4, 5, 4]], "gray", transformation));
+    context.pushGeometry(new Geometry(context, [[-4, 5, -4], [4, 5, -4], [-4, 5, 4]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[4, 5, -4], [4, 5, 4], [-4, 5, 4]], color, transformation));
 
     // bottom
-    context.pushGeometry(new Geometry(context, [[-4, -5, -4], [4, -5, -4], [-4, -5, 4]], "gold", transformation));
-    context.pushGeometry(new Geometry(context, [[4, -5, -4], [4, -5, 4], [-4, -5, 4]], "gold", transformation)); 
+    context.pushGeometry(new Geometry(context, [[-4, -5, -4], [4, -5, -4], [-4, -5, 4]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[4, -5, -4], [4, -5, 4], [-4, -5, 4]],  color, transformation)); 
 
     // left
-    context.pushGeometry(new Geometry(context, [[-5, -4, -4], [-5, 4, -4], [-5, 4, 4]], "orange", transformation));
-    context.pushGeometry(new Geometry(context, [[-5, -4, -4], [-5, -4, 4], [-5, 4, 4]], "orange", transformation));
+    context.pushGeometry(new Geometry(context, [[-5, -4, -4], [-5, 4, -4], [-5, 4, 4]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[-5, -4, -4], [-5, -4, 4], [-5, 4, 4]], color, transformation));
 
     // right
-    context.pushGeometry(new Geometry(context, [[5, -4, -4], [5, -4, 4], [5, 4, 4]], "red", transformation));
-    context.pushGeometry(new Geometry(context, [[5, -4, -4], [5, 4, -4], [5, 4, 4]], "red", transformation));
+    context.pushGeometry(new Geometry(context, [[5, -4, -4], [5, -4, 4], [5, 4, 4]], color, transformation));
+    context.pushGeometry(new Geometry(context, [[5, -4, -4], [5, 4, -4], [5, 4, 4]], color, transformation));
 }
 
 function DefineCubeCorners(context, color, transformation) {

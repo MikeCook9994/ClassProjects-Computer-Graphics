@@ -38,5 +38,12 @@ function GetCameraTransformation(cameraAngle, cameraHeight) {
 
     let eye = [cameraHeight * Math.cos(angle), 300, cameraHeight * Math.sin(angle)];
 
-    return m4.inverse(m4.lookAt(eye,target,up));
+    let camera = m4.inverse(m4.lookAt(eye,target,up));
+
+    // return m4.multiply(camera, m4.perspective(DegreesToRadians(1), 1, 2, 1));
+    return camera;
+}
+
+function DegreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
 }

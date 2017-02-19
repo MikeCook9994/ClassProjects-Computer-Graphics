@@ -1,16 +1,12 @@
-function CorePiece(threeDimcontext, planeColor) {
+function CorePiece(threeDimcontext) {
     this.context = threeDimcontext;
-    this.planeColor = planeColor;
+    this.color = "black";
 }
 
 CorePiece.prototype.Draw = function(transformation) {
-    DefineCubePlanes(this.context, this.planeColor, transformation);
-}
-
-function DefineCubePlanes(context, color, transformation) {
-    DefineCubeSides(context, color, transformation);
-    DefineCubeEdges(context, color, transformation);
-    DefineCubeCorners(context, color, transformation);
+    DefineCubeSides(this.context, this.color, transformation);
+    DefineCubeEdges(this.context, this.color, transformation);
+    DefineCubeCorners(this.context, this.color, transformation);
 }
 
 function DefineCubeEdges(context, color, transformation) {

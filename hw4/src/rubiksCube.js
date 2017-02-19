@@ -31,11 +31,13 @@ RubiksCube.prototype.Draw = function(transformation, blowOutSize, drawWireFrameO
 				let oneeighty = DegreesToRadians(180);
 				let twoseventy = DegreesToRadians(270);
 
-				let blockRotationTransform = 
-					m4.multiply(m4.rotationX(((rowIndex == 0 && blockIndex == 1 && slice != "top") ? ninety : zero)), (
-					m4.multiply(m4.rotationY(0), (
-					m4.multiply(m4.rotationZ(((rowIndex == 0 && blockIndex == 2) ? twoseventy : ((rowIndex == 0 && blockIndex == 0 && slice != "top") ? ninety : zero))), (
-						blockTranslationTransform))))));
+				let rotations = { 
+					x : zero,
+					y : zero, 
+					z : zero 
+				};
+
+				let blockRotationTransform = m4.multiply(m4.rotationX(rotations.x), m4.multiply(m4.rotationY(rotations.y), m4.multiply(m4.rotationZ(rotations.z), blockTranslationTransform)));
 				block.Draw(blockRotationTransform);
 			});
 		});
@@ -46,17 +48,17 @@ RubiksCube.prototype.Draw = function(transformation, blowOutSize, drawWireFrameO
 }
 
 function InitializePieces(cubePieces, threeDimContext) {
-	cubePieces.top[0][0] = new CornerPiece(threeDimContext, "white", "green", "orange");
-	cubePieces.top[0][1] = new EdgePiece(threeDimContext, "white", "green");
-	cubePieces.top[0][2] = new CornerPiece(threeDimContext, "white", "green", "red");
+	cubePieces.top[0][0] = new CornerPiece(threeDimContext, "green", "white", "orange");
+	cubePieces.top[0][1] = new EdgePiece(threeDimContext, "green", "white");
+	cubePieces.top[0][2] = new CornerPiece(threeDimContext, "red", "white", "green");
 
-	cubePieces.top[1][0] = new EdgePiece(threeDimContext, "white", "orange");
+	cubePieces.top[1][0] = new EdgePiece(threeDimContext, "orange", "white");
 	cubePieces.top[1][1] = new CenterPiece(threeDimContext, "white");
-	cubePieces.top[1][2] = new EdgePiece(threeDimContext, "white", "red");
+	cubePieces.top[1][2] = new EdgePiece(threeDimContext, "red", "white");
 	
 	cubePieces.top[2][0] = new CornerPiece(threeDimContext, "white", "blue", "orange");
 	cubePieces.top[2][1] = new EdgePiece(threeDimContext, "white", "blue");
-	cubePieces.top[2][2] = new CornerPiece(threeDimContext, "white", "blue", "red");
+	cubePieces.top[2][2] = new CornerPiece(threeDimContext, "red", "blue", "white");
 
 	cubePieces.middle[0][0] = new EdgePiece(threeDimContext, "green", "orange");
 	cubePieces.middle[0][1] = new CenterPiece(threeDimContext, "green");
@@ -66,9 +68,9 @@ function InitializePieces(cubePieces, threeDimContext) {
 	cubePieces.middle[1][1] = new CorePiece(threeDimContext);
 	cubePieces.middle[1][2] = new CenterPiece(threeDimContext, "red");
 
-	cubePieces.middle[2][0] = new EdgePiece(threeDimContext, "blue", "orange");
+	cubePieces.middle[2][0] = new EdgePiece(threeDimContext, "orange", "blue");
 	cubePieces.middle[2][1] = new CenterPiece(threeDimContext, "blue");
-	cubePieces.middle[2][2] = new EdgePiece(threeDimContext, "blue", "orange");
+	cubePieces.middle[2][2] = new EdgePiece(threeDimContext, "red", "blue");
 
 	cubePieces.bottom[0][0] = new CornerPiece(threeDimContext, "yellow", "green", "orange");
 	cubePieces.bottom[0][1] = new EdgePiece(threeDimContext, "yellow", "green");

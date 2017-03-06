@@ -17,15 +17,16 @@ mat4 RotationMatrix(vec3 axis, float angle);
 void main()
 {
   fNormal = normalize(normalMatrix * normal);
-  mat4 xRotationMatrix = RotationMatrix(vec3(1.0, 0.0, 0.0), mod(time, PI / 2.0) * 10.0);
-  if(position.x < 0.0) {
-    xRotationMatrix = RotationMatrix(vec3(1.0, 0.0, 0.0), mod(time, PI / 2.0) * -10.0);
-  }
+//  mat4 xRotationMatrix = RotationMatrix(vec3(1.0, 0.0, 0.0), mod(time, PI / 2.0) * 10.0);
+////  if(position.x < 0.0) {
+////    xRotationMatrix = RotationMatrix(vec3(1.0, 0.0, 0.0), mod(time, PI / 2.0) * -10.0);
+////  }
+//  
+//  mat4 yRotationMatrix = RotationMatrix(vec3(0.0, 1.0, 0.0), mod(time, PI / 2.0) * 8.0);
+//  mat4 zRotationMatrix = RotationMatrix(vec3(0.0, 0.0, 1.0), mod(time, PI / 2.0) * 8.0);
   
-  mat4 yRotationMatrix = RotationMatrix(vec3(0.0, 1.0, 0.0), mod(time, PI / 2.0) * 8.0);
-  mat4 zRotationMatrix = RotationMatrix(vec3(0.0, 0.0, 1.0), mod(time, PI / 2.0) * 8.0);
-  
-  vec4 pos = modelViewMatrix * zRotationMatrix* yRotationMatrix * xRotationMatrix* vec4(position, 1.0);
+//  vec4 pos = modelViewMatrix * zRotationMatrix* yRotationMatrix * xRotationMatrix* vec4(position, 1.0);
+  vec4 pos = modelViewMatrix * vec4(position, 1.0);
   
   fPosition = pos.xyz;
   localPos = position;

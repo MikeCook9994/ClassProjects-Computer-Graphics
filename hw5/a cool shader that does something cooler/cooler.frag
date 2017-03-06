@@ -13,11 +13,13 @@ float rand(vec2 co);
 
 void main()
 {
+  float alpha = 1.0;
   vec3 color = vec3(0.8, 0.2, 0.2);
   float lightingModifier = ComputeLightingModifier();
   
   float noise = Grid(localPos.x, 5.0) + Grid(localPos.y, 5.0) + Grid(localPos.z, 5.0);
-  float strip = Grid(localPos.x + localPos.y, 50.0) + Grid(localPos.x + localPos.z, 50.0);
+  float grid = Grid(localPos.x + localPos.y, 50.0) + Grid(localPos.x + localPos.z, 50.0);
+  float strip = Grid(localPos.y, 8.0);
   if(localPos.z > 0.0) {
     if(localPos.x > 0.0 && localPos.y > 0.0) {
       if(mod(noise, 2.0) > 0.0) {
@@ -26,7 +28,7 @@ void main()
       }
     }
     else if(localPos.x < 0.0 && localPos.y > 0.0) {
-      if(strip > .5) {
+      if(grid > .5) {
         discard;
       }
     }
@@ -36,7 +38,17 @@ void main()
       color.z = vColor.z;
     }    
     else {
-      
+      if(strip > .5) {
+        color.x = vColor.x;
+        color.y = vColor.x;
+        color.z = vColor.x;
+        alpha = 0.0;
+      }
+      else {
+        color.x = vColor.y;
+        color.y = vColor.y;
+        color.z = vColor.x;
+      }
     }
   }
   else {
@@ -52,16 +64,26 @@ void main()
       }
     }
     else if(localPos.x < 0.0 && localPos.y < 0.0) {
-        
+      if(strip > .5) {
+        color.x = vColor.x;
+        color.y = vColor.x;
+        color.z = vColor.x;
+        alpha = 0.0;
+      }
+      else {
+        color.x = vColor.y;
+        color.y = vColor.y;
+        color.z = vColor.x;
+      }
     }
     else {
-      if(strip > .5) {
+      if(grid > .5) {
         discard;
       }
     }
   }
   
-  gl_FragColor = vec4(color * lightingModifier, 1.0);
+  gl_FragColor = vec4(color * lightingModifier, alpha);
 }
 
 float ComputeLightingModifier() {

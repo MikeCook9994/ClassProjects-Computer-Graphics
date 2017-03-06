@@ -21,11 +21,11 @@ float ComputeLightingModifier() {
   vec3 normal = normalize(fNormal);
   vec3 halfVec = normalize((eye + light) / length(eye + light));
   float ambientColor = .5;
-  float specularExp = 10.0;
-  float intensity = 1.0;
+  float specularExp = 50.0;
+  float intensity = 1.5;
   
   float diffuseComponent = max(0.0, dot(light, normal)) * intensity;
   float specularComponent = pow(max(0.0, dot(halfVec, normal)), specularExp) * intensity;  
   float ambientComponent = ambientColor * intensity;
   return (diffuseComponent + specularComponent + ambientComponent);
-}
+ }

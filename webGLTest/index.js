@@ -4,8 +4,8 @@ let m4 = twgl.m4;
     let canvas = document.getElementById("drawing-plane");
     let gl = canvas.getContext("webgl");
 
-    let vertexShaderSource = readShaderFile("vertexShader.vert");
-    let fragmentShaderSource = readShaderFile("fragmentShader.vert");
+    let vertexShaderSource = document.getElementById("vertex-shader").text;
+    let fragmentShaderSource = document.getElementById("fragment-shader").text;
 
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, vertexShaderSource);
@@ -90,8 +90,5 @@ function draw() {
 }
 
 function readShaderFile(shaderPath) {
-    let shaderFile = new File([""], shaderPath, {type: "text/plan"});
-    let reader = new FileReader();
-    let content = reader.readAsText(shaderFile);
-    console.log(content);
+
 }

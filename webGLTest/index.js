@@ -2,10 +2,10 @@ let m4 = twgl.m4;
 
 (() => {
     let canvas = document.getElementById("drawing-plane");
-    let gl = canvas.msGetInputContext("webgl");
+    let gl = canvas.getContext("webgl");
 
-    let vertexShaderSource = document.getElementById("vertex-shader").text;
-    let fragmentShaderSource = document.getElementById("fragment-shader").text;
+    let vertexShaderSource = readShaderFile("vertexShader.vert");
+    let fragmentShaderSource = readShaderFile("fragmentShader.vert");
 
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, vertexShaderSource);
@@ -54,6 +54,8 @@ let m4 = twgl.m4;
     gl.bufferData(gl.ARRAY_BUFFER, vertexColors, gl.STATIC_DRAW);
     trianglePosBuffer.itemSize = 3;
     trianglePosBuffer.numItems = 12;
+
+    draw();
 })();
 
 function draw() {
@@ -85,4 +87,11 @@ function draw() {
 
     // Do the drawing
     gl.drawArrays(gl.TRIANGLES, 0, trianglePosBuffer.numItems);
+}
+
+function readShaderFile(shaderPath) {
+    let shaderFile = new File([""], shaderPath, {type: "text/plan"});
+    let reader = new FileReader();
+    let content = reader.readAsText(shaderFile);
+    console.log(content);
 }

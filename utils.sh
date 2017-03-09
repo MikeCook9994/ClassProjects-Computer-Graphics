@@ -3,21 +3,20 @@
 function createJavascriptFile () {
     contents=$(cat "$0")
 
-    filename=$(basename "$0" | cut -d"." -f 1 | tr -d " ")
-    jsVarDeclaration="let "
-    type=""
+    shaderName=$(basename "$0" | cut -d"." -f 1 | tr -d " ")
     if [[ $0 == *".vert" ]]; then
         type="VertexShader"
-        jsVarDeclaration="$jsVarDeclaration$filename$type"
+        jsVarDeclaration="let $shaderName$type"
     else
         type="FragmentShader"
-        jsVarDeclaration="$jsVarDeclaration$filename$type"
+        jsVarDeclaration="let $shaderName$type"
     fi
     # defines the contents of the file to be written out as a js file
     jsContents="$jsVarDeclaration"' =
 `'"$contents"'`
 '
-    echo "$jsContents" > $filename$type".js"
+    filepath=$(dirname "$0")
+    echo "$jsContents" > "$filepath/$shaderName$type.js"
 }
 export -f createJavascriptFile
 
@@ -43,4 +42,7 @@ fi
 # generate json from wavefront object file
 if [[ $1 == *"l"* ]]; then
     echo "generating json from object file"
+    cd $2
+    find -regex ".*\.\(obj\)" -exec echo "{}" \;
+    cd ..
 fi

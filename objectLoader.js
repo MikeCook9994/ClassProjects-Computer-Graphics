@@ -58,10 +58,14 @@ let fs = require('fs');
                 }
             });
 
+            // generate the json as a javascript variable
             let objectAsJSONString = JSON.stringify(objectFileJson, null, 4);
-            let regex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\][\,])?/g;
-            let prettyJson = objectAsJSONString.replace(regex, '$1 $2 $3 $4 $5');
-            fs.open("." + process.argv[2].split(".")[1] + ".json", "w", (err, fd) => {
+            let arrayRegex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\][\,])?/g;
+            let pathWithoutExtension = process.argv[2].split(".")[1];
+            let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + " = \n" + objectAsJSONString.replace(arrayRegex, '$1$2 $3 $4$5');
+
+            // write variable to javascript file
+            fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {
                 if(err) {
                     throw err;
                 }

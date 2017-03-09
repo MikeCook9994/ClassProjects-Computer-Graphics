@@ -43,6 +43,6 @@ fi
 if [[ $1 == *"l"* ]]; then
     echo "generating json from object file"
     cd $2
-    find -regex ".*\.\(obj\)" -exec echo "{}" \;
+    find -regex ".*\.\(obj\)" -exec node ../objectLoader.js {} \;
     cd ..
 fi

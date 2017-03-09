@@ -58,12 +58,14 @@ let fs = require('fs');
                 }
             });
 
-            let objectAsJSON = JSON.stringify(objectFileJson, null, 4);
+            let objectAsJSONString = JSON.stringify(objectFileJson, null, 4);
+            let regex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\][\,])?/g;
+            let prettyJson = objectAsJSONString.replace(regex, '$1 $2 $3 $4 $5');
             fs.open("." + process.argv[2].split(".")[1] + ".json", "w", (err, fd) => {
                 if(err) {
                     throw err;
                 }
-                fs.write(fd, objectAsJSON, "utf8", (err) => {
+                fs.write(fd, prettyJson, "utf8", (err) => {
                     if(err) {
                         throw err;
                     }

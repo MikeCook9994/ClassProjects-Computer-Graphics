@@ -11,57 +11,75 @@ let fs = require('fs');
             }
             let lines = data.split('\n');
             
-            // let objectFileJson = {
-
-            // };
-
-            let vertexCount = 0;
-            let vertexTextureCount = 0;
-            let vertexNormalCount = 0;
-            let vertexParameterSpaceVertices = 0;
-            let faceCount = 0;
+            let objectFileJson = {
+                v: [],
+                vt: [], 
+                vn: [],
+                vp: [],
+                f: {
+                    vi: [],
+                    vti: [],
+                    vni: []
+                }
+            };
 
             lines.forEach((line, index, array) => {
                 let lineContent = line.split(" ");
                 switch(lineContent[0]) {
-                    case "v":
-                        vertexCount++;
+                    case "v": {
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            objectFileJson.v.push(floatArray);
+                        }
                         break;
-                    case "vt":
-                        vertexTextureCount++;
+                    case "vt": {
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            objectFileJson.vt.push(floatArray);
+                        }
                         break;
-                    case "vn":
-                        vertexNormalCount++;
+                    case "vn": {
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            objectFileJson.vt.push(floatArray);                
+                        }
                         break;
-                    case "vp":
-                        vertexParameterSpaceVertices++;
+                    case "vp": {
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2]]);
+                            objectFileJson.vt.push(floatArray);
+                        }
                         break;
                     case "f":
-                        faceCount++;
-                        break;
-                    default:
-                        //console.log(line);
+                        let vertices = ParseFloatArray([lineContent[1].split("/")[0], lineContent[2].split("/")[0], lineContent[3].split("/")[0]]);
+                        let textures = ParseFloatArray([lineContent[1].split("/")[1], lineContent[2].split("/")[1], lineContent[3].split("/")[1]]);
+                        let normals = ParseFloatArray([lineContent[1].split("/")[2], lineContent[2].split("/")[2], lineContent[3].split("/")[2]]);
+
+                        objectFileJson.f.vi.push(vertices);
+                        objectFileJson.f.vti.push(textures);
+                        objectFileJson.f.vni.push(normals);
                         break;
                 }
             });
 
-            console.log("vertexCount: " + vertexCount);
-            console.log("vertexTextureCount: " + vertexTextureCount);
-            console.log("vertexNormalCount: " + vertexNormalCount);
-            console.log("vertexParameterSpaceVertices: " + vertexParameterSpaceVertices);
-            console.log("faceCount: " + faceCount);
-
-            // let objectAsJSON = JSON.stringify(objectFileJson);
-            // fs.open(process.argv[2].split(".")[0], "w", (err, fd) => {
-            //     if(err) {
-            //         throw err;
-            //     }
-            //     fs.write(fd, objectAsJSON, "utf8", (err) => {
-            //         if(err) {
-            //             throw err;
-            //         }
-            //     })
-            // });
+            let objectAsJSON = JSON.stringify(objectFileJson, null, 4);
+            fs.open("." + process.argv[2].split(".")[1] + ".json", "w", (err, fd) => {
+                if(err) {
+                    throw err;
+                }
+                fs.write(fd, objectAsJSON, "utf8", (err) => {
+                    if(err) {
+                        throw err;
+                    }
+                })
+            });
         });
     });
 })();
+
+function ParseFloatArray(array) {
+    let floatArr = [];
+    array.forEach((value, index, arr) => {
+        if(value === "") {
+            value = '-1.0';
+        }
+        floatArr.push(parseFloat(value));
+    });
+    return floatArr;
+}

@@ -1,10 +1,8 @@
-precision highp float;
-uniform float time;
-uniform vec2 resolution;
+let shadingFragmentShader =
+`precision highp float;
 
 varying vec3 fPosition;
 varying vec3 fNormal;
-varying vec3 localPos;
 
 float ComputeLightingModifier();
 
@@ -31,4 +29,5 @@ float ComputeLightingModifier() {
   float specularComponent = pow(max(0.0, dot(halfVec, normal)), specularExp) * intensity * specularConstant;
   float ambientComponent = ambientColor * intensity;
   return (diffuseComponent + specularComponent + ambientComponent);
-}
+}`
+

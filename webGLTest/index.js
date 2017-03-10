@@ -6,9 +6,10 @@ let m4 = twgl.m4;
 
     let slider1 = document.getElementById('slider1');
     let slider2 = document.getElementById('slider2');
+    let slider3 = document.getElementById('slider3');
 
     // change what is assigned to these variables to change the model and the shader;
-    let objectAttributes = castleObjectAttributes;
+    let objectAttributes = pipeObjectAttributes;
     let vertexShaderSource = basicVertexShader;
     let fragmentShaderSource = basicFragmentShader;
 
@@ -57,18 +58,17 @@ let m4 = twgl.m4;
 
     let indexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(objectAttributes.f.vi), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectAttributes.f.vi), gl.STATIC_DRAW);
 
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
-        let angle2 = slider2.value*0.01*Math.PI;
 
         // Circle around the y-axis
-        var eye = [500*Math.sin(angle1),400,500.0*Math.cos(angle1)];
-        var target = [0,100,0];
+        var eye = [500*Math.sin(angle1),slider2.value,500.0*Math.cos(angle1)];
+        var target = [0,slider3.value,0];
         var up = [0,1,0];
 
-        var tModel = m4.multiply(m4.scaling([100,100,100]),m4.axisRotation([1,0,0],angle2));
+        var tModel = m4.multiply(m4.scaling([100,100,100]),m4.axisRotation([1,0,0],0));
         var tCamera = m4.inverse(m4.lookAt(eye,target,up));
         var tProjection = m4.perspective(Math.PI/4,1,10,1000);
 
@@ -88,10 +88,11 @@ let m4 = twgl.m4;
         gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
         // Do the drawing
-        gl.drawElements(gl.TRIANGLES, objectAttributes.f.vi.length, gl.UNSIGNED_BYTE, 0);
+        gl.drawElements(gl.TRIANGLES, objectAttributes.f.vi.length, gl.UNSIGNED_SHORT, 0);
     }
 
     slider1.addEventListener("input",draw);
     slider2.addEventListener("input",draw);
+    slider3.addEventListener("input",draw);
     draw();
 })();

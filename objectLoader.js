@@ -27,17 +27,17 @@ let fs = require('fs');
                 let lineContent = line.split(" ");
                 switch(lineContent[0]) {
                     case "v": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
                             objectFileJson.v.push(floatArray);
                         }
                         break;
                     case "vt": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
                             objectFileJson.vt.push(floatArray);
                         }
                         break;
                     case "vn": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
                             objectFileJson.vn.push(floatArray);                
                         }
                         break;
@@ -47,9 +47,9 @@ let fs = require('fs');
                         }
                         break;
                     case "f":
-                        let vertices = ParseFloatArray([lineContent[1].split("/")[0], lineContent[2].split("/")[0], lineContent[3].split("/")[0]]);
-                        let textures = ParseFloatArray([lineContent[1].split("/")[1], lineContent[2].split("/")[1], lineContent[3].split("/")[1]]);
-                        let normals = ParseFloatArray([lineContent[1].split("/")[2], lineContent[2].split("/")[2], lineContent[3].split("/")[2]]);
+                        let vertices = ParseFloatArray([lineContent[1].split("/")[0], lineContent[2].split("/")[0], lineContent[3].split("/")[0]], true);
+                        let textures = ParseFloatArray([lineContent[1].split("/")[1], lineContent[2].split("/")[1], lineContent[3].split("/")[1]], true);
+                        let normals = ParseFloatArray([lineContent[1].split("/")[2], lineContent[2].split("/")[2], lineContent[3].split("/")[2]], true);
 
                         objectFileJson.f.vi.push(vertices);
                         objectFileJson.f.vti.push(textures);
@@ -69,7 +69,6 @@ let fs = require('fs');
             }
 
             // write variable to javascript file
-            console.log("." + pathWithoutExtension + ".js");
             fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {
                 if(err) {
                     throw err;
@@ -85,13 +84,18 @@ let fs = require('fs');
     });
 })();
 
-function ParseFloatArray(array) {
+function ParseFloatArray(array, isIndex) {
     let floatArr = [];
     array.forEach((value, index, arr) => {
         if(value === "") {
-            value = '-1.0';
+            value = '0.0';
         }
-        floatArr.push(parseFloat(value));
+        value = parseFloat(value);
+        if(isIndex) {
+            value--;
+        }
+        floatArr.push(value);
+
     });
     return floatArr;
 }

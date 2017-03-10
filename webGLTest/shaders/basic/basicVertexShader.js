@@ -1,4 +1,4 @@
-let triangleVertexShader =
+let basicVertexShader =
 `attribute vec3 vPosition;
 attribute vec3 vColor;
 varying vec3 fColor;

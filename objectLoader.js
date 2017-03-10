@@ -69,7 +69,8 @@ let fs = require('fs');
             }
 
             // write variable to javascript file
-            fs.open("." + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + ".js", "w", (err, fd) => {
+            console.log("." + pathWithoutExtension + ".js");
+            fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {
                 if(err) {
                     throw err;
                 }

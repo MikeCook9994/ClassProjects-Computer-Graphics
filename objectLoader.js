@@ -64,16 +64,21 @@ let fs = require('fs');
             let pathWithoutExtension = process.argv[2].split(".")[1];
             let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + "ObjectAttributes = \n" + objectAsJSONString.replace(arrayRegex, '$2 $3 $4$6');
 
+            if(!fs.existsSync("." + (pathWithoutExtension.split("/").slice(0, pathWithoutExtension.split("/").length - 1).join("/")))) {
+                fs.mkdirSync("." + (pathWithoutExtension.split("/").slice(0, pathWithoutExtension.split("/").length - 1).join("/")));
+            }
+
             // write variable to javascript file
-            fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {
+            fs.open("." + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + ".js", "w", (err, fd) => {
                 if(err) {
                     throw err;
                 }
+
                 fs.write(fd, prettyJson, "utf8", (err) => {
                     if(err) {
                         throw err;
                     }
-                })
+                });
             });
         });
     });

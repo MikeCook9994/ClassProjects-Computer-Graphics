@@ -9,6 +9,8 @@ let m4 = twgl.m4;
     let slider2 = document.getElementById('slider2');
     slider2.value = 0;
 
+    let objectAttributes = coneObjectAttributes;
+
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, triangleVertexShader);
     gl.compileShader(vertexShader);
@@ -31,39 +33,32 @@ let m4 = twgl.m4;
 
     let mvpMatrix = gl.getUniformLocation(shaderProgram, "uMVP");
 
-    // vertex positions
-    let vertexPos = new Float32Array ([
-        0.0,  0.0,  0.0,   0.0,  1.0,  0.0,   0.0,  0.0,  1.0,
-        0.0,  0.0,  0.0,   1.0,  0.0,  0.0,   0.0,  0.0,  1.0,
-        0.0,  0.0,  0.0,   1.0,  0.0,  0.0,   0.0,  1.0,  0.0,
-        0.0,  1.0,  0.0,   1.0,  0.0,  0.0,   0.0,  0.0,  1.0 ]);  
-
-    // vertex colors
-    let vertexColors = new Float32Array ([
-        1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,
-        0.0, 1.0, 0.0,   0.0, 1.0, 0.0,   0.0, 1.0, 0.0,
-        0.0, 0.0, 1.0,   0.0, 0.0, 1.0,   0.0, 0.0, 1.0,
-        1.0, 1.0, 0.0,   1.0, 1.0, 0.0,   1.0, 1.0, 0.0 ]);
-
     let trianglePosBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, trianglePosBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertexPos, gl.STATIC_DRAW);
-    trianglePosBuffer.itemSize = 3;
-    trianglePosBuffer.numItems = 12;
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.v), gl.STATIC_DRAW);
+
+    let indexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(objectAttributes.f.vi), gl.STATIC_DRAW);
+
+    let vertexColors = [];
+    for(let i = 0; i < objectAttributes.v.length / 3; i++) {
+        vertexColors.push(Math.random());
+        vertexColors.push(Math.random());
+        vertexColors.push(Math.random());
+    }
 
     let colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertexColors, gl.STATIC_DRAW);
-    colorBuffer.itemSize = 3;
-    colorBuffer.numItems = 12;
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
 
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
         let angle2 = slider2.value*0.01*Math.PI;
 
         // Circle around the y-axis
-        var eye = [300*Math.sin(angle1),150.0,300.0*Math.cos(angle1)];
-        var target = [0,40,0];
+        var eye = [500*Math.sin(angle1),400,500.0*Math.cos(angle1)];
+        var target = [0,150,0];
         var up = [0,1,0];
 
         var tModel = m4.multiply(m4.scaling([100,100,100]),m4.axisRotation([1,1,1],angle2));
@@ -81,12 +76,12 @@ let m4 = twgl.m4;
         gl.uniformMatrix4fv(mvpMatrix, false, tMVP);
                     
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-        gl.vertexAttribPointer(colorAttribute, colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(colorAttribute, 3, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglePosBuffer);
-        gl.vertexAttribPointer(positionAttribute, trianglePosBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
         // Do the drawing
-        gl.drawArrays(gl.TRIANGLES, 0, trianglePosBuffer.numItems);
+        gl.drawElements(gl.TRIANGLES, objectAttributes.f.vi.length, gl.UNSIGNED_BYTE, 0);
     }
 
     slider1.addEventListener("input",draw);

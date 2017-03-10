@@ -3,15 +3,15 @@ let shadingFragmentShader =
 
 varying vec3 fPosition;
 varying vec3 fNormal;
+varying vec3 fColor;
 
 float ComputeLightingModifier();
 
 void main()
 {
-  vec3 color = vec3(0.8, 0.2, 0.2);
   float lightingModifier = ComputeLightingModifier();
   
-  gl_FragColor = vec4(color * lightingModifier, 1.0);
+  gl_FragColor = vec4(fColor * lightingModifier, 1.0);
 }
 
 float ComputeLightingModifier() {

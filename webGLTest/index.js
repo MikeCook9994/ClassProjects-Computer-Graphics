@@ -37,10 +37,10 @@ let m4 = twgl.m4;
     let time = gl.getUniformLocation(shaderProgram, "time");
 
     // set up our attributes
-    let positionAttribute = gl.getAttribLocation(shaderProgram, "vPosition");
+    let positionAttribute = gl.getAttribLocation(shaderProgram, "position");
     gl.enableVertexAttribArray(positionAttribute);
 
-    let colorAttribute = gl.getAttribLocation(shaderProgram, "vColor");
+    let colorAttribute = gl.getAttribLocation(shaderProgram, "color");
     gl.enableVertexAttribArray(colorAttribute);
 
     // let normalAttribute = gl.getAttribLocation(shaderProgram, "normal");

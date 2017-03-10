@@ -1,5 +1,6 @@
 let basicFragmentShader =
 `precision highp float;
+
 varying vec3 fColor;
 
 void main(void) {      

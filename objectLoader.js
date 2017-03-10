@@ -38,12 +38,12 @@ let fs = require('fs');
                         break;
                     case "vn": {
                             let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]]);
-                            objectFileJson.vt.push(floatArray);                
+                            objectFileJson.vn.push(floatArray);                
                         }
                         break;
                     case "vp": {
                             let floatArray = ParseFloatArray([lineContent[1], lineContent[2]]);
-                            objectFileJson.vt.push(floatArray);
+                            objectFileJson.vp.push(floatArray);
                         }
                         break;
                     case "f":
@@ -60,9 +60,9 @@ let fs = require('fs');
 
             // generate the json as a javascript variable
             let objectAsJSONString = JSON.stringify(objectFileJson, null, 4);
-            let arrayRegex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\][\,])?/g;
+            let arrayRegex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\])([\,]?)/g;
             let pathWithoutExtension = process.argv[2].split(".")[1];
-            let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + " = \n" + objectAsJSONString.replace(arrayRegex, '$1$2 $3 $4$5');
+            let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + "ObjectAttributes = \n" + objectAsJSONString.replace(arrayRegex, '$2 $3 $4$6');
 
             // write variable to javascript file
             fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {

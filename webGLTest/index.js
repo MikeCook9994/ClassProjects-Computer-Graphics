@@ -9,7 +9,7 @@ let m4 = twgl.m4;
     let slider3 = document.getElementById('slider3');
 
     // change what is assigned to these variables to change the model and the shader;
-    let objectAttributes = cubeObjectAttributes;
+    let objectAttributes = suzanneObjectAttributes;
     let vertexShaderSource = basicVertexShader;
     let fragmentShaderSource = basicFragmentShader;
 
@@ -51,7 +51,7 @@ let m4 = twgl.m4;
     for(let i = 0; i < objectAttributes.v.length / 3; i++) {
         vertexColors.push(Math.random());
         vertexColors.push(Math.random());
-        vertexColors.push(Math.random());
+        vertexColors.push(Math.random());       
     }
 
     let colorBuffer = gl.createBuffer();
@@ -70,20 +70,15 @@ let m4 = twgl.m4;
     // gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
     // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vn), gl.STATIC_DRAW);
 
-    // let normalIndexBuffer = gl.createBuffer();
-    // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, normalIndexBuffer);
-    // gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectAttributes.f.vni), gl.STATIC_DRAW);
-    
-
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
 
         // Circle around the y-axis
-        let eye = [500*Math.sin(angle1),slider2.value,500.0*Math.cos(angle1)];
+        let eye = [500*Math.sin(angle1),slider2.value, 500*Math.cos(angle1)];
         let target = [0,slider3.value,0];
         let up = [0,1,0];
 
-        let modelTransform = m4.multiply(m4.scaling([100,100,100]),m4.axisRotation([1,0,0],0));
+        let modelTransform = m4.multiply(m4.scaling([100, 100, 100]),m4.axisRotation([1,0,0],0));
         let cameraTransform = m4.inverse(m4.lookAt(eye,target,up));
         let modelViewTransform = m4.multiply(modelTransform,cameraTransform);
 

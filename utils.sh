@@ -22,27 +22,27 @@ export -f createJavascriptFile
 
 #check the parameter count
 if [[ $# -ne 2 ]]; then
-    printf "usage: ./webgl-utils -[csl] [dir] \n\t'c' -- compile shaders to javascript file\n\t's' -- secure copy to csl\n\t'l' -- convert the provided object files to a json file\n\tdir -- the directory containing files you want to operate on\n"
-fi
+    printf "usage: ./webgl-utils -[cls] [dir] \n\t'c' -- compile shaders to javascript file\n\t'l' -- convert the provided object files to a json file\n\t's' -- secure copy to csl\n\tdir -- the directory containing files you want to operate on\n"
+else
+    # "compiles" a glsl shader to a javascript file
+    if [[ $1 == *"c"* ]]; then
+        echo "compiling shaders to javascript"
+        cd $2
+        find -regex ".*\.\(vert\|frag\)" -exec bash -c 'createJavascriptFile "$0"' {} \;
+        cd ..
+    fi
 
-# "compiles" a glsl shader to a javascript file
-if [[ $1 == *"c"* ]]; then
-    echo "compiling shaders to javascript"
-    cd $2
-    find -regex ".*\.\(vert\|frag\)" -exec bash -c 'createJavascriptFile "$0"' {} \;
-    cd ..
-fi
+    # generate json from wavefront object file
+    if [[ $1 == *"l"* ]]; then
+        echo "generating json from object file"
+        cd $2
+        find -regex ".*\.\(obj\)" -exec node ../objectLoader.js {} \;
+        cd ..
+    fi
 
-# secure copy directory specified to csl machine
-if [[ $1 == *"s"* ]]; then
-    echo "copying project to csl"
-    scp -r $2 cook@best-linux.cs.wisc.edu:/u/c/o/cook/public/html/cs559/
-fi
-
-# generate json from wavefront object file
-if [[ $1 == *"l"* ]]; then
-    echo "generating json from object file"
-    cd $2
-    find -regex ".*\.\(obj\)" -exec node ../objectLoader.js {} \;
-    cd ..
+    # secure copy directory specified to csl machine
+    if [[ $1 == *"s"* ]]; then
+        echo "copying project to csl"
+        scp -r $2 cook@best-linux.cs.wisc.edu:/u/c/o/cook/public/html/cs559/
+    fi
 fi

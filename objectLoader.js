@@ -11,55 +11,61 @@ let fs = require('fs');
             }
             let lines = data.split('\n');
             
-            let objectFileJson = {
+            let vectorData = {
                 v: [],
                 vt: [], 
                 vn: [],
-                vp: [],
-                f: {
-                    vi: [],
-                    vti: [],
-                    vni: []
-                }
             };
+
+            let outputData = {
+                vertices: [],
+                vertexTextureCoordinates: [],
+                vertexNormals: []
+            }
 
             lines.forEach((line, index, array) => {
                 let lineContent = line.split(" ");
                 switch(lineContent[0]) {
                     case "v": {
                             let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
-                            objectFileJson.v.push(floatArray);
+                            vectorData.v.push(floatArray);
                         }
                         break;
                     case "vt": {
                             let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
-                            objectFileJson.vt.push(floatArray);
+                            vectorData.vt.push(floatArray);
                         }
                         break;
                     case "vn": {
                             let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
-                            objectFileJson.vn.push(floatArray);                
+                            vectorData.vn.push(floatArray);                
                         }
                         break;
-                    case "vp": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2]]);
-                            objectFileJson.vp.push(floatArray);
-                        }
-                        break;
+                    // faces are guranteed to come after we've parsed all of the vector data so these operations are safe.
                     case "f":
-                        let vertices = ParseFloatArray([lineContent[1].split("/")[0], lineContent[2].split("/")[0], lineContent[3].split("/")[0]], true);
-                        let textures = ParseFloatArray([lineContent[1].split("/")[1], lineContent[2].split("/")[1], lineContent[3].split("/")[1]], true);
-                        let normals = ParseFloatArray([lineContent[1].split("/")[2], lineContent[2].split("/")[2], lineContent[3].split("/")[2]], true);
+                        let face = [];
+                        face.push(ParseFloatArray(lineContent[1].split("/"), true));
+                        face.push(ParseFloatArray(lineContent[2].split("/"), true));
+                        face.push(ParseFloatArray(lineContent[3].split("/"), true));
 
-                        objectFileJson.f.vi.push(vertices);
-                        objectFileJson.f.vti.push(textures);
-                        objectFileJson.f.vni.push(normals);
+                        face.forEach((vertexPropertyIndex, index, array) => {
+                            let vertexTextureCoordinate = [];
+                            if(vertexPropertyIndex[1] !== -1) {
+                                vertexTextureCoordinate = vectorData.vt[vertexPropertyIndex[1]];
+                            }
+
+                            outputData.vertices.push(vectorData.v[vertexPropertyIndex[0]]);
+                            if(vertexTextureCoordinate.length !== 0) {
+                                outputData.vertexTextureCoordinates.push(vertexTextureCoordinate);
+                            }
+                            outputData.vertexNormals.push(vectorData.vn[vertexPropertyIndex[2]]);
+                        });
                         break;
                 }
             });
 
-            // generate the json as a javascript variable
-            let objectAsJSONString = JSON.stringify(objectFileJson, null, 4);
+            //generate the json as a javascript variable
+            let objectAsJSONString = JSON.stringify(outputData, null, 4);
             let arrayRegex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\])([\,]?)/g;
             let pathWithoutExtension = process.argv[2].split(".")[1];
             let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + "ObjectAttributes = \n" + objectAsJSONString.replace(arrayRegex, '$2 $3 $4$6');

@@ -10,8 +10,8 @@ let m4 = twgl.m4;
 
     // change what is assigned to these variables to change the model and the shader;
     let objectAttributes = suzanneObjectAttributes;
-    let vertexShaderSource = shadingVertexShader;
-    let fragmentShaderSource = shadingFragmentShader;
+    let vertexShaderSource = coolerVertexShader;
+    let fragmentShaderSource = coolerFragmentShader;
 
     // compile vertex shader
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -40,23 +40,8 @@ let m4 = twgl.m4;
     let positionAttribute = gl.getAttribLocation(shaderProgram, "position");
     gl.enableVertexAttribArray(positionAttribute);
 
-    let colorAttribute = gl.getAttribLocation(shaderProgram, "color");
-    gl.enableVertexAttribArray(colorAttribute);
-
     let normalAttribute = gl.getAttribLocation(shaderProgram, "normal");
     gl.enableVertexAttribArray(normalAttribute);
-
-    // create buffers and copy our attributes
-    let vertexColors = [];
-    for(let i = 0; i < objectAttributes.vertices.length / 3; i++) {
-        vertexColors.push(0.0, 1.0, 0.0);
-        vertexColors.push(0.0, 1.0, 0.0);
-        vertexColors.push(0.0, 1.0, 0.0);       
-    }
-
-    let colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
 
     let posBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
@@ -92,9 +77,6 @@ let m4 = twgl.m4;
         gl.uniformMatrix4fv(normalMatrix, false, normalTransform);
         gl.uniformMatrix4fv(projectionMatrix, false, projectionTransform);
         gl.uniform1f(time, + new Date());
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-        gl.vertexAttribPointer(colorAttribute, 3, gl.FLOAT, false, 0, 0);
         
         gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
         gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);

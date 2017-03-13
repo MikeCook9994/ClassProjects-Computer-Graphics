@@ -10,8 +10,8 @@ let m4 = twgl.m4;
 
     // change what is assigned to these variables to change the model and the shader;
     let objectAttributes = suzanneObjectAttributes;
-    let vertexShaderSource = basicVertexShader;
-    let fragmentShaderSource = basicFragmentShader;
+    let vertexShaderSource = shadingVertexShader;
+    let fragmentShaderSource = shadingFragmentShader;
 
     // compile vertex shader
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -43,15 +43,15 @@ let m4 = twgl.m4;
     let colorAttribute = gl.getAttribLocation(shaderProgram, "color");
     gl.enableVertexAttribArray(colorAttribute);
 
-    // let normalAttribute = gl.getAttribLocation(shaderProgram, "normal");
-    // gl.enableVertexAttribArray(normalAttribute);
+    let normalAttribute = gl.getAttribLocation(shaderProgram, "normal");
+    gl.enableVertexAttribArray(normalAttribute);
 
     // create buffers and copy our attributes
     let vertexColors = [];
-    for(let i = 0; i < objectAttributes.v.length / 3; i++) {
-        vertexColors.push(Math.random());
-        vertexColors.push(Math.random());
-        vertexColors.push(Math.random());       
+    for(let i = 0; i < objectAttributes.vertices.length / 3; i++) {
+        vertexColors.push(0.0, 1.0, 0.0);
+        vertexColors.push(0.0, 1.0, 0.0);
+        vertexColors.push(0.0, 1.0, 0.0);       
     }
 
     let colorBuffer = gl.createBuffer();
@@ -60,15 +60,11 @@ let m4 = twgl.m4;
 
     let posBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.v), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices), gl.STATIC_DRAW);
 
-    let posIndexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, posIndexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectAttributes.f.vi), gl.STATIC_DRAW);
-
-    // let normalBuffer = gl.createBuffer();
-    // gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vn), gl.STATIC_DRAW);
+    let normalBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals), gl.STATIC_DRAW);
 
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
@@ -96,16 +92,18 @@ let m4 = twgl.m4;
         gl.uniformMatrix4fv(normalMatrix, false, normalTransform);
         gl.uniformMatrix4fv(projectionMatrix, false, projectionTransform);
         gl.uniform1f(time, + new Date());
-                    
+
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
         gl.vertexAttribPointer(colorAttribute, 3, gl.FLOAT, false, 0, 0);
+        
         gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
         gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
-        // gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-        // gl.vertexAttribPointer(normalAttribute, 3, gl.FLOAT, false, 0, 0);
+        
+        gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+        gl.vertexAttribPointer(normalAttribute, 3, gl.FLOAT, false, 0, 0);
 
         // Do the drawing
-        gl.drawElements(gl.TRIANGLES, objectAttributes.f.vi.length, gl.UNSIGNED_SHORT, 0);
+        gl.drawArrays(gl.TRIANGLES, 0, objectAttributes.vertices.length / 3);
     }
 
     slider1.addEventListener("input",draw);

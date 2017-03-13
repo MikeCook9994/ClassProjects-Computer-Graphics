@@ -6,12 +6,11 @@ let m4 = twgl.m4;
 
     let slider1 = document.getElementById('slider1');
     let slider2 = document.getElementById('slider2');
-    let slider3 = document.getElementById('slider3');
 
     // change what is assigned to these variables to change the model and the shader;
-    let objectAttributes = suzanneObjectAttributes;
-    let vertexShaderSource = coolerVertexShader;
-    let fragmentShaderSource = coolerFragmentShader;
+    let objectAttributes = pipeObjectAttributes;
+    let vertexShaderSource = shadingVertexShader;
+    let fragmentShaderSource = shadingFragmentShader;
 
     // compile vertex shader
     let vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -56,10 +55,10 @@ let m4 = twgl.m4;
 
         // Circle around the y-axis
         let eye = [500*Math.sin(angle1),slider2.value, 500*Math.cos(angle1)];
-        let target = [0,slider3.value,0];
+        let target = [0,100,0];
         let up = [0,1,0];
 
-        let modelTransform = m4.multiply(m4.scaling([100, 100, 100]),m4.axisRotation([1,0,0],0));
+        let modelTransform = m4.scaling([70, 70, 70]);
         let cameraTransform = m4.inverse(m4.lookAt(eye,target,up));
         let modelViewTransform = m4.multiply(modelTransform,cameraTransform);
 
@@ -90,6 +89,5 @@ let m4 = twgl.m4;
 
     slider1.addEventListener("input",draw);
     slider2.addEventListener("input",draw);
-    slider3.addEventListener("input",draw);
     draw();
 })();

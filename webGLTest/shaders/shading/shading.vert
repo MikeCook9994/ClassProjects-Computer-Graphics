@@ -1,7 +1,6 @@
 precision highp float;
 
 attribute vec3 position;
-attribute vec3 color;
 attribute vec3 normal;
 
 uniform mat4 normalMatrix;
@@ -17,7 +16,7 @@ void main()
     fNormal = normalize(normalMatrix * vec4(normal, 1.0)).xyz;
     vec4 pos = modelViewMatrix * vec4(position, 1.0);
     fPosition = pos.xyz;
-    fColor = color;
+    fColor = vec3(0.0, 1.0, 0.0);
 
     gl_Position = projectionMatrix * pos;
 }

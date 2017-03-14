@@ -1,16 +1,28 @@
 precision highp float;
 
+uniform float wireframe;
+
 varying vec3 fPosition;
 varying vec3 fNormal;
 varying vec3 fColor;
+varying vec3 fbarycentric;
 
 float ComputeLightingModifier();
 
 void main()
 {
-    float lightingModifier = ComputeLightingModifier();
-
-    gl_FragColor = vec4(fColor * lightingModifier, 1.0);
+	if(wireframe == 0.0) {
+    	float lightingModifier = ComputeLightingModifier();
+    	gl_FragColor = vec4(fColor * lightingModifier, 1.0);
+	}
+	else {
+		if(fbarycentric.x < 0.03 || fbarycentric.y  < 0.03 || fbarycentric.z < 0.03) {
+			gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+		}
+		else {
+			discard;
+		}
+	}
 }
 
 float ComputeLightingModifier() {

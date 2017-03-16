@@ -32,39 +32,12 @@ let m4 = twgl.m4;
     let attributeNames = ["position", "normal", "barycentric"];
     let attributeLocations = glHost.GetAttributeLocations(shaderProgram, attributeNames);
 
-    // let positionAttribute = glHost.gl.getAttribLocation(shaderProgram, "position");
-    // glHost.gl.enableVertexAttribArray(positionAttribute);
-
-    // let normalAttribute = glHost.gl.getAttribLocation(shaderProgram, "normal");
-    // glHost.gl.enableVertexAttribArray(normalAttribute);
-
-    // let barycentricAttribute = glHost.gl.getAttribLocation(shaderProgram, "barycentric");
-    // glHost.gl.enableVertexAttribArray(barycentricAttribute);
-
-    let posBuffer = glHost.gl.createBuffer();
-    glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, posBuffer);
-    glHost.gl.bufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices), glHost.gl.STATIC_DRAW);
-
-    let normalBuffer = glHost.gl.createBuffer();
-    glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, normalBuffer);
-    glHost.gl.bufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals), glHost.gl.STATIC_DRAW);
 
     let barycentricCoords = defineBaryCentricCoordiantes(objectAttributes.vertices.length);
-    let barycentricBuffer = glHost.gl.createBuffer();
-    glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, barycentricBuffer);
-    glHost.gl.bufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(barycentricCoords), glHost.gl.STATIC_DRAW);
-
-    // set up our attributes
-    // let attributeNames = ["position", "normal", "barycentric"];
-    // let attributeLocations = glHost.GetAttributeLocations(shaderProgram, attributeNames);
-
-    // let barycentricCoords = defineBaryCentricCoordiantes(objectAttributes.vertices.length / 3);
-    // let barycentricBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(barycentricCoords));
-    // let posBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices));
-    // let normalBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals));
-
-    let position
-
+    let barycentricBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(barycentricCoords));
+    let posBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices));
+    let normalBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals));
+    
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
 

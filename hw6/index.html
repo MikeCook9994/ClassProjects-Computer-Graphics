@@ -6,11 +6,23 @@
     <body>
         <canvas id="drawing-plane" height=500 width=500></canvas>
         <div id="controls">
+            <p>Select Model</p>
+            <select id="dropdown1">
+                <option value=pipeObjectAttributes>Super Mario Bros Pipe</option>
+                <option value=suzanneObjectAttributes>suzanne</option>
+                <option value=sphereObjectAttributes>sphere</option>
+                <option value=coneObjectAttributes>cone</option>
+                <option value=cubeObjectAttributes>cube</option>
+            </select>
+            <br>
             <p>Camera Angle</p>
             <input id="slider1" type="range" min="-100" max="100" value="0"/>
             <br>
             <p>Camera Height</p>
             <input id="slider2" type="range" min="-300" max="500" value="500"/>
+            <br>
+            <p>Camera Target</p>
+            <input id="slider4" type="range" min="-100" max="100" value="100"/>
             <br>
             <p>fov</p>
             <input id="slider3" type="range" min="10" max="120" value="45"/>
@@ -24,6 +36,10 @@
         <script type="text/javascript" src="./libraries/GLHost.js"></script>
 
         <!-- object attributes -->
+        <script type="text/javascript" src="./models/cube/cubeModel.js"></script>
+        <script type="text/javascript" src="./models/cone/coneModel.js"></script>
+        <script type="text/javascript" src="./models/suzanne/suzanneModel.js"></script>
+        <script type="text/javascript" src="./models/sphere/sphereModel.js"></script>
         <script type="text/javascript" src="./models/pipe/pipeModel.js"></script>
 
         <!-- shaders -->
@@ -31,7 +47,7 @@
         <script type="text/javascript" src="./shaders/shading/shadingVertexShader.js"></script>
 
         <!-- script files -->
-        <script type="text/javascript" src="./src/pipe.js"></script>
+        <script type="text/javascript" src="./src/model.js"></script>
         <script type="text/javascript" src="./src/index.js"></script>
     </body>
 </html>

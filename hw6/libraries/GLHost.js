@@ -45,13 +45,20 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributeNames)
     return attributeLocations;
 }
 
-GLHost.prototype.CreateBufferAndBufferData = function(bufferType, data) {
-    let buff = this.gl.createBuffer();
-    this.gl.bindBuffer(bufferType, buff);
-    this.gl.bufferData(bufferType, data, this.gl.STATIC_DRAW);
-    return buff;
+GLHost.prototype.BufferAttributeData = function(attributeNames, attributeData) {
+    let buffers = {};
+    attributeNames.forEach((attributeName, index) => {
+        let buff = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buff);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, attributeData[index], this.gl.STATIC_DRAW);
+        buffers[attributeName] = buff;
+    });
+    return buffers;
 }
 
-GLHost.prototype.VertexAttributePointer = function() {
-
+GLHost.prototype.SpecifyAttributes = function(attributeNames, attributeBuffers, attributeLocations) {
+    attributeNames.forEach((attributeName) => {
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributeBuffers[attributeName]);
+        this.gl.vertexAttribPointer(attributeLocations[attributeName], 3, this.gl.FLOAT, false, 0, 0);
+    });
 }

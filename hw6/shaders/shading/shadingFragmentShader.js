@@ -1,4 +1,5 @@
-precision highp float;
+let shadingFragmentShader =
+`precision highp float;
 
 uniform float wireframe;
 
@@ -40,4 +41,5 @@ float ComputeLightingModifier() {
 	float specularComponent = pow(max(0.0, dot(halfVec, normal)), specularExp) * intensity * specularConstant;
 	float ambientComponent = ambientColor * intensity;
 	return (diffuseComponent + specularComponent + ambientComponent);
-}
+}`
+

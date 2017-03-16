@@ -75,7 +75,7 @@ let fs = require('fs');
             }
 
             // write variable to javascript file
-            fs.open("." + pathWithoutExtension + ".js", "w", (err, fd) => {
+            fs.open("." + pathWithoutExtension + "Model.js", "w", (err, fd) => {
                 if(err) {
                     throw err;
                 }

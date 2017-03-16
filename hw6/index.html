@@ -6,7 +6,8 @@
     <body>
         <canvas id="drawing-plane" height=500 width=500></canvas>
         <div id="controls">
-            <p>Select Model</p>
+            <p>Model</p>
+            <p>Dynamically load one of the models from the drop down list</p>
             <select id="dropdown1">
                 <option value=pipeObjectAttributes>Super Mario Bros Pipe</option>
                 <option value=suzanneObjectAttributes>suzanne</option>
@@ -29,6 +30,14 @@
             <br>
             <p>Enable/Disable Wireframe</p>
             <input id="checkbox1" type="checkbox"/>
+            <br>
+            <p>You can edit these shaders and the model will update in real time</p>
+            <p>Vertex Shader</p>
+            <textarea id="textarea1" rows="20" cols="80"></textarea>
+            <br>
+            <p>Fragment Shader</p>
+            <textarea id="textarea2" rows="20" cols="80"></textarea>
+            <br>
         </div>
 
         <!-- libraries -->

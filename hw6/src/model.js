@@ -3,13 +3,13 @@ function Model(glHost, selectedModel) {
     this.modelAttributes = eval(selectedModel);
 }
 
-Model.prototype.SetupProgram = function() {
-    let vertexShader = this.glHost.CreateAndCompileShader(this.glHost.gl.VERTEX_SHADER, shadingVertexShader);
+Model.prototype.SetupProgram = function(vertexShaderSource, fragmentShaderSource) {
+    let vertexShader = this.glHost.CreateAndCompileShader(this.glHost.gl.VERTEX_SHADER, vertexShaderSource);
     if(vertexShader == null) {
         return null;
     } 
     
-    let fragmentShader = this.glHost.CreateAndCompileShader(this.glHost.gl.FRAGMENT_SHADER, shadingFragmentShader);
+    let fragmentShader = this.glHost.CreateAndCompileShader(this.glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
     if(fragmentShader == null) {
         return null;
     } 

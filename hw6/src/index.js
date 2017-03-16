@@ -10,11 +10,15 @@ let m4 = twgl.m4;
     let wireframeCheckbox = document.getElementById("checkbox1");
     let modelDropdown = document.getElementById("dropdown1");
     let cameraTargetSlider = document.getElementById("slider4");
+    let vertexShaderArea = document.getElementById("textarea1");
+    vertexShaderArea.value = shadingVertexShader;
+    let fragmentShaderArea = document.getElementById("textarea2");
+    fragmentShaderArea.value = shadingFragmentShader;
 
     // change what is assigned to these variables to change the model and the shader;
 
     let model = new Model(glHost, modelDropdown.value);
-    model.SetupProgram();
+    model.SetupProgram(shadingVertexShader, shadingFragmentShader);
     
     function Draw() {
         let cameraTransform = GetCameraTransform();
@@ -28,7 +32,7 @@ let m4 = twgl.m4;
 
     function ReinitializeProgram() {
         model = new Model(glHost, modelDropdown.value);
-        model.SetupProgram();
+        model.SetupProgram(vertexShaderArea.value, fragmentShaderArea.value);
         Draw();
     }
 
@@ -54,7 +58,12 @@ let m4 = twgl.m4;
     cameraHeightSlider.addEventListener("input", Draw);
     fovSlider.addEventListener("input", Draw);
     cameraTargetSlider.addEventListener("input", Draw);
+
     wireframeCheckbox.addEventListener("change", Draw);
     modelDropdown.addEventListener("change", ReinitializeProgram);
+
+    vertexShaderArea.addEventListener("input", ReinitializeProgram);
+    fragmentShaderArea.addEventListener("input", ReinitializeProgram);
+
     Draw();
 })();

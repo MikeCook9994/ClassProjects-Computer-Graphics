@@ -29,14 +29,17 @@ let m4 = twgl.m4;
     let uniformNames = ["modelViewMatrix", "normalMatrix", "projectionMatrix", "time", "wireframe"];
     let uniformLocations = glHost.GetUniformLocations(shaderProgram, uniformNames);
 
-    let positionAttribute = glHost.gl.getAttribLocation(shaderProgram, "position");
-    glHost.gl.enableVertexAttribArray(positionAttribute);
+    let attributeNames = ["position", "normal", "barycentric"];
+    let attributeLocations = glHost.GetAttributeLocations(shaderProgram, attributeNames);
 
-    let normalAttribute = glHost.gl.getAttribLocation(shaderProgram, "normal");
-    glHost.gl.enableVertexAttribArray(normalAttribute);
+    // let positionAttribute = glHost.gl.getAttribLocation(shaderProgram, "position");
+    // glHost.gl.enableVertexAttribArray(positionAttribute);
 
-    let barycentricAttribute = glHost.gl.getAttribLocation(shaderProgram, "barycentric");
-    glHost.gl.enableVertexAttribArray(barycentricAttribute);
+    // let normalAttribute = glHost.gl.getAttribLocation(shaderProgram, "normal");
+    // glHost.gl.enableVertexAttribArray(normalAttribute);
+
+    // let barycentricAttribute = glHost.gl.getAttribLocation(shaderProgram, "barycentric");
+    // glHost.gl.enableVertexAttribArray(barycentricAttribute);
 
     let posBuffer = glHost.gl.createBuffer();
     glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, posBuffer);
@@ -96,13 +99,13 @@ let m4 = twgl.m4;
         }
         
         glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, posBuffer);
-        glHost.gl.vertexAttribPointer(positionAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
+        glHost.gl.vertexAttribPointer(attributeLocations["position"], 3, glHost.gl.FLOAT, false, 0, 0);
 
         glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, normalBuffer);
-        glHost.gl.vertexAttribPointer(normalAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
+        glHost.gl.vertexAttribPointer(attributeLocations["normal"], 3, glHost.gl.FLOAT, false, 0, 0);
 
         glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, barycentricBuffer);
-        glHost.gl.vertexAttribPointer(barycentricAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
+        glHost.gl.vertexAttribPointer(attributeLocations["barycentric"], 3, glHost.gl.FLOAT, false, 0, 0);
 
         // Do the drawing
         glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, objectAttributes.vertices.length / 3);

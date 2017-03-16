@@ -39,7 +39,7 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributeNames)
     attributeNames.forEach((attributeName) => {
         attributeLocations[attributeName] = this.gl.getAttribLocation(shaderProgram, attributeName);
         if(attributeLocations[attributeName] != -1) {
-            this.gl.enableVertexAttribArray(attributeLocations.attributeName);
+            this.gl.enableVertexAttribArray(attributeLocations[attributeName]);
         }
     });
     return attributeLocations;

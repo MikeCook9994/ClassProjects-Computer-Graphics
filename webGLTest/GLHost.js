@@ -7,7 +7,7 @@ GLHost.prototype.CreateAndCompileShader = function(shaderType, shaderSource) {
      this.gl.shaderSource(shader, shaderSource);
      this.gl.compileShader(shader);
      if(!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-         alert(gl.getShaderInfoLog(vertexShader));
+         alert(this.gl.getShaderInfoLog(shader));
          return null;
      }
      return shader;
@@ -29,7 +29,7 @@ GLHost.prototype.CreateAndConfigureProgram = function(vertexShader, fragmentShad
 GLHost.prototype.GetUniformLocations = function(shaderProgram, uniformNames) {
     let uniformLocations = {};
     uniformNames.forEach((uniformName) => {
-        uniformLocations.uniformName = this.gl.getUniformLocation(shaderProgram, uniformName);
+        uniformLocations[uniformName] = this.gl.getUniformLocation(shaderProgram, uniformName);
     });
     return uniformLocations;
 }
@@ -37,14 +37,21 @@ GLHost.prototype.GetUniformLocations = function(shaderProgram, uniformNames) {
 GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributeNames) {
     let attributeLocations = {};
     attributeNames.forEach((attributeName) => {
-        attributeLocations.attributeName = this.gl.getAttribLocation(shaderProgram, attributeName);
-        this.gl.enableVertexAttribArray(attributeLocations.attributeName);
+        attributeLocations[attributeName] = this.gl.getAttribLocation(shaderProgram, attributeName);
+        if(attributeLocations[attributeName] != -1) {
+            this.gl.enableVertexAttribArray(attributeLocations.attributeName);
+        }
     });
     return attributeLocations;
 }
 
-GLHost.prototype.BindAndBufferData = function(bufferType, data) {
+GLHost.prototype.CreateBufferAndBufferData = function(bufferType, data) {
     let buff = this.gl.createBuffer();
     this.gl.bindBuffer(bufferType, buff);
     this.gl.bufferData(bufferType, data, this.gl.STATIC_DRAW);
+    return buff;
+}
+
+GLHost.prototype.VertexAttributePointer = function() {
+
 }

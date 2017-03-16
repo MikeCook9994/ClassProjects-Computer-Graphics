@@ -24,7 +24,7 @@ let m4 = twgl.m4;
     let shaderProgram = glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
     if(shaderProgram == null) {
         return null;
-    } 
+    }
 
     let uniformNames = ["modelViewMatrix", "normalMatrix", "projectionMatrix", "time", "wireframe"];
     let uniformLocations = glHost.GetUniformLocations(shaderProgram, uniformNames);
@@ -33,12 +33,10 @@ let m4 = twgl.m4;
     let attributeNames = ["position", "normal", "barycentric"];
     let attributeLocations = glHost.GetAttributeLocations(shaderProgram, attributeNames);
 
-    let posBuffer = glHost.BindAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices));
-
-    let normalBuffer = glHost.BindAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals));
-
     let barycentricCoords = defineBaryCentricCoordiantes(objectAttributes.vertices.length / 3);
-    let barycentricBuffer = glHost.BindAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(barycentricCoords));
+    let barycentricBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(barycentricCoords));
+    let posBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertices));
+    let normalBuffer = glHost.CreateBufferAndBufferData(glHost.gl.ARRAY_BUFFER, new Float32Array(objectAttributes.vertexNormals));
 
     function draw() {
         let angle1 = slider1.value*0.01*Math.PI;
@@ -57,30 +55,30 @@ let m4 = twgl.m4;
         let projectionTransform = m4.perspective(Math.PI/4,1,10,1000);
 
         // Clear screen, prepare for rendering
-        glHost.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        glHost.gl.clearColor(1.0, 1.0, 1.0, 1.0);
         glHost.gl.enable(glHost.gl.DEPTH_TEST);
         glHost.gl.clear(glHost.gl.COLOR_BUFFER_BIT | glHost.gl.DEPTH_BUFFER_BIT);
 
         // Set up uniforms & attributes
-        glHost.gl.uniformMatrix4fv(modelViewMatrix, false, modelViewTransform);
-        glHost.gl.uniformMatrix4fv(normalMatrix, false, normalTransform);
-        glHost.gl.uniformMatrix4fv(projectionMatrix, false, projectionTransform);
-        glHost.gl.uniform1f(time, + new Date());
+        glHost.gl.uniformMatrix4fv(uniformLocations["modelViewMatrix"], false, modelViewTransform);
+        glHost.gl.uniformMatrix4fv(uniformLocations["normalMatrix"], false, normalTransform);
+        glHost.gl.uniformMatrix4fv(uniformLocations["projectionMatrix"], false, projectionTransform);
+        glHost.gl.uniform1f(uniformLocations["time"], + new Date());
         if(checkbox1.checked) {
-            glHost.gl.uniform1f(wireframe, 1.0);
+            glHost.gl.uniform1f(uniformLocations["wireframe"], 1.0);
         }
         else {
-            glHost.gl.uniform1f(wireframe, false, 0.0);
+            glHost.gl.uniform1f(uniformLocations["wireframe"], 0.0);
         }
         
-        // glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, posBuffer);
-        // glHost.gl.vertexAttribPointer(positionAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
-        
-        // glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, normalBuffer);
-        // glHost.gl.vertexAttribPointer(normalAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
+        glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, posBuffer);
+        glHost.gl.vertexAttribPointer(attributeLocations["position"], 3, glHost.gl.FLOAT, false, 0, 0);
 
-        // glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, barycentricBuffer);
-        // glHost.gl.vertexAttribPointer(barycentricAttribute, 3, glHost.gl.FLOAT, false, 0, 0);
+        glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, normalBuffer);
+        glHost.gl.vertexAttribPointer(attributeLocations["normal"], 3, glHost.gl.FLOAT, false, 0, 0);
+
+        glHost.gl.bindBuffer(glHost.gl.ARRAY_BUFFER, barycentricBuffer);
+        glHost.gl.vertexAttribPointer(attributeLocations["barycentric"], 3, glHost.gl.FLOAT, false, 0, 0);
 
         // Do the drawing
         glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, objectAttributes.vertices.length / 3);
@@ -95,6 +93,7 @@ let m4 = twgl.m4;
 function defineBaryCentricCoordiantes(length) {
     let barycentricCoords = [];
     for(let i = 0; i < length / 3; i++) {
+        // these ternary operators determine which vertex should have value one. These rest will be zero.
         barycentricCoords.push(((i % 3 == 0) ? (1.0) : (0.0)));
         barycentricCoords.push(((i % 3 == 1) ? (1.0) : (0.0)));
         barycentricCoords.push(((i % 3 == 2) ? (1.0) : (0.0)));

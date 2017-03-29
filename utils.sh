@@ -35,8 +35,9 @@ else
     # generate json from wavefront object file
     if [[ $1 == *"l"* ]]; then
         echo "generating json from object file"
+        loaderDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
         cd $2
-        find -regex ".*\.\(obj\)" -exec node ../objectLoader.js {} \;
+        find -maxdepth 1 -regex ".*\.\(obj\)" -exec node $loaderDir/objectLoader.js {} \;
         cd ..
     fi
 

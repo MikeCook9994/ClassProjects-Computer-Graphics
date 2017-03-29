@@ -32,7 +32,7 @@ let fs = require('fs');
                         }
                         break;
                     case "vt": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
+                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2]], false);
                             vectorData.vt.push(floatArray);
                         }
                         break;
@@ -70,6 +70,9 @@ let fs = require('fs');
             let pathWithoutExtension = process.argv[2].split(".")[1];
             let prettyJson = "let " + pathWithoutExtension.split("/")[pathWithoutExtension.split("/").length - 1] + "ObjectAttributes = \n" + objectAsJSONString.replace(arrayRegex, '$2 $3 $4$6');
 
+            let textureCoordRegex = /(\[)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*([+-]?[0-9]*[.]?[0-9]+[\,]?)\n\s*(\])([\,]?)/g;
+            prettyJson = prettyJson.replace(textureCoordRegex, "$2 $3$5");
+            
             if(!fs.existsSync("." + (pathWithoutExtension.split("/").slice(0, pathWithoutExtension.split("/").length - 1).join("/")))) {
                 fs.mkdirSync("." + (pathWithoutExtension.split("/").slice(0, pathWithoutExtension.split("/").length - 1).join("/")));
             }

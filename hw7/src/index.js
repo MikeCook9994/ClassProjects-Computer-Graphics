@@ -16,7 +16,7 @@ let m4 = twgl.m4;
 
     // change what is assigned to these variables to change the model and the shader;
 
-    let model = new Model(glHost, EightBitMarioObjectAttributes);
+    let model = new Model(glHost, groundBlockObjectAttributes);
     model.SetupProgram(shadingVertexShader, shadingFragmentShader);
     
     function Draw() {

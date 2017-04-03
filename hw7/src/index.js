@@ -30,7 +30,7 @@ let m4 = twgl.m4;
     }
 
     function ReinitializeProgram() {
-        model = new Model(glHost, modelDropdown.value);
+        model = new Model(glHost, EightBitMarioObjectAttributes);
         model.SetupProgram(vertexShaderArea.value, fragmentShaderArea.value);
         Draw();
     }
@@ -41,10 +41,6 @@ let m4 = twgl.m4;
         let target = [0,cameraTargetSlider.value,0];
         let up = [0,1,0];
         return m4.inverse(m4.lookAt(eye,target,up));
-    }
-
-    function DegreesToRadians(degrees) {
-        return degrees * (Math.PI / 180);
     }
 
     function SetupCanvas() {

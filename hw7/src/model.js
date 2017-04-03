@@ -34,7 +34,7 @@ Model.prototype.SetupProgram = function(vertexShaderSource, fragmentShaderSource
 }
 
 Model.prototype.SetUniformValues = function(cameraMatrix, projectionMatrix, isWireframe) {
-    let modelTransform = m4.scaling([70, 70, 70]);
+    let modelTransform = m4.multiply(m4.translation([-0.5, 0, 0]), m4.multiply(m4.scaling([5, 5, 5]), m4.rotationX(DegreesToRadians(45))));
     let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
@@ -65,4 +65,8 @@ function defineBaryCentricCoordiantes(length) {
         barycentricCoords.push(((i % 3 == 2) ? (1.0) : (0.0)));
     }
     return new Float32Array(barycentricCoords);
+}
+
+function DegreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
 }

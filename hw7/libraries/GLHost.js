@@ -18,12 +18,15 @@ GLHost.prototype.CreateAndConfigureProgram = function(vertexShader, fragmentShad
     this.gl.attachShader(shaderProgram, vertexShader);
     this.gl.attachShader(shaderProgram, fragmentShader);
     this.gl.linkProgram(shaderProgram);
-    this.gl.useProgram(shaderProgram);
     if(!this.gl.getProgramParameter(shaderProgram, this.gl.LINK_STATUS)) {
         alert("Shader linking failed");
         return null;
     }
     return shaderProgram;
+}
+
+GLHost.prototype.SetShaderProgram = function(shaderProgram) {
+    this.gl.useProgram(shaderProgram);
 }
 
 GLHost.prototype.GetUniformLocations = function(shaderProgram, uniformNames) {
@@ -61,4 +64,13 @@ GLHost.prototype.SpecifyAttributes = function(attributeNames, attributeBuffers, 
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributeBuffers[attributeName]);
         this.gl.vertexAttribPointer(attributeLocations[attributeName], 3, this.gl.FLOAT, false, 0, 0);
     });
+}
+
+GLHost.prototype.ConfigureWebGL = function() {
+    this.gl.enable(this.gl.DEPTH_TEST);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+}
+
+GLHost.prototype.ColorCanvas = function(red, green, blue, alpha) {
+    this.gl.clearColor(red, green, blue, alpha);
 }

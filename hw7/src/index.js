@@ -1,38 +1,24 @@
 let m4 = twgl.m4;
 
 (() => {
-    let canvas = document.getElementById("drawing-plane");
-    let glHost = new GLHost(canvas.getContext("webgl"));
+    let glHost = new GLHost(document.getElementById("drawing-plane").getContext("webgl"));
 
     let angleSlider = document.getElementById("slider1");
     let cameraHeightSlider = document.getElementById("slider2");
     let fovSlider = document.getElementById("slider3");
+    let cameraTargetSlider = document.getElementById("slider4");    
+
     let wireframeCheckbox = document.getElementById("checkbox1");
-    let cameraTargetSlider = document.getElementById("slider4");
-    let vertexShaderArea = document.getElementById("textarea1");
-    vertexShaderArea.value = shadingVertexShader;
-    let fragmentShaderArea = document.getElementById("textarea2");
-    fragmentShaderArea.value = shadingFragmentShader;
 
-    // change what is assigned to these variables to change the model and the shader;
-
-    let model = new Model(glHost, groundBlockObjectAttributes);
-    model.SetupProgram(shadingVertexShader, shadingFragmentShader);
-    
     function Draw() {
         let cameraTransform = GetCameraTransform();
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
+        CopyValuesForScene(cameraTransform, projectionTransform);
 
         SetupCanvas();
+        scene.Draw();
 
-        model.SetUniformValues(cameraTransform, projectionTransform, wireframeCheckbox.checked);
-        model.Draw();
-    }
-
-    function ReinitializeProgram() {
-        model = new Model(glHost, EightBitMarioObjectAttributes);
-        model.SetupProgram(vertexShaderArea.value, fragmentShaderArea.value);
-        Draw();
+        window.requestAnimationFrame(Draw);
     }
 
     function GetCameraTransform() {
@@ -44,19 +30,30 @@ let m4 = twgl.m4;
     }
 
     function SetupCanvas() {
-        glHost.gl.clearColor(1.0, 1.0, 1.0, 1.0);
-        glHost.gl.enable(glHost.gl.DEPTH_TEST);
-        glHost.gl.clear(glHost.gl.COLOR_BUFFER_BIT | glHost.gl.DEPTH_BUFFER_BIT);
+        glHost.ConfigureWebGL();
+        glHost.ColorCanvas(1.0, 1.0, 1.0, 1.0);
     }
 
-    angleSlider.addEventListener("input", Draw);
-    cameraHeightSlider.addEventListener("input", Draw);
-    fovSlider.addEventListener("input", Draw);
-    cameraTargetSlider.addEventListener("input", Draw);
-    wireframeCheckbox.addEventListener("change", Draw);
+    function CopyValuesForScene(cameraTransform, projectionTransform) {
+        let modelTransform1 = m4.scaling([10, 10, 10]);
+        entity1.EnableProgram();
+        entity1.SetUniformValues(cameraTransform, projectionTransform, modelTransform1, wireframeCheckbox.checked, new Float32Array([0.54, 0.27, 0.07]));
 
-    vertexShaderArea.addEventListener("input", ReinitializeProgram);
-    fragmentShaderArea.addEventListener("input", ReinitializeProgram);
+        let modelTransform2 = m4.multiply(m4.translation([2.25, 0.0, 0.0]), m4.scaling([10, 10, 10]));
+        entity2.EnableProgram();
+        entity2.SetUniformValues(cameraTransform, projectionTransform, modelTransform2, wireframeCheckbox.checked, new Float32Array([0.54, 0.27, 0.07]));
+    }
 
-    Draw();
+    let scene = new Scene();
+
+    let entity1 = new Entity(glHost, groundBlockObjectAttributes);
+    entity1.SetupProgram(shadingVertexShader, shadingFragmentShader);
+    scene.AddEntity(entity1);
+
+    let entity2 = new Entity(glHost, groundBlockObjectAttributes);
+    entity2.SetupProgram(shadingVertexShader, shadingFragmentShader);
+    scene.AddEntity(entity2);
+
+    window.requestAnimationFrame(Draw);
 })();
+

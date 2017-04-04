@@ -1,6 +1,7 @@
-function Uniform(name, glCopyUniformFunction) {
+function Uniform(name, isMatrix, glCopyUniformFunction) {
     this.name = name;
-    this.glCopyUniformFunction = glCopyUniformFunction
+    this.isMatrix = isMatrix;
+    this.glCopyUniformFunction = glCopyUniformFunction;
     this.value = null;
 
 }

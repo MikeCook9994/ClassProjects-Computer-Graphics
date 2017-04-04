@@ -19,17 +19,22 @@ Entity.prototype.EnableProgram = function() {
 }
 
 Entity.prototype.BufferData = function(cameraMatrix, projectionMatrix, modelMatrix) {
+    this.glHost.BufferAttributeData(this.attributes, this.shaderProgram);
+
     let modelViewMatrix = m4.multiply(modelMatrix, cameraMatrix);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.glHost.BufferAttributeData(this.attributes, this.shaderProgram);
-    this.glHost.SpecifyAttributes(this.attributes);
+    this.uniforms.forEach((uniform) => {
+        if(uniform.isMatrix) {
+            uniform.glCopyUniformFunction(uniform.location, false, uniform.value);
+        }
+        else {
+            uniform.glCopyUniformFunction(uniform.location, uniform.value);
+        }
+    });
 }
 
 Entity.prototype.Draw = function() {
+    this.glHost.SpecifyAttributes(this.attributes);
     this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
-}
-
-function DegreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
 }

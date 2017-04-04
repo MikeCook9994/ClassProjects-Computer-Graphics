@@ -1,5 +1,9 @@
 let m4 = twgl.m4;
 
+function DegreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+
 (() => {
     function SetupCanvas() {
         glHost.ConfigureWebGL();
@@ -14,19 +18,21 @@ let m4 = twgl.m4;
         return m4.inverse(m4.lookAt(eye,target,up));
     }
 
-    function SetupAttributesAndUniforms(uniformNames, groundUniformCopyFunction, attributeNames) {
+    function SetupAttributesAndUniforms(uniformNames, groundUniformMatrixBooleans, groundUniformCopyFunction, attributeNames) {
         let shaderValues = {
-            uniforms: [],
-            attributes: []
+            "uniforms": [],
+            "attributes": []
         }
 
         uniformNames.forEach((uniformName, index) => {
-            shaderValues.uniforms.push(new Uniform(uniformName, groundUniformCopyFunction[index]));
+            shaderValues.uniforms.push(new Uniform(uniformName, groundUniformMatrixBooleans[index], groundUniformCopyFunction[index]));
         });
 
         attributeNames.forEach((attributeName) => {
             shaderValues.attributes.push(new Uniform(attributeName));
         });
+        
+        return shaderValues;
     }
 
     function Draw() {
@@ -48,10 +54,11 @@ let m4 = twgl.m4;
     let wireframeCheckbox = document.getElementById("checkbox1");
 
     let groundUniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];    
-    let groundUniformCopyFunction = [glHost.gl.uniformMatrix4v, glHost.gl.uniformMatrix4v, glHost.gl.uniformMatrix4v, glHost.gl.uniform3fv];
+    let groundUniformMatrixBooleans = [true, true, true, false];
+    let groundUniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];
 
     let groundAttributeNames = ["position", "normal"];
-    let groundData = SetupAttributesAndUniforms(groundUniformNames, groundUniformCopyFunctions, groundAttributeNames);
+    let groundData = SetupAttributesAndUniforms(groundUniformNames, groundUniformMatrixBooleans, groundUniformCopyFunctions, groundAttributeNames);
     let groundEntityCollection = new EntityCollection(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader, groundData.uniforms, groundData.attributes);
     let ground = new Ground(groundEntityCollection);
 
@@ -60,8 +67,3 @@ let m4 = twgl.m4;
 
     window.requestAnimationFrame(Draw);
 })();
-
-// let attributeData = [
-//     new Float32Array(this.modelAttributes.vertices), 
-//     new Float32Array(this.modelAttributes.vertexNormals), 
-// ];

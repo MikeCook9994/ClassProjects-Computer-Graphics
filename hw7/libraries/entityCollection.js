@@ -28,8 +28,3 @@ EntityCollection.prototype.Draw = function() {
         entity.Draw();
     });
 }
-
-let attributeData = [
-    new Float32Array(this.modelAttributes.vertices), 
-    new Float32Array(this.modelAttributes.vertexNormals), 
-];

@@ -10,6 +10,8 @@ let m4 = twgl.m4;
 
     let wireframeCheckbox = document.getElementById("checkbox1");
 
+    let scene = new Scene();
+
     function Draw() {
         let cameraTransform = GetCameraTransform();
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
@@ -35,24 +37,18 @@ let m4 = twgl.m4;
     }
 
     function CopyValuesForScene(cameraTransform, projectionTransform) {
-        let modelTransform1 = m4.scaling([10, 10, 10]);
-        entity1.EnableProgram();
-        entity1.SetUniformValues(cameraTransform, projectionTransform, modelTransform1, wireframeCheckbox.checked, new Float32Array([0.54, 0.27, 0.07]));
-
-        let modelTransform2 = m4.multiply(m4.translation([2.25, 0.0, 0.0]), m4.scaling([10, 10, 10]));
-        entity2.EnableProgram();
-        entity2.SetUniformValues(cameraTransform, projectionTransform, modelTransform2, wireframeCheckbox.checked, new Float32Array([0.54, 0.27, 0.07]));
+        
     }
 
-    let scene = new Scene();
+    function CreateNewEntity(objectAttributes, vertexShader, fragmentShader) {
+        let entity = new Entity(glHost, objectAttributes);
+        entity.SetupProgram(vertexShader, fragmentShader);
+        scene.AddEntity(entity);
+    }
 
-    let entity1 = new Entity(glHost, groundBlockObjectAttributes);
-    entity1.SetupProgram(shadingVertexShader, shadingFragmentShader);
-    scene.AddEntity(entity1);
-
-    let entity2 = new Entity(glHost, groundBlockObjectAttributes);
-    entity2.SetupProgram(shadingVertexShader, shadingFragmentShader);
-    scene.AddEntity(entity2);
+    for(let i = 0; i < 30; i++) {
+        CreateNewEntity(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    }
 
     window.requestAnimationFrame(Draw);
 })();

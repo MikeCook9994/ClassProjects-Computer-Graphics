@@ -1,3 +1,0 @@
-function EntityCollection(glHost, model) {
-    
-}

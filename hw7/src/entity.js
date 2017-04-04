@@ -19,7 +19,7 @@ Entity.prototype.SetupProgram = function(vertexShaderSource, fragmentShaderSourc
         new Float32Array(this.modelAttributes.vertexNormals), 
         defineBaryCentricCoordiantes(this.modelAttributes.vertices.length)
     ];
-    this.attributeBuffers = this.glHost.BufferAttributeData(this.attributeNames, attributeData);
+    this.attributeBuffers = this.glHost.BufferAttributeData(this.attributeNames, attributeData, this.shaderProgram);
 }
 
 Entity.prototype.EnableProgram = function() {

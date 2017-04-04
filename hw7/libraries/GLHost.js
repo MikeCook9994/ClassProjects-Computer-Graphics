@@ -48,8 +48,9 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributeNames)
     return attributeLocations;
 }
 
-GLHost.prototype.BufferAttributeData = function(attributeNames, attributeData) {
+GLHost.prototype.BufferAttributeData = function(attributeNames, attributeData, shaderProgram) {
     let buffers = {};
+    this.gl.useProgram(shaderProgram)
     attributeNames.forEach((attributeName, index) => {
         let buff = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buff);

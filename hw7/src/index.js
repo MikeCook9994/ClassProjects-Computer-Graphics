@@ -1,9 +1,3 @@
-let m4 = twgl.m4;
-
-function DegreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
-}
-
 (() => {
     function SetupCanvas() {
         glHost.ConfigureWebGL();
@@ -18,30 +12,13 @@ function DegreesToRadians(degrees) {
         return m4.inverse(m4.lookAt(eye,target,up));
     }
 
-    function SetupAttributesAndUniforms(uniformNames, groundUniformMatrixBooleans, groundUniformCopyFunction, attributeNames) {
-        let shaderValues = {
-            "uniforms": [],
-            "attributes": []
-        }
-
-        uniformNames.forEach((uniformName, index) => {
-            shaderValues.uniforms.push(new Uniform(uniformName, groundUniformMatrixBooleans[index], groundUniformCopyFunction[index]));
-        });
-
-        attributeNames.forEach((attributeName) => {
-            shaderValues.attributes.push(new Uniform(attributeName));
-        });
-        
-        return shaderValues;
-    }
-
     function Draw() {
         SetupCanvas();
 
         let cameraTransform = GetCameraTransform();
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
 
-        scene.CopyUniformValues(cameraTransform, projectionTransform);
+        scene.CopyShaderValues(cameraTransform, projectionTransform);
         scene.Draw();
         window.requestAnimationFrame(Draw);
     }
@@ -53,14 +30,7 @@ function DegreesToRadians(degrees) {
     let cameraTargetSlider = document.getElementById("slider4");    
     let wireframeCheckbox = document.getElementById("checkbox1");
 
-    let groundUniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];    
-    let groundUniformMatrixBooleans = [true, true, true, false];
-    let groundUniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];
-
-    let groundAttributeNames = ["position", "normal"];
-    let groundData = SetupAttributesAndUniforms(groundUniformNames, groundUniformMatrixBooleans, groundUniformCopyFunctions, groundAttributeNames);
-    let groundEntityCollection = new EntityCollection(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader, groundData.uniforms, groundData.attributes);
-    let ground = new Ground(groundEntityCollection);
+    let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
 
     let scene = new Scene();
     scene.AddEntityCollection(ground);

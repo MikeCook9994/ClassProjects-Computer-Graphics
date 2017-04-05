@@ -1,25 +1,21 @@
-function EntityCollection(glHost, model, vertexShader, fragmentShader, attributes, uniforms) {
+function EntityCollection(glHost, model, vertexShader, fragmentShader) {
     this.glHost = glHost;
     this.model = model;
-    this.attributes = attributes;
-    this.uniforms = uniforms;
+    this.vertexShader = vertexShader;
+    this.fragmentShader = fragmentShader;
     this.entities = [];
 }
 
-EntityCollection.prototype.CreateEntity = function() {
-    let entity = new Entity(this.glHost, this.model, this.attributes, this.uniforms);
-    entity.SetupProgram(vertexShader, fragmentShader);
+EntityCollection.prototype.CreateEntity = function(uniforms, attributes) {
+    let entity = new Entity(this.glHost, this.model, uniforms, attributes);
+    entity.SetupProgram(this.vertexShader, this.fragmentShader);
     this.entities.push(entity);
 }
 
-EntityCollection.prototype.SetUniformValues = function(cameraTransform, projectionTransform, modelTransform) {
-    this.entities.forEach((entity) => {
-        entity.SetUniformValues(cameraTransform, projectionTransform, modelTransform);
-    });
-}
-
-EntityCollection.prototype.EnableProgram = function() {
-    return;
+EntityCollection.prototype.CopyUniformValues = function(entityIndex, uniformSet) {
+    this.entities[entityIndex].UpdateUniforms(uniformSet)
+    this.entities[entityIndex].EnableProgram();
+    this.entities[entityIndex].CopyUniformValues();
 }
 
 EntityCollection.prototype.Draw = function() {

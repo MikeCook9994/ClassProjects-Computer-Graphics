@@ -3,5 +3,5 @@ function Uniform(name, isMatrix, glCopyUniformFunction) {
     this.isMatrix = isMatrix;
     this.glCopyUniformFunction = glCopyUniformFunction;
     this.value = null;
-
+    this.location = null;
 }

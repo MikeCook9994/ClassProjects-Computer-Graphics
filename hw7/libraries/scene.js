@@ -10,15 +10,14 @@ Scene.prototype.AddEntityCollection = function(entity) {
     this.entities.push(entity);
 }
 
-Scene.prototype.CopyUniformValues = function(cameraTransform, projectionTransform) {
+Scene.prototype.CopyShaderValues = function(cameraTransform, projectionTransform) {
     this.entities.forEach((entity) => {
-        entity.SetUniformValues(cameraTransform, projectionTransform);
+        entity.CopyShaderValues(cameraTransform, projectionTransform);
     });
 }
 
 Scene.prototype.Draw = function() {
     this.entities.forEach((entity) => {
-        entity.EnableProgram();
         entity.Draw();
     });
 }

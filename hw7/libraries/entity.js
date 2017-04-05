@@ -11,30 +11,32 @@ Entity.prototype.SetupProgram = function(vertexShaderSource, fragmentShaderSourc
     this.shaderProgram = this.glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
 
     this.glHost.GetUniformLocations(this.shaderProgram, this.uniforms);
+
     this.glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
+    this.glHost.BufferAttributeData(this.attributes, this.shaderProgram);
+    this.glHost.SpecifyAttributes(this.attributes);
+}
+
+Entity.prototype.UpdateUniforms = function(uniformSet) {
+    this.uniforms = uniformSet;
 }
 
 Entity.prototype.EnableProgram = function() {
     this.glHost.SetShaderProgram(this.shaderProgram);
 }
 
-Entity.prototype.BufferData = function(cameraMatrix, projectionMatrix, modelMatrix) {
-    this.glHost.BufferAttributeData(this.attributes, this.shaderProgram);
-
-    let modelViewMatrix = m4.multiply(modelMatrix, cameraMatrix);
-    let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-
-    this.uniforms.forEach((uniform) => {
+Entity.prototype.CopyUniformValues = function() {
+    Object.keys(this.uniforms).forEach((uniformName) => {
+        let uniform = this.uniforms[uniformName];
         if(uniform.isMatrix) {
-            uniform.glCopyUniformFunction(uniform.location, false, uniform.value);
+            uniform.glCopyUniformFunction.call(this.glHost.gl, uniform.location, false, uniform.value);
         }
         else {
-            uniform.glCopyUniformFunction(uniform.location, uniform.value);
+            uniform.glCopyUniformFunction.call(this.glHost.gl, uniform.location, uniform.value);
         }
     });
 }
 
 Entity.prototype.Draw = function() {
-    this.glHost.SpecifyAttributes(this.attributes);
     this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

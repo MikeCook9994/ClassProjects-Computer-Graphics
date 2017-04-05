@@ -30,36 +30,35 @@ GLHost.prototype.SetShaderProgram = function(shaderProgram) {
 }
 
 GLHost.prototype.GetUniformLocations = function(shaderProgram, uniforms) {
-    uniforms.forEach((uniform) => {
-       uniform.location = this.gl.getUniformLocation(shaderProgram, uniform.name);
+    Object.keys(uniforms).forEach((uniformName) => {
+       uniforms[uniformName].location = this.gl.getUniformLocation(shaderProgram, uniformName);
     });
 }
 
 GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
     let attributeLocations = {};
-    attributes.forEach((attribute) => {
-        attribute.location = this.gl.getAttribLocation(shaderProgram, attribute.name);
-        if(attribute.locations != -1) {
-            this.gl.enableVertexAttribArray(attribute.location);
+    Object.keys(attributes).forEach((attributeName) => {
+        attributes[attributeName].location = this.gl.getAttribLocation(shaderProgram, attributeName);
+        if(attributes[attributeName].location != -1) {
+            this.gl.enableVertexAttribArray(attributes[attributeName].location);
         }
     });
 }
 
 GLHost.prototype.BufferAttributeData = function(attributes, shaderProgram) {
     this.gl.useProgram(shaderProgram)
-    attributes.forEach((attribue, index) => {
+    Object.keys(attributes).forEach((attributeName, index) => {
         let buff = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buff);
-        this.gl.bufferData(this.gl.ARRAY_BUFFER, attribute.value, this.gl.STATIC_DRAW);
-        attribute.buffer = buff;
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, attributes[attributeName].value, this.gl.STATIC_DRAW);
+        attributes[attributeName].buffer = buff;
     });
-    return buffers;
 }
 
 GLHost.prototype.SpecifyAttributes = function(attributes) {
-    attributes.forEach((attribute) => {
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attribute.name);
-        this.gl.vertexAttribPointer(attribute.name, 3, this.gl.FLOAT, false, 0, 0);
+    Object.keys(attributes).forEach((attributeName) => {
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
+        this.gl.vertexAttribPointer(attributes[attributeName].location, 3, this.gl.FLOAT, false, 0, 0);
     });
 }
 

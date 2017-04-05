@@ -1,6 +1,6 @@
-function Uniform(name) {
+function Attribute(name) {
     this.name = name;
     this.value = null;
-    this.location = null;
+    this.location = -1;
     this.buffer = null
 }

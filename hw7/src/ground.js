@@ -17,10 +17,16 @@ function Ground(glHost, objectAttributes, vertexShader, fragmentShader) {
 }
 
 Ground.prototype.CopyShaderValues = function(cameraTransform, projectionTransform) {
-    for(let i = 0; i < this.entityCount; i++) {
-        let modelTransform = m4.multiply(m4.translation([2.2 * (i), 0.0, 0.0]), m4.scaling([10, 10, 10]));
-        UpdateUniformValues(this.uniforms[i], cameraTransform, projectionTransform, modelTransform, this.objectAttributes);
-        this.entityCollection.CopyUniformValues(i, this.uniforms[i]);
+    let i = 0;
+    for(let j = -1; j < 1; j++) {
+        for(let k = -1; k < 2; k++) {
+            for(let l = -5; l < 5; l++) {
+                let modelTransform = m4.multiply(m4.translation([2.2 * (k), 2.2 * (j) , 2.2 * (l)]), m4.scaling([10, 10, 10]));
+                UpdateUniformValues(this.uniforms[i], cameraTransform, projectionTransform, modelTransform, this.objectAttributes);
+                this.entityCollection.CopyUniformValues(i, this.uniforms[i]);
+                i++;
+            }
+        }
     }
 }
 

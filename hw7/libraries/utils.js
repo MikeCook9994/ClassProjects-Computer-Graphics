@@ -26,3 +26,10 @@ function CreateShaderProgram(glHost) {
     let shaderProgram = glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
     return shaderProgram;
 }
+
+function PrintSliderValues() {
+    console.log("angle: " + document.getElementById("slider1").value);
+    console.log("height: " + document.getElementById("slider2").value);
+    console.log("target: " + document.getElementById("slider3").value);
+    console.log("fov:" + document.getElementById("slider4").value);   
+} 

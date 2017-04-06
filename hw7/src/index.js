@@ -18,8 +18,7 @@
         let cameraTransform = GetCameraTransform();
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
 
-        scene.CopyShaderValues(cameraTransform, projectionTransform);
-        scene.Draw();
+        scene.Draw(cameraTransform, projectionTransform);
         window.requestAnimationFrame(Draw);
     }
 
@@ -31,8 +30,10 @@
     let wireframeCheckbox = document.getElementById("checkbox1");
 
     let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
-
+    let pipe = new Pipe(glHost, pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    
     let scene = new Scene();
+    scene.AddEntity(pipe);
     scene.AddEntityCollection(ground);
 
     window.requestAnimationFrame(Draw);

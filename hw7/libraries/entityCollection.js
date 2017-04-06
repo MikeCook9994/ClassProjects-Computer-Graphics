@@ -1,26 +1,37 @@
-function EntityCollection(glHost, model, vertexShader, fragmentShader) {
+function EntityCollection(glHost, model, vertexShaderSource, fragmentShaderSource, attributes) {
     this.glHost = glHost;
     this.model = model;
-    this.vertexShader = vertexShader;
-    this.fragmentShader = fragmentShader;
+    this.attributes = attributes;
+    this.uniforms = [];
     this.entities = [];
+    this.shaderProgram = CreateShaderProgram(glHost, vertexShaderSource, fragmentShaderSource);
 }
 
-EntityCollection.prototype.CreateEntity = function(uniforms, attributes) {
-    let entity = new Entity(this.glHost, this.model, uniforms, attributes);
-    entity.SetupProgram(this.vertexShader, this.fragmentShader);
+EntityCollection.prototype.CreateEntity = function(uniform) {
+    this.glHost.GetUniformLocations(this.shaderProgram, uniform);
+    this.uniforms.push(uniform);
+
+    this.glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
+
+    let entity = new Entity(this.glHost, this.model, uniform, this.attributes, this.shaderProgram);
     this.entities.push(entity);
 }
 
-EntityCollection.prototype.CopyUniformValues = function(entityIndex, uniformSet) {
-    this.entities[entityIndex].UpdateUniforms(uniformSet)
-    this.entities[entityIndex].EnableProgram();
-    this.entities[entityIndex].CopyUniformValues();
+EntityCollection.prototype.CopyUniformValues = function(entityIndex, uniformValues) {
+    Object.keys(this.uniforms[entityIndex]).forEach((uniformName, index) => {
+        this.uniforms[entityIndex][uniformName].value = uniformValues[index];
+    });
 }
 
 EntityCollection.prototype.Draw = function() {
-    this.entities.forEach((entity) => {
-        entity.EnableProgram();
+    this.entities.forEach((entity, index) => {
+        entity.CopyUniformValues(this.uniforms[index]);
         entity.Draw();
     });
+}
+
+function CreateShaderProgram(glHost, vertexShaderSource, fragmentShaderSource) {
+    let vertexShader = glHost.CreateAndCompileShader(glHost.gl.VERTEX_SHADER, vertexShaderSource);
+    let fragmentShader = glHost.CreateAndCompileShader(glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
+    return glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
 }

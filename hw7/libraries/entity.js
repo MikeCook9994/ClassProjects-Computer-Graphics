@@ -1,31 +1,14 @@
-function Entity(glHost, model, uniforms, attributes) {
+function Entity(glHost, model, uniforms, attributes, shaderProgram) {
     this.glHost = glHost;
-    this.modelAttributes = model;
+    this.modelAttributes = model;    
     this.uniforms = uniforms;
     this.attributes = attributes;
+    this.shaderProgram = shaderProgram;
 }
 
-Entity.prototype.SetupProgram = function(vertexShaderSource, fragmentShaderSource) {
-    let vertexShader = this.glHost.CreateAndCompileShader(this.glHost.gl.VERTEX_SHADER, vertexShaderSource);
-    let fragmentShader = this.glHost.CreateAndCompileShader(this.glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
-    this.shaderProgram = this.glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
-
-    this.glHost.GetUniformLocations(this.shaderProgram, this.uniforms);
-
-    this.glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
-    this.glHost.BufferAttributeData(this.attributes, this.shaderProgram);
-    this.glHost.SpecifyAttributes(this.attributes);
-}
-
-Entity.prototype.UpdateUniforms = function(uniformSet) {
-    this.uniforms = uniformSet;
-}
-
-Entity.prototype.EnableProgram = function() {
+Entity.prototype.CopyUniformValues = function(uniformSet) {
     this.glHost.SetShaderProgram(this.shaderProgram);
-}
-
-Entity.prototype.CopyUniformValues = function() {
+    this.uniforms = uniformSet
     Object.keys(this.uniforms).forEach((uniformName) => {
         let uniform = this.uniforms[uniformName];
         if(uniform.isMatrix) {
@@ -38,5 +21,8 @@ Entity.prototype.CopyUniformValues = function() {
 }
 
 Entity.prototype.Draw = function() {
+    this.glHost.SetShaderProgram(this.shaderProgram);
+    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+    this.glHost.SpecifyAttributes(this.attributes);
     this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

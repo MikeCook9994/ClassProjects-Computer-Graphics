@@ -4,19 +4,25 @@ function DegreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
 
-function SetupAttributesAndUniforms(uniformNames, groundUniformMatrixBooleans, groundUniformCopyFunction, attributeNames) {
-    let shaderValues = {
-        "uniforms": {},
-        "attributes": {}
-    }
-
+function CreateUniforms(uniformNames, groundUniformMatrixBooleans, groundUniformCopyFunction, attributeNames) {
+    let uniforms = {};
     uniformNames.forEach((uniformName, index) => {
-        shaderValues.uniforms[uniformName] = new Uniform(uniformName, groundUniformMatrixBooleans[index], groundUniformCopyFunction[index]);
+        uniforms[uniformName] = new Uniform(uniformName, groundUniformMatrixBooleans[index], groundUniformCopyFunction[index]);
     });
+    return uniforms;
+}
 
-    attributeNames.forEach((attributeName) => {
-        shaderValues.attributes[attributeName] = new Attribute(attributeName);
+function CreateAttributes(attributeNames, attributeValues) {
+    let attributes = {};
+    attributeNames.forEach((attributeName, index) => {
+        attributes[attributeName] = new Attribute(attributeName, attributeValues[index]);
     });
-    
-    return shaderValues;
+    return attributes;
+}
+
+function CreateShaderProgram(glHost) {
+    let vertexShader = glHost.CreateAndCompileShader(glHost.gl.VERTEX_SHADER, vertexShaderSource);
+    let fragmentShader = glHost.CreateAndCompileShader(glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
+    let shaderProgram = glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
+    return shaderProgram;
 }

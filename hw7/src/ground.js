@@ -19,7 +19,7 @@ Ground.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.translation([2.2 * (k), 2.2 * (j) , 2.2 * (l)]), m4.scaling([10, 10, 10]));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.CopyUniformValues(i, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.54, 0.27, 0.07])]);
+                this.entityCollection.UpdateUniformValues(i, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.54, 0.27, 0.07])]);
                 i++;
             }
         }

@@ -12,13 +12,13 @@ function Pipe(glHost, objectAttributes, vertexShaderSource, fragmentShaderSource
     glHost.GetUniformLocations(shaderProgram, this.uniforms);
     
     this.entity = new Entity(glHost, objectAttributes, this.uniforms, this.attributes, shaderProgram);
+    this.entity.BufferAttributes();
 }
 
 Pipe.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     let modelTransform = m4.multiply(m4.translation([0.05, 0.5, 2.9]), m4.scaling([15, 15, 15]));
     UpdatePipeUniformValues(this.uniforms, cameraMatrix, projectionMatrix, modelTransform);
     this.entity.CopyUniformValues(this.uniforms);
-    this.entity.BufferAttributes();
     this.entity.Draw();
 }
 

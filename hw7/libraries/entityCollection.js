@@ -4,7 +4,10 @@ function EntityCollection(glHost, model, vertexShaderSource, fragmentShaderSourc
     this.attributes = attributes;
     this.uniforms = [];
     this.entities = [];
+    
     this.shaderProgram = CreateShaderProgram(glHost, vertexShaderSource, fragmentShaderSource);
+    this.glHost.SetShaderProgram(this.shaderProgram);
+    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
 EntityCollection.prototype.CreateEntity = function(uniform) {
@@ -17,19 +20,15 @@ EntityCollection.prototype.CreateEntity = function(uniform) {
     this.entities.push(entity);
 }
 
-EntityCollection.prototype.CopyUniformValues = function(entityIndex, uniformValues) {
+EntityCollection.prototype.UpdateUniformValues = function(entityIndex, uniformValues) {
     Object.keys(this.uniforms[entityIndex]).forEach((uniformName, index) => {
         this.uniforms[entityIndex][uniformName].value = uniformValues[index];
     });
 }
 
 EntityCollection.prototype.Draw = function() {
-    this.glHost.SetShaderProgram(this.shaderProgram);
-    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
-    this.glHost.SpecifyAttributes(this.attributes);
     this.entities.forEach((entity, index) => {
         entity.CopyUniformValues(this.uniforms[index]);
-        entity.BufferAttributes();
         entity.Draw();
     });
 }

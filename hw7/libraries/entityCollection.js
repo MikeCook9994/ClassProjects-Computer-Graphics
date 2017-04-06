@@ -24,8 +24,12 @@ EntityCollection.prototype.CopyUniformValues = function(entityIndex, uniformValu
 }
 
 EntityCollection.prototype.Draw = function() {
+    this.glHost.SetShaderProgram(this.shaderProgram);
+    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+    this.glHost.SpecifyAttributes(this.attributes);
     this.entities.forEach((entity, index) => {
         entity.CopyUniformValues(this.uniforms[index]);
+        entity.BufferAttributes();
         entity.Draw();
     });
 }

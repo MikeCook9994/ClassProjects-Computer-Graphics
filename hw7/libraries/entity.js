@@ -22,7 +22,11 @@ Entity.prototype.CopyUniformValues = function(uniformSet) {
 
 Entity.prototype.Draw = function() {
     this.glHost.SetShaderProgram(this.shaderProgram);
+    this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
+}
+
+Entity.prototype.BufferAttributes = function() {
+    this.glHost.SetShaderProgram(this.shaderProgram);
     this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
     this.glHost.SpecifyAttributes(this.attributes);
-    this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

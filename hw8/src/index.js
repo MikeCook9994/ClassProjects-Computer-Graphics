@@ -18,8 +18,7 @@
         let cameraTransform = GetCameraTransform();
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
 
-        scene.CopyShaderValues(cameraTransform, projectionTransform);
-        scene.Draw();
+        scene.Draw(cameraTransform, projectionTransform);
         window.requestAnimationFrame(Draw);
     }
 
@@ -28,11 +27,14 @@
     let cameraHeightSlider = document.getElementById("slider2");
     let fovSlider = document.getElementById("slider3");
     let cameraTargetSlider = document.getElementById("slider4");    
-    let wireframeCheckbox = document.getElementById("checkbox1");
 
     let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
-
+    let pipe = new Pipe(glHost, pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    let mario = new Mario(glHost, marioObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    
     let scene = new Scene();
+    scene.AddEntity(pipe);
+    scene.AddEntity(mario);
     scene.AddEntityCollection(ground);
 
     window.requestAnimationFrame(Draw);

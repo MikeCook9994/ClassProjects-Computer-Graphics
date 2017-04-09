@@ -39,16 +39,16 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
     let attributeLocations = {};
     Object.keys(attributes).forEach((attributeName) => {
         attributes[attributeName].location = this.gl.getAttribLocation(shaderProgram, attributeName);
-        if(attributes[attributeName].location != -1) {
-            this.gl.enableVertexAttribArray(attributes[attributeName].location);
-        }
     });
 }
 
-GLHost.prototype.BufferAttributeData = function(attributes, shaderProgram) {
+GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
     this.gl.useProgram(shaderProgram)
     Object.keys(attributes).forEach((attributeName, index) => {
-        let buff = this.gl.createBuffer();
+        let buff = attributes[attributeName].buffer
+        if(buff == null) {
+            buff = this.gl.createBuffer();
+        }
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buff);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, attributes[attributeName].value, this.gl.STATIC_DRAW);
         attributes[attributeName].buffer = buff;
@@ -58,6 +58,9 @@ GLHost.prototype.BufferAttributeData = function(attributes, shaderProgram) {
 GLHost.prototype.SpecifyAttributes = function(attributes) {
     Object.keys(attributes).forEach((attributeName) => {
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
+        if(attributes[attributeName].location != -1) {
+            this.gl.enableVertexAttribArray(attributes[attributeName].location);
+        }
         this.gl.vertexAttribPointer(attributes[attributeName].location, 3, this.gl.FLOAT, false, 0, 0);
     });
 }

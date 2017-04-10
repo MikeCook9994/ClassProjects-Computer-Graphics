@@ -2,18 +2,17 @@ precision highp float;
 
 varying vec3 fPosition;
 varying vec3 fNormal;
-varying vec2 fTexCoord;	
+varying vec2 fTextureCoordinate;	
 
-uniform sampler2D texSampler;
+uniform sampler2D textureSampler;
 
 float ComputeLightingModifier();
 
 void main()
 {
 	float lightingModifier = ComputeLightingModifier();
-	vec4 texColor = texture2D(texSampler, fTexCoord);
-
-	gl_FragColor = vec4(texColor.xyz * lightingModifier, texColor.a);
+	vec4 textureColor = texture2D(textureSampler, fTextureCoordindate);
+	gl_FragColor = vec4(textureColor.xyz * lightingModifier, textureColor.a);
 }
 
 float ComputeLightingModifier() {

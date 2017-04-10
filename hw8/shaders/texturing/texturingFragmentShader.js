@@ -1,17 +1,19 @@
 let texturingFragmentShader =
 `precision highp float;
 
-uniform vec3 color;
-
 varying vec3 fPosition;
 varying vec3 fNormal;
+varying vec2 fTextureCoordinate;	
+
+uniform sampler2D textureSampler;
 
 float ComputeLightingModifier();
 
 void main()
 {
 	float lightingModifier = ComputeLightingModifier();
-	gl_FragColor = vec4(color * lightingModifier, 1.0);
+	vec4 textureColor = texture2D(textureSampler, fTextureCoordindate);
+	gl_FragColor = vec4(textureColor.xyz * lightingModifier, textureColor.a);
 }
 
 float ComputeLightingModifier() {

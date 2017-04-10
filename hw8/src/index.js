@@ -31,7 +31,7 @@
   
     let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let pipe = new Pipe(glHost, pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    let mario = new Mario(glHost, marioObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    let mario = new Mario(glHost, marioObjectAttributes, texturingVertexShader, texturingFragmentShader);
     
     let scene = new Scene();
     scene.AddEntity(pipe);

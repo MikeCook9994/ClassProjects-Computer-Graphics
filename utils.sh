@@ -37,7 +37,7 @@ else
         echo "generating json from object file"
         loaderDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
         cd $2
-        find -maxdepth 2 -regex ".*\.\(obj\)" -exec node $loaderDir/objectLoader.js {} \;
+        find -maxdepth 3 -regex ".*\.\(obj\)" -exec node $loaderDir/objectLoader.js {} \;
         cd ..
     fi
 

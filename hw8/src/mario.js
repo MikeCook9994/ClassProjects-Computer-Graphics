@@ -16,7 +16,7 @@ function Mario(glHost, objectAttributes, vertexShaderSource, fragmentShaderSourc
 }
 
 Mario.prototype.Draw = function(cameraMatrix, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(270)), m4.multiply(m4.translation([0.0, 2.80, -10.9]), m4.scaling([8, 8, 8])));
+    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(270)), m4.multiply(m4.scaling([2, 2, 2]), m4.translation([0.0, 19, -87.5])));
     UpdateMarioUniformValues(this.uniforms, cameraMatrix, projectionMatrix, modelTransform);
     this.entity.CopyUniformValues(this.uniforms);
     this.entity.Draw();

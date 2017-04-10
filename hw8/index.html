@@ -7,16 +7,19 @@
         <canvas id="drawing-plane" height=500 width=500></canvas>
         <div id="controls">
             <p>Camera Angle</p>
-            <input id="slider1" type="range" min="-100" max="100" value="-56"/>
+            <input id="slider1" type="range" min="-100" max="100" value="-58"/>
             <br>
-            <p>Camera Height</p>
-            <input id="slider2" type="range" min="-300" max="500" value="122"/>
+            <p>Camera Y</p>
+            <input id="slider2" type="range" min="-300" max="500" value="117"/>
             <br>
-            <p>Camera Target</p>
-            <input id="slider4" type="range" min="-100" max="100" value="48"/>
+            <p>Lookat Y</p>
+            <input id="slider3" type="range" min="-500" max="500" value="-4"/>
+            <br>
+            <p>Lookat Z</p>
+            <input id="slider4" type="range" min="-500" max="500" value="-13"/>
             <br>
             <p>fov</p>
-            <input id="slider3" type="range" min="1" max="160" value="45"/>
+            <input id="slider5" type="range" min="1" max="160" value="41"/>
         </div>
 
         <!-- libraries -->
@@ -30,10 +33,10 @@
         <script type="text/javascript" src="./libraries/scene.js"></script>
 
         <!-- object attributes -->
-        <script type="text/javascript" src="./models/Mario/marioModel.js"></script>
+        <script type="text/javascript" src="./models/Mario/Default/marioModel.js"></script>
+        <script type="text/javascript" src="./models/Mario/Jumping/marioJumpingModel.js"></script>
         <script type="text/javascript" src="./models/GroundBlock/groundBlockModel.js"></script>
         <script type="text/javascript" src="./models/Pipe/pipeModel.js"></script>
-        <script type="text/javascript" src="./models/Cube/cubeModel.js"></script>
 
         <!-- shaders -->
         <script type="text/javascript" src="./shaders/shading/shadingFragmentShader.js"></script>

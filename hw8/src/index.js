@@ -5,9 +5,9 @@
     }    
 
     function GetCameraTransform() {
-        let angle1 = slider1.value*0.01*Math.PI;
-        let eye = [300*Math.sin(angle1), slider2.value, 300*Math.cos(angle1)];
-        let target = [0,cameraTargetSlider.value,0];
+        let angle1 = angleSlider.value*0.01*Math.PI;
+        let eye = [300*Math.sin(angle1), cameraYSlider.value, 300*Math.cos(angle1)];
+        let target = [0, lookatYSlider.value, lookatZSlider.value];
         let up = [0,1,0];
         return m4.inverse(m4.lookAt(eye,target,up));
     }
@@ -24,10 +24,11 @@
 
     let glHost = new GLHost(document.getElementById("drawing-plane").getContext("webgl"));
     let angleSlider = document.getElementById("slider1");
-    let cameraHeightSlider = document.getElementById("slider2");
-    let fovSlider = document.getElementById("slider3");
-    let cameraTargetSlider = document.getElementById("slider4");    
-
+    let cameraYSlider = document.getElementById("slider2");
+    let lookatYSlider = document.getElementById("slider3");  
+    let lookatZSlider = document.getElementById("slider4");
+    let fovSlider = document.getElementById("slider5");
+  
     let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let pipe = new Pipe(glHost, pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let mario = new Mario(glHost, marioObjectAttributes, shadingVertexShader, shadingFragmentShader);

@@ -2,7 +2,7 @@ precision highp float;
 
 attribute vec3 position;
 attribute vec3 normal;
-attribute vec2 textureCoordindates;
+attribute vec2 textureCoordinates;
 
 uniform mat4 normalMatrix;
 uniform mat4 modelViewMatrix;
@@ -17,7 +17,7 @@ void main()
     fNormal = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
     vec4 pos = modelViewMatrix * vec4(position, 1.0);
     fPosition = pos.xyz;
-    fTexCoord = textureCoordinates;
+    fTextureCoordinate = textureCoordinates;
 
     gl_Position = projectionMatrix * pos;
 }

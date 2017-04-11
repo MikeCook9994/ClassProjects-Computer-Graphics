@@ -22,21 +22,22 @@
         window.requestAnimationFrame(Draw);
     }
 
-    let glHost = new GLHost(document.getElementById("drawing-plane").getContext("webgl"));
     let angleSlider = document.getElementById("slider1");
     let cameraYSlider = document.getElementById("slider2");
     let lookatYSlider = document.getElementById("slider3");  
     let lookatZSlider = document.getElementById("slider4");
     let fovSlider = document.getElementById("slider5");
-  
-    let ground = new Ground(glHost, groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    let pipe = new Pipe(glHost, pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    let mario = new Mario(glHost, marioObjectAttributes, texturingVertexShader, texturingFragmentShader);
+
+    let marioTexture = document.getElementById("marioTexture");
+
+    //let ground = new Ground(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    //let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader);
     
     let scene = new Scene();
-    scene.AddEntity(pipe);
+    //scene.AddEntity(pipe);
     scene.AddEntity(mario);
-    scene.AddEntityCollection(ground);
+    //scene.AddEntityCollection(ground);
 
     window.requestAnimationFrame(Draw);
 })();

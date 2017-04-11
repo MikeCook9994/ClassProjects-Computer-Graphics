@@ -12,7 +12,7 @@ float ComputeLightingModifier();
 void main()
 {
 	float lightingModifier = ComputeLightingModifier();
-	vec4 textureColor = texture2D(textureSampler, fTextureCoordindate);
+	vec4 textureColor = texture2D(textureSampler, fTextureCoordinate);
 	gl_FragColor = vec4(textureColor.xyz * lightingModifier, textureColor.a);
 }
 

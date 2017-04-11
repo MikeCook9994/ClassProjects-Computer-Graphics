@@ -1,17 +1,17 @@
 function Scene() {
-    this.entities = [];
+    this.objects = [];
 }
 
 Scene.prototype.AddEntity = function(entity) {
-    this.entities.push(entity);
+    this.objects.push(entity);
 }
 
 Scene.prototype.AddEntityCollection = function(entity) {
-    this.entities.push(entity);
+    this.objects.push(entity);
 }
 
 Scene.prototype.Draw = function(cameraTransform, projectionTransform) {
-    this.entities.forEach((entity) => {
-        entity.Draw(cameraTransform, projectionTransform);
+    this.objects.forEach((object) => {
+        object.Draw(cameraTransform, projectionTransform);
     });
 }

@@ -1,29 +1,27 @@
-function EntityCollection(glHost, model, vertexShaderSource, fragmentShaderSource, attributes) {
-    this.glHost = glHost;
+function EntityCollection(model, vertexShaderSource, fragmentShaderSource, attributes, uniformTemplate) {
     this.model = model;
     this.attributes = attributes;
-    this.uniforms = [];
-    this.entities = [];
-    
-    this.shaderProgram = CreateShaderProgram(glHost, vertexShaderSource, fragmentShaderSource);
-    this.glHost.SetShaderProgram(this.shaderProgram);
-    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+    this.uniformTemplate = uniformTemplate;
+    this.entities = {};
+
+    this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+
+    glHost.GetUniformLocations(this.shaderProgram, uniformTemplate);
+
+    glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
+    glHost.EnableAttributes(this.attributes); 
+
+    glHost.SetShaderProgram(this.shaderProgram);
+    glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
-EntityCollection.prototype.CreateEntity = function(uniform) {
-    this.glHost.GetUniformLocations(this.shaderProgram, uniform);
-    this.uniforms.push(uniform);
-
-    this.glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
-
-    let entity = new Entity(this.glHost, this.model, uniform, this.attributes, this.shaderProgram);
-    this.entities.push(entity);
+EntityCollection.prototype.CreateEntity = function(entityId) {
+    let uniform = new Uniform(this.uniformTemplate.name, this.uniformTemplate.isMatrix, this.uniformTemplate.glCopyUniformFunction, this.uniformTemplate.location);
+    this.entities[entityId] = new Entity(this.model, uniform, this.attributes, this.shaderProgram, false);
 }
 
-EntityCollection.prototype.UpdateUniformValues = function(entityIndex, uniformValues) {
-    Object.keys(this.uniforms[entityIndex]).forEach((uniformName, index) => {
-        this.uniforms[entityIndex][uniformName].value = uniformValues[index];
-    });
+EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValues) {
+    this.entities[entityId].UpdateUniformValues(uniformValues);
 }
 
 EntityCollection.prototype.Draw = function() {
@@ -33,7 +31,7 @@ EntityCollection.prototype.Draw = function() {
     });
 }
 
-function CreateShaderProgram(glHost, vertexShaderSource, fragmentShaderSource) {
+function CreateShaderProgram(vertexShaderSource, fragmentShaderSource) {
     let vertexShader = glHost.CreateAndCompileShader(glHost.gl.VERTEX_SHADER, vertexShaderSource);
     let fragmentShader = glHost.CreateAndCompileShader(glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
     return glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);

@@ -7,50 +7,47 @@
         <canvas id="drawing-plane" height=500 width=500></canvas>
         <div id="controls">
             <p>Camera Angle</p>
-            <input id="slider1" type="range" min="-100" max="100" value="-58"/>
+            <input id="slider1" type="range" min="-100" max="100" value="-64"/>
             <br>
             <p>Camera Y</p>
-            <input id="slider2" type="range" min="-300" max="500" value="117"/>
+            <input id="slider2" type="range" min="-300" max="500" value="14"/>
             <br>
             <p>Lookat Y</p>
-            <input id="slider3" type="range" min="-500" max="500" value="-4"/>
+            <input id="slider3" type="range" min="-500" max="500" value="17"/>
             <br>
             <p>Lookat Z</p>
-            <input id="slider4" type="range" min="-500" max="500" value="-13"/>
+            <input id="slider4" type="range" min="-500" max="500" value="-86"/>
             <br>
             <p>fov</p>
-            <input id="slider5" type="range" min="1" max="160" value="41"/>
+            <input id="slider5" type="range" min="1" max="160" value="5"/>
         </div>
 
-        <div>
-            <img style="display:none" src="./textures/mario/default/texture.png">
-
         <!-- libraries -->
-        <script type="text/javascript" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
-        <script type="text/javascript" src="./libraries/utils.js"></script>
-        <script type="text/javascript" src="./libraries/GLHost.js"></script>
-        <script type="text/javascript" src="./libraries/entity.js"></script>
-        <script type="text/javascript" src="./libraries/uniform.js"></script>
-        <script type="text/javascript" src="./libraries/attribute.js"></script>
-        <script type="text/javascript" src="./libraries/entityCollection.js"></script>
-        <script type="text/javascript" src="./libraries/scene.js"></script>
+        <script type="text/javascript" defer="defer" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/GLHost.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/utils.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/uniform.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/attribute.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/entity.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/entityCollection.js"></script>
+        <script type="text/javascript" defer="defer" src="./libraries/scene.js"></script>
 
         <!-- object attributes -->
-        <script type="text/javascript" src="./models/mario/default/marioModel.js"></script>
-        <script type="text/javascript" src="./models/mario/jumping/marioJumpingModel.js"></script>
-        <script type="text/javascript" src="./models/groundBlock/groundBlockModel.js"></script>
-        <script type="text/javascript" src="./models/pipe/pipeModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/mario/default/marioModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/mario/jumping/marioJumpingModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/groundBlock/groundBlockModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/pipe/pipeModel.js"></script>
 
         <!-- shaders -->
-        <script type="text/javascript" src="./shaders/shading/shadingFragmentShader.js"></script>
-        <script type="text/javascript" src="./shaders/shading/shadingVertexShader.js"></script>
-        <script type="text/javascript" src="./shaders/texturing/texturingFragmentShader.js"></script>
-        <script type="text/javascript" src="./shaders/texturing/texturingVertexShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/shading/shadingFragmentShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/shading/shadingVertexShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/texturing/texturingFragmentShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/texturing/texturingVertexShader.js"></script>
 
         <!-- script files -->
-        <script type="text/javascript" src="./src/ground.js"></script>
-        <script type="text/javascript" src="./src/mario.js"></script>
-        <script type="text/javascript" src="./src/pipe.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/ground.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/mario.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/pipe.js"></script>
         <script type="text/javascript" defer="defer" src="./src/index.js"></script>
     </body>
 </html>

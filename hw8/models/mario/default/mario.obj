@@ -1,7 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'mario.blend'
 # www.blender.org
 mtllib mario.mtl
-o Plane
 v -3.067585 -3.768648 -0.234477
 v 2.586941 -3.768648 -0.234477
 v -0.711533 3.777583 0.713626

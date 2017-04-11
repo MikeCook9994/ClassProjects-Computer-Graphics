@@ -1,32 +1,36 @@
-function Entity(glHost, model, uniforms, attributes, shaderProgram) {
-    this.glHost = glHost;
+function Entity(model, uniforms, attributes, shaderProgram, getLocations) {
     this.modelAttributes = model;    
     this.uniforms = uniforms;
     this.attributes = attributes;
     this.shaderProgram = shaderProgram;
+
+    glHost.SetShaderProgram(this.shaderProgram);
+
+    if(getLocations === true) {
+        glHost.GetAttributeLocations(shaderProgram, this.attributes);
+        glHost.GetUniformLocations(shaderProgram, this.uniforms);
+    }
+    glHost.EnableAttributes(attributes); 
+
+    glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
-Entity.prototype.CopyUniformValues = function(uniformSet) {
-    this.glHost.SetShaderProgram(this.shaderProgram);
-    this.uniforms = uniformSet
-    Object.keys(this.uniforms).forEach((uniformName) => {
-        let uniform = this.uniforms[uniformName];
-        if(uniform.isMatrix) {
-            uniform.glCopyUniformFunction.call(this.glHost.gl, uniform.location, false, uniform.value);
-        }
-        else {
-            uniform.glCopyUniformFunction.call(this.glHost.gl, uniform.location, uniform.value);
-        }
-    });
+Entity.prototype.UpdateUniformValues = function(uniformSet) {
+    this.uniforms = uniformSet;
 }
 
 Entity.prototype.Draw = function() {
-    this.glHost.SetShaderProgram(this.shaderProgram);
-    this.glHost.SpecifyAttributes(this.attributes);
-    this.glHost.gl.drawArrays(this.glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
-}
+    glHost.SetShaderProgram(this.shaderProgram);
+    Object.keys(this.uniforms).forEach((uniformName) => {
+        let uniform = this.uniforms[uniformName];
+        if(uniform.isMatrix) {
+            uniform.glCopyUniformFunction.call(glHost.gl, uniform.location, false, uniform.value);
+        }
+        else {
+                uniform.glCopyUniformFunction.call(glHost.gl, uniform.location, uniform.value);
+        }
+    });
 
-Entity.prototype.BufferAttributes = function() {
-    this.glHost.SetShaderProgram(this.shaderProgram);
-    this.glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+    glHost.SpecifyAttributes(this.attributes);
+    glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

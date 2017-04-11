@@ -27,26 +27,26 @@ let fs = require('fs');
                 let lineContent = line.split(" ");
                 switch(lineContent[0]) {
                     case "v": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
-                            vectorData.v.push(floatArray);
-                        }
-                        break;
+                        let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
+                        vectorData.v.push(floatArray);
+                    }
+                    break;
                     case "vt": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2]], false);
-                            vectorData.vt.push(floatArray);
-                        }
-                        break;
+                        let floatArray = ParseFloatArray([lineContent[1], lineContent[2]], false);
+                        vectorData.vt.push(floatArray);
+                    }
+                    break;
                     case "vn": {
-                            let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
-                            vectorData.vn.push(floatArray);                
-                        }
-                        break;
+                        let floatArray = ParseFloatArray([lineContent[1], lineContent[2], lineContent[3]], false);
+                        vectorData.vn.push(floatArray);                
+                    }
+                    break;
                     // faces are guranteed to come after we've parsed all of the vector data so these operations are safe.
-                    case "f":
+                    case "f": {
                         let face = [];
                         face.push(ParseFloatArray(lineContent[1].split("/"), true));
                         face.push(ParseFloatArray(lineContent[2].split("/"), true));
-                        face.push(ParseFloatArray(lineContent[3].split("/"), true));
+                        face.push(ParseFloatArray(lineContent[3].split("/"), true)); 
 
                         face.forEach((vertexPropertyIndex, index, array) => {
                             let vertexTextureCoordinate = [];
@@ -60,7 +60,8 @@ let fs = require('fs');
                             }
                             outputData.vertexNormals.push(vectorData.vn[vertexPropertyIndex[2]]);
                         });
-                        break;
+                    }
+                    break;
                 }
             });
 

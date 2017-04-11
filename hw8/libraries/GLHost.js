@@ -59,10 +59,36 @@ GLHost.prototype.SpecifyAttributes = function(attributes) {
     Object.keys(attributes).forEach((attributeName) => {
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
         if(attributes[attributeName].location != -1) {
+            this.gl.vertexAttribPointer(attributes[attributeName].location, attributes[attributeName].size, this.gl.FLOAT, false, 0, 0);
+        }
+    });
+}
+
+GLHost.prototype.EnableAttributes = function(attributes) {
+    Object.keys(attributes).forEach((attributeName) => {
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
+        if(attributes[attributeName].location != -1) {
             this.gl.enableVertexAttribArray(attributes[attributeName].location);
         }
-        this.gl.vertexAttribPointer(attributes[attributeName].location, 3, this.gl.FLOAT, false, 0, 0);
     });
+}
+
+GLHost.prototype.SetupTexture = function(textureImageSource) {
+    let texture = this.gl.createTexture();
+    this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+
+    let textureImage = new Image();
+    textureImage.onload = (() => {
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, textureImage);
+        this.gl.generateMipmap(this.gl.TEXTURE_2D);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
+    });
+    textureImage.crossOrigin = "anonymous";
+    textureImage.src = textureImageSource;
+
+    return texture;
 }
 
 GLHost.prototype.ConfigureWebGL = function() {

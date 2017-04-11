@@ -45,13 +45,11 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
 GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
     this.gl.useProgram(shaderProgram)
     Object.keys(attributes).forEach((attributeName, index) => {
-        let buff = attributes[attributeName].buffer
-        if(buff == null) {
-            buff = this.gl.createBuffer();
+        if(attributes[attributeName].buffer == null) {
+            attributes[attributeName].buffer = this.gl.createBuffer();
         }
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buff);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, attributes[attributeName].value, this.gl.STATIC_DRAW);
-        attributes[attributeName].buffer = buff;
     });
 }
 
@@ -80,10 +78,10 @@ GLHost.prototype.SetupTexture = function(textureImageSource) {
 
     let textureImage = new Image();
     textureImage.onload = (() => {
-        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
         this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, textureImage);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);     
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
         this.gl.generateMipmap(this.gl.TEXTURE_2D);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR_MIPMAP_LINEAR);
     });
     textureImage.crossOrigin = "anonymous";
     textureImage.src = textureImageSource;

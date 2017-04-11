@@ -11,22 +11,13 @@ function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
     this.entity = new Entity(objectAttributes, this.uniforms, this.attributes, shaderProgram, true);
 }
 
-Pipe.prototype.Draw = function(cameraMatrix, projectionMatrix) {
+Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelTransform = m4.multiply(m4.translation([0.05, 0.5, 2.9]), m4.scaling([15, 15, 15]));
-    UpdatePipeUniformValues(this.entity, this.uniforms, cameraMatrix, projectionMatrix, modelTransform);
-
-    this.entity.Draw();
-}
-
-function UpdatePipeUniformValues(entity, uniformSet, cameraTransform, projectionMatrix, modelTransform) {
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    uniformSet["normalMatrix"].value = normalMatrix;
-    uniformSet["modelViewMatrix"].value = modelViewMatrix;
-    uniformSet["projectionMatrix"].value = projectionMatrix;
-    uniformSet["color"].value = new Float32Array([0.0, 1.0, 0.0]);
-    entity.UpdateUniformValues(uniformSet);
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.0, 1.0, 0.0])]);   
+    this.entity.Draw();
 }
 
 function CreatePipeUniforms() {

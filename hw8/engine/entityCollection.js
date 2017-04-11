@@ -16,18 +16,20 @@ function EntityCollection(model, vertexShaderSource, fragmentShaderSource, attri
 }
 
 EntityCollection.prototype.CreateEntity = function(entityId) {
-    let uniform = new Uniform(this.uniformTemplate.name, this.uniformTemplate.isMatrix, this.uniformTemplate.glCopyUniformFunction, this.uniformTemplate.location);
-    this.entities[entityId] = new Entity(this.model, uniform, this.attributes, this.shaderProgram, false);
+    let uniforms = {};
+    Object.keys(this.uniformTemplate).forEach((uniformName) => {
+        uniforms[uniformName] = new Uniform(this.uniformTemplate[uniformName].name, this.uniformTemplate[uniformName].isMatrix, this.uniformTemplate[uniformName].glCopyUniformFunction, this.uniformTemplate[uniformName].location);
+    });
+    this.entities[entityId] = new Entity(this.model, uniforms, this.attributes, this.shaderProgram, null, null, null);
 }
 
-EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValues) {
-    this.entities[entityId].UpdateUniformValues(uniformValues);
+EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValueSet) {
+    this.entities[entityId].UpdateUniformValues(uniformValueSet);
 }
 
 EntityCollection.prototype.Draw = function() {
-    this.entities.forEach((entity, index) => {
-        entity.CopyUniformValues(this.uniforms[index]);
-        entity.Draw();
+    Object.keys(this.entities).forEach((entityId, index) => {
+        this.entities[entityId].Draw();
     });
 }
 

@@ -1,28 +1,25 @@
-function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource) {
+function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textureImageSource) {
     this.objectAttributes = objectAttributes;
     this.vertexShader = vertexShaderSource;
     this.fragmentShader = fragmentShaderSource;
 
-    let shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
     this.attributes = CreateMarioAttributes(objectAttributes);
     this.uniforms = CreateMarioUniforms();
 
-    let textureImageSource = "http://i.imgur.com/lvaEw2u.png";
-    this.texture = glHost.SetupTexture(textureImageSource);
-    
-    this.entity = new Entity(objectAttributes, this.uniforms, this.attributes, shaderProgram, true); 
+    this.entity = new Entity(objectAttributes, this.uniforms, this.attributes, null, vertexShaderSource, fragmentShaderSource, textureImageSource); 
 }
 
-Mario.prototype.Draw = function(cameraMatrix, projectionMatrix) {
+Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(270)), m4.multiply(m4.scaling([2, 2, 2]), m4.translation([0.0, 19, -87.5])));
-    UpdateMarioUniformValues(this.entity, this.uniforms, cameraMatrix, projectionMatrix, modelTransform);
+    let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
+    let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, 0]);
     this.entity.Draw();
 }
 
 function UpdateMarioUniformValues(entity, uniformSet, cameraTransform, projectionMatrix, modelTransform) {
-    let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
-    let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
+
 
     uniformSet["normalMatrix"].value = normalMatrix;
     uniformSet["modelViewMatrix"].value = modelViewMatrix;

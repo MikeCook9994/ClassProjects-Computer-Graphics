@@ -2,7 +2,7 @@ function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textu
     let attributes = CreateMarioAttributes(objectAttributes);
     let uniforms = CreateMarioUniforms();
 
-    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource, textureImageSource);
+    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
     this.entity.SetupTexture(textureImageSource);
 }
 

@@ -30,11 +30,12 @@
 
     let marioTextureImageSource = "http://i.imgur.com/lvaEw2u.png";
     let cubeTextureImageSource = "http://i.imgur.com/8rE2XyE.png";
+    let colorGradientTextureImageSource = "http://i.imgur.com/L8Ig9V6.jpg?2";
 
     let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let ground = new Ground(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    //let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, colorGradientTextureImageSource);
     let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, marioTextureImageSource);
-    //let mario = new Mario(cubeObjectAttributes, texturingVertexShader, texturingFragmentShader, cubeTextureImageSource);
     
     let scene = new Scene();
 

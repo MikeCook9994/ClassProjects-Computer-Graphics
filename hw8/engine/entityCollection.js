@@ -9,7 +9,6 @@ function EntityCollection(model, vertexShaderSource, fragmentShaderSource, attri
     glHost.GetUniformLocations(this.shaderProgram, uniformTemplate);
     
     glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
-    glHost.EnableAttributes(this.shaderProgram, this.attributes); 
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
@@ -18,7 +17,7 @@ EntityCollection.prototype.CreateEntity = function(entityId) {
     Object.keys(this.uniformTemplate).forEach((uniformName) => {
         uniforms[uniformName] = new Uniform(this.uniformTemplate[uniformName].name, this.uniformTemplate[uniformName].isMatrix, this.uniformTemplate[uniformName].glCopyUniformFunction, this.uniformTemplate[uniformName].location);
     });
-    this.entities[entityId] = new Entity(this.model, uniforms, this.attributes, this.shaderProgram, null, null, null);
+    this.entities[entityId] = new Entity(this.model, uniforms, this.attributes, this.shaderProgram, null, null);
 }
 
 EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValueSet) {

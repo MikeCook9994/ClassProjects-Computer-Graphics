@@ -2,7 +2,7 @@ function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
     let attributes = CreatePipeAttributes(objectAttributes);
     let uniforms = CreatePipeUniforms();
     
-    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource, null);
+    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
 }
 
 Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {

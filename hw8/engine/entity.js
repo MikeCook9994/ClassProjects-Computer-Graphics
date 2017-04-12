@@ -1,22 +1,20 @@
-function Entity(model, uniforms, attributes, shaderProgram, vertexShaderSource, fragmentShaderSource, textureImageSource) {
+function Entity(model, uniforms, attributes, shaderProgram, vertexShaderSource, fragmentShaderSource) {
     this.modelAttributes = model;    
     this.uniforms = uniforms;
     this.attributes = attributes;
     this.shaderProgram = shaderProgram;
+    this.textures = {};
 
     if(shaderProgram === null) {
         this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
-
         glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
         glHost.GetUniformLocations(this.shaderProgram, this.uniforms);
     }
-    
-    glHost.EnableAttributes(this.shaderProgram, this.attributes); 
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+}
 
-    if(textureImageSource !== null) {
-        this.texture = glHost.SetupTexture(this.shaderProgram, textureImageSource);
-    }
+Entity.prototype.SetupTexture = function(textureImageSource) {
+    this.textures[textureImageSource] = glHost.SetupTexture(this.shaderProgram, textureImageSource);
 }
 
 Entity.prototype.UpdateUniformValues = function(uniformValueSet) {

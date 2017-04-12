@@ -44,6 +44,10 @@ GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
 GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
     this.gl.useProgram(shaderProgram);
     Object.keys(attributes).forEach((attributeName, index) => {
+        if(attributes[attributeName].location != -1) {
+            this.gl.vertexAttribPointer(attributes[attributeName].location, attributes[attributeName].size, this.gl.FLOAT, false, 0, 0);        
+            this.gl.enableVertexAttribArray(attributes[attributeName].location);
+        }
         if(attributes[attributeName].buffer === null) {
             attributes[attributeName].buffer = this.gl.createBuffer();
         }
@@ -59,15 +63,6 @@ GLHost.prototype.SpecifyAttributes = function(attributes) {
         }
         if(attributes[attributeName].location != -1) {
             this.gl.vertexAttribPointer(attributes[attributeName].location, attributes[attributeName].size, this.gl.FLOAT, false, 0, 0);
-        }
-    });
-}
-
-GLHost.prototype.EnableAttributes = function(shaderProgram, attributes) {
-    this.gl.useProgram(shaderProgram);
-    Object.keys(attributes).forEach((attributeName) => {
-        if(attributes[attributeName].location != -1) {
-            this.gl.enableVertexAttribArray(attributes[attributeName].location);
         }
     });
 }

@@ -36,16 +36,15 @@ GLHost.prototype.GetUniformLocations = function(shaderProgram, uniforms) {
 }
 
 GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
-    let attributeLocations = {};
     Object.keys(attributes).forEach((attributeName) => {
         attributes[attributeName].location = this.gl.getAttribLocation(shaderProgram, attributeName);
     });
 }
 
 GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
-    this.gl.useProgram(shaderProgram)
+    this.gl.useProgram(shaderProgram);
     Object.keys(attributes).forEach((attributeName, index) => {
-        if(attributes[attributeName].buffer == null) {
+        if(attributes[attributeName].buffer === null) {
             attributes[attributeName].buffer = this.gl.createBuffer();
         }
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
@@ -55,33 +54,38 @@ GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
 
 GLHost.prototype.SpecifyAttributes = function(attributes) {
     Object.keys(attributes).forEach((attributeName) => {
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
+        if(attributes[attributeName].buffer !== null) {
+            this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
+        }
         if(attributes[attributeName].location != -1) {
             this.gl.vertexAttribPointer(attributes[attributeName].location, attributes[attributeName].size, this.gl.FLOAT, false, 0, 0);
         }
     });
 }
 
-GLHost.prototype.EnableAttributes = function(attributes) {
+GLHost.prototype.EnableAttributes = function(shaderProgram, attributes) {
+    this.gl.useProgram(shaderProgram);
     Object.keys(attributes).forEach((attributeName) => {
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
         if(attributes[attributeName].location != -1) {
             this.gl.enableVertexAttribArray(attributes[attributeName].location);
         }
     });
 }
 
-GLHost.prototype.SetupTexture = function(textureImageSource) {
+GLHost.prototype.SetupTexture = function(shaderProgram, textureImageSource) {
+    this.gl.useProgram(shaderProgram);
+
     let texture = this.gl.createTexture();
     this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
     this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
 
     let textureImage = new Image();
     textureImage.onload = (() => {
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
         this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, textureImage);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);     
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+
         this.gl.generateMipmap(this.gl.TEXTURE_2D);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
     });
     textureImage.crossOrigin = "anonymous";
     textureImage.src = textureImageSource;

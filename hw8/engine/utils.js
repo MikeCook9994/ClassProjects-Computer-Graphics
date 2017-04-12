@@ -5,10 +5,10 @@ function DegreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
 
-function CreateUniforms(uniformNames, uniformTypes, uniformCopyFunction) {
+function CreateUniforms(uniformNames, uniformTypes, uniformCopyFunctions) {
     let uniforms = {};
     uniformNames.forEach((uniformName, index) => {
-        uniforms[uniformName] = new Uniform(uniformName, uniformTypes[index], uniformCopyFunction[index]);
+        uniforms[uniformName] = new Uniform(uniformName, uniformTypes[index], uniformCopyFunctions[index]);
     });
     return uniforms;
 }
@@ -21,11 +21,10 @@ function CreateAttributes(attributeNames, attributeValues, attributeSizes) {
     return attributes;
 }
 
-function CreateShaderProgram() {
+function CreateShaderProgram(vertexShaderSource, fragmentShaderSource) {
     let vertexShader = glHost.CreateAndCompileShader(glHost.gl.VERTEX_SHADER, vertexShaderSource);
     let fragmentShader = glHost.CreateAndCompileShader(glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
-    let shaderProgram = glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
-    return shaderProgram;
+    return glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
 }
 
 function PrintSliderValues() {

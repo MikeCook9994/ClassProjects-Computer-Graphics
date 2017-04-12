@@ -29,17 +29,18 @@
     let fovSlider = document.getElementById("slider5");
 
     let marioTextureImageSource = "http://i.imgur.com/lvaEw2u.png";
-    //let cubeTextureImageSource = "http://i.imgur.com/8rE2XyE.png";
+    let cubeTextureImageSource = "http://i.imgur.com/8rE2XyE.png";
 
-    let ground = new Ground(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    let ground = new Ground(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
     let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, marioTextureImageSource);
     //let mario = new Mario(cubeObjectAttributes, texturingVertexShader, texturingFragmentShader, cubeTextureImageSource);
     
     let scene = new Scene();
-    //scene.AddEntity(pipe);
-    scene.AddEntity(mario);
+
     scene.AddEntityCollection(ground);
+    scene.AddEntity(pipe);
+    scene.AddEntity(mario);
 
     window.requestAnimationFrame(Draw);
 })();

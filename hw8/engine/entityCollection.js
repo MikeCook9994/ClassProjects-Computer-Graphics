@@ -7,11 +7,9 @@ function EntityCollection(model, vertexShaderSource, fragmentShaderSource, attri
     this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
     glHost.GetUniformLocations(this.shaderProgram, uniformTemplate);
-
+    
     glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
-    glHost.EnableAttributes(this.attributes); 
-
-    glHost.SetShaderProgram(this.shaderProgram);
+    glHost.EnableAttributes(this.shaderProgram, this.attributes); 
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
@@ -31,10 +29,4 @@ EntityCollection.prototype.Draw = function() {
     Object.keys(this.entities).forEach((entityId, index) => {
         this.entities[entityId].Draw();
     });
-}
-
-function CreateShaderProgram(vertexShaderSource, fragmentShaderSource) {
-    let vertexShader = glHost.CreateAndCompileShader(glHost.gl.VERTEX_SHADER, vertexShaderSource);
-    let fragmentShader = glHost.CreateAndCompileShader(glHost.gl.FRAGMENT_SHADER, fragmentShaderSource);
-    return glHost.CreateAndConfigureProgram(vertexShader, fragmentShader);
 }

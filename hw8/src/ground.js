@@ -1,7 +1,5 @@
 function Ground(objectAttributes, vertexShader, fragmentShader) {
-    this.objectAttributes = objectAttributes;
-
-    let attributes = CreateGroundAttributes(this.objectAttributes);
+    let attributes = CreateGroundAttributes(objectAttributes);
     let uniformTemplate = CreateGroundUniformTemplate();
 
     this.entityCollection = new EntityCollection(objectAttributes, vertexShader, fragmentShader, attributes, uniformTemplate);

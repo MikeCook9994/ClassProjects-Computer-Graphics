@@ -1,14 +1,8 @@
 function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
-    this.objectAttributes = objectAttributes;
-    this.vertexShader = vertexShaderSource;
-    this.fragmentShader = fragmentShaderSource;
-
-    let shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
-
-    this.attributes = CreatePipeAttributes(objectAttributes);
-    this.uniforms = CreatePipeUniforms();
+    let attributes = CreatePipeAttributes(objectAttributes);
+    let uniforms = CreatePipeUniforms();
     
-    this.entity = new Entity(objectAttributes, this.uniforms, this.attributes, shaderProgram, true);
+    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource, null);
 }
 
 Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
@@ -33,4 +27,3 @@ function CreatePipeAttributes(objectAttributes) {
     let attributeSizes = [3, 3];
     return CreateAttributes(attributeNames, attributeValues, attributeSizes);
 }
-

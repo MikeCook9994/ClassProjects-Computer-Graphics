@@ -1,12 +1,8 @@
 function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textureImageSource) {
-    this.objectAttributes = objectAttributes;
-    this.vertexShader = vertexShaderSource;
-    this.fragmentShader = fragmentShaderSource;
+    let attributes = CreateMarioAttributes(objectAttributes);
+    let uniforms = CreateMarioUniforms();
 
-    this.attributes = CreateMarioAttributes(objectAttributes);
-    this.uniforms = CreateMarioUniforms();
-
-    this.entity = new Entity(objectAttributes, this.uniforms, this.attributes, null, vertexShaderSource, fragmentShaderSource, textureImageSource); 
+    this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource, textureImageSource);
 }
 
 Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
@@ -18,24 +14,14 @@ Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
     this.entity.Draw();
 }
 
-function UpdateMarioUniformValues(entity, uniformSet, cameraTransform, projectionMatrix, modelTransform) {
-
-
-    uniformSet["normalMatrix"].value = normalMatrix;
-    uniformSet["modelViewMatrix"].value = modelViewMatrix;
-    uniformSet["projectionMatrix"].value = projectionMatrix;
-    uniformSet["textureSampler"].value = 0;
-    entity.UpdateUniformValues(uniformSet);
-}
-
 function CreateMarioUniforms(shaderProgram) {
     let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler"];
     let uniformMatrixSpecifier = [true, true, true, false]; 
     let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i];
-    return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions, shaderProgram);
+    return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 
-function CreateMarioAttributes(objectAttributes, shaderProgram) {
+function CreateMarioAttributes(objectAttributes) {
     let attributeNames = ["position", "normal", "textureCoordinates"];
     let attributeValues = [
         new Float32Array(objectAttributes.vertices), 

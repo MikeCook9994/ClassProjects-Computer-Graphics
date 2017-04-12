@@ -2,21 +2,21 @@ function Entity(model, uniforms, attributes, shaderProgram, vertexShaderSource, 
     this.modelAttributes = model;    
     this.uniforms = uniforms;
     this.attributes = attributes;
-    if(textureImageSource !== null) {
-        this.texture = glHost.SetupTexture(textureImageSource);
-    }
-
     this.shaderProgram = shaderProgram;
+
     if(shaderProgram === null) {
         this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
-        glHost.SetShaderProgram(this.shaderProgram);
 
         glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
         glHost.GetUniformLocations(this.shaderProgram, this.uniforms);
     }
-    glHost.EnableAttributes(attributes); 
-
+    
+    glHost.EnableAttributes(this.shaderProgram, this.attributes); 
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
+
+    if(textureImageSource !== null) {
+        this.texture = glHost.SetupTexture(this.shaderProgram, textureImageSource);
+    }
 }
 
 Entity.prototype.UpdateUniformValues = function(uniformValueSet) {
@@ -27,6 +27,7 @@ Entity.prototype.UpdateUniformValues = function(uniformValueSet) {
 
 Entity.prototype.Draw = function() {
     glHost.SetShaderProgram(this.shaderProgram);
+    glHost.SpecifyAttributes(this.attributes);
     Object.keys(this.uniforms).forEach((uniformName) => {
         let uniform = this.uniforms[uniformName];
         if(uniform.isMatrix) {
@@ -36,7 +37,5 @@ Entity.prototype.Draw = function() {
             uniform.glCopyUniformFunction.call(glHost.gl, uniform.location, uniform.value);
         }
     });
-
-    glHost.SpecifyAttributes(this.attributes);
     glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

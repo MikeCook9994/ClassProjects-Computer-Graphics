@@ -1,5 +1,6 @@
 function GLHost(webGLContext) {
     this.gl = webGLContext;
+    this.textureCount = 0;
 }
 
 GLHost.prototype.CreateAndCompileShader = function(shaderType, shaderSource) {
@@ -69,11 +70,16 @@ GLHost.prototype.SpecifyAttributes = function(attributes) {
 
 GLHost.prototype.SetupTexture = function(textureImageSource) {
     let texture = this.gl.createTexture();
+    let activeTextureProperty = eval("this.gl.TEXTURE" + this.textureCount);
+    this.texureCount++
+
+    this.gl.activeTexture(activeTextureProperty);
     this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
     this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
 
     let textureImage = new Image();
     textureImage.onload = (() => {
+        this.gl.activeTexture(activeTextureProperty);
         this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
         this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, textureImage);
 
@@ -83,7 +89,14 @@ GLHost.prototype.SetupTexture = function(textureImageSource) {
     textureImage.crossOrigin = "anonymous";
     textureImage.src = textureImageSource;
 
-    return texture;
+    return new Texture(textureImageSource, activeTextureProperty, texture);
+}
+
+GLHost.prototype.EnableTextures = function(textures) {
+    textures.forEach((texture) => {
+        this.gl.activeTexture(texture.textureUnit);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, texture.webGLTexture);
+    });
 }
 
 GLHost.prototype.ConfigureWebGL = function() {

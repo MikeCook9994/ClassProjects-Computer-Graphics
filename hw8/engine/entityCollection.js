@@ -3,7 +3,7 @@ function EntityCollection(model, vertexShaderSource, fragmentShaderSource, attri
     this.attributes = attributes;
     this.uniformTemplate = uniformTemplate;
     this.entities = {};
-    this.textures = {};
+    this.textures = [];
 
     this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
@@ -28,7 +28,7 @@ EntityCollection.prototype.CreateEntity = function(entityId) {
 
 EntityCollection.prototype.SetupTextures = function(textureImageSources) {
     textureImageSources.forEach((textureImageSource) => {
-        this.textures[textureImageSource] = glHost.SetupTexture(textureImageSource);
+        this.textures.push(glHost.SetupTexture(textureImageSource));
     });
 }
 
@@ -37,6 +37,7 @@ EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValue
 }
  
 EntityCollection.prototype.Draw = function() {
+    glHost.EnableTextures(this.textures);
     Object.keys(this.entities).forEach((entityId, index) => {
         this.entities[entityId].Draw();
     });

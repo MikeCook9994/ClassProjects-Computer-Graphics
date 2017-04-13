@@ -3,19 +3,19 @@ function Entity(model, uniforms, attributes, shaderProgram, vertexShaderSource, 
     this.uniforms = uniforms;
     this.attributes = attributes;
     this.shaderProgram = shaderProgram;
-    this.textures = {};
 
     if(shaderProgram === null) {
         this.shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
         glHost.GetAttributeLocations(this.shaderProgram, this.attributes);
         glHost.GetUniformLocations(this.shaderProgram, this.uniforms);
+        this.textures = [];
     }
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
 Entity.prototype.SetupTextures = function(textureImageSources) {
     textureImageSources.forEach((textureImageSource) => {
-        this.textures[textureImageSource] = glHost.SetupTexture(textureImageSource);
+        this.textures.push(glHost.SetupTexture(textureImageSource));
     });
 }
 
@@ -37,6 +37,10 @@ Entity.prototype.Draw = function() {
             uniform.glCopyUniformFunction.call(glHost.gl, uniform.location, uniform.value);
         }
     });
+
+    if(this.hasOwnProperty("textures")) {
+        glHost.EnableTextures(this.textures);
+    }
 
     glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

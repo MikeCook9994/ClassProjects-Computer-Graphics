@@ -29,8 +29,8 @@ function CreateShaderProgram(vertexShaderSource, fragmentShaderSource) {
 
 function PrintSliderValues() {
     console.log("angle: " + document.getElementById("slider1").value);
-    console.log("cam y: " + document.getElementById("slider2").value);
+    console.log("lookat x:" + document.getElementById("slider2").value);  
     console.log("lookat y: " + document.getElementById("slider3").value);
-    console.log("lookat z:" + document.getElementById("slider4").value);  
+    console.log("cam y: " + document.getElementById("slider4").value);
     console.log("fov:" + document.getElementById("slider5").value);    
 } 

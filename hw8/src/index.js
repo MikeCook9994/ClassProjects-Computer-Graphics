@@ -19,7 +19,7 @@
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
 
         scene.Draw(cameraTransform, projectionTransform);
-        window.requestAnimationFrame(Draw);
+            window.requestAnimationFrame(Draw);
     }
 
     let angleSlider = document.getElementById("slider1");
@@ -40,10 +40,10 @@
     // let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
     // scene.AddEntity(pipe);
 
-    // let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, marioTextureImageSource);
+    // let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]);
     // scene.AddEntity(mario);
 
-    let ground = new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, noBlackColorGradientTextureImageSource);
+    let ground = new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]);
     scene.AddEntityCollection(ground);
 
     window.requestAnimationFrame(Draw);

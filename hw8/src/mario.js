@@ -1,9 +1,9 @@
-function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textureImageSource) {
+function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textureImageSources) {
     let attributes = CreateMarioAttributes(objectAttributes);
     let uniforms = CreateMarioUniforms();
 
     this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
-    this.entity.SetupTexture(textureImageSource);
+    this.entity.SetupTextures(textureImageSources);
 }
 
 Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {

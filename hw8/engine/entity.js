@@ -13,8 +13,10 @@ function Entity(model, uniforms, attributes, shaderProgram, vertexShaderSource, 
     glHost.BufferAttributeData(this.shaderProgram, this.attributes);
 }
 
-Entity.prototype.SetupTexture = function(textureImageSource) {
-    this.textures[textureImageSource] = glHost.SetupTexture(textureImageSource);
+Entity.prototype.SetupTextures = function(textureImageSources) {
+    textureImageSources.forEach((textureImageSource) => {
+        this.textures[textureImageSource] = glHost.SetupTexture(textureImageSource);
+    });
 }
 
 Entity.prototype.UpdateUniformValues = function(uniformValueSet) {

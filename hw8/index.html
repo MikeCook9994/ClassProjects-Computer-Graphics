@@ -4,19 +4,19 @@
         <title>Graphics Kingdom</title>
     </header>
     <body>
-        <canvas id="drawing-plane" height=500 width=500></canvas>
+        <canvas id="drawing-plane" height=1024 width=1024></canvas>
         <div id="controls">
             <p>Camera Angle</p>
-            <input id="slider1" type="range" min="-100" max="100" value="-64"/>
+            <input id="slider1" type="range" min="-100" max="100" value="100"/>
             <br>
             <p>Camera Y</p>
-            <input id="slider2" type="range" min="-300" max="500" value="14"/>
+            <input id="slider2" type="range" min="-300" max="500" value="500"/>
             <br>
             <p>Lookat Y</p>
-            <input id="slider3" type="range" min="-500" max="500" value="17"/>
+            <input id="slider3" type="range" min="-500" max="500" value="26"/>
             <br>
             <p>Lookat Z</p>
-            <input id="slider4" type="range" min="-500" max="500" value="-86"/>
+            <input id="slider4" type="range" min="-500" max="500" value="-4"/>
             <br>
             <p>fov</p>
             <input id="slider5" type="range" min="1" max="160" value="5"/>
@@ -34,11 +34,9 @@
 
         <!-- object attributes -->
         <script type="text/javascript" defer="defer" src="./models/mario/default/marioModel.js"></script>
-        <script type="text/javascript" defer="defer" src="./models/mario/jumping/marioJumpingModel.js"></script>
+        <!--<script type="text/javascript" defer="defer" src="./models/mario/jumping/marioJumpingModel.js"></script>-->
         <script type="text/javascript" defer="defer" src="./models/groundBlock/groundBlockModel.js"></script>
         <script type="text/javascript" defer="defer" src="./models/pipe/pipeModel.js"></script>
-        <script type="text/javascript" defer="defer" src="./models/TestCube/cubeModel.js"></script>
-        <script type="text/javascript" defer="defer" src="./models/plane/planeModel.js"></script>
 
         <!-- shaders -->
         <script type="text/javascript" defer="defer" src="./shaders/shading/shadingFragmentShader.js"></script>

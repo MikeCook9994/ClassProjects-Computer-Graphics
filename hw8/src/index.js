@@ -28,20 +28,23 @@
     let lookatZSlider = document.getElementById("slider4");
     let fovSlider = document.getElementById("slider5");
 
-    let marioTextureImageSource = "http://i.imgur.com/lvaEw2u.png";
-    let cubeTextureImageSource = "http://i.imgur.com/8rE2XyE.png";
-    let colorGradientTextureImageSource = "http://i.imgur.com/L8Ig9V6.jpg?2";
+    let marioTextureImageSource = "http://i.imgur.com/KxFBFbe.png?1";
+    let groundBlockTextureImageSource = "http://i.imgur.com/53tE88X.png";
+    let colorGradientTextureImageSource = "http://i.imgur.com/HnerCO9.jpg?1";
+    let testTextureImageSourece = "http://i.imgur.com/IqVPyp7.jpg";
+    let floorTextureImageSource = "http://i.imgur.com/IqVPyp7.jpg";
+    let noBlackColorGradientTextureImageSource = "http://i.imgur.com/iuGJYPp.png";
 
-    let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    let ground = new Ground(groundBlockObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    //let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, colorGradientTextureImageSource);
-    let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, marioTextureImageSource);
-    
     let scene = new Scene();
 
+    // let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
+    // scene.AddEntity(pipe);
+
+    // let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, marioTextureImageSource);
+    // scene.AddEntity(mario);
+
+    let ground = new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, noBlackColorGradientTextureImageSource);
     scene.AddEntityCollection(ground);
-    scene.AddEntity(pipe);
-    scene.AddEntity(mario);
 
     window.requestAnimationFrame(Draw);
 })();

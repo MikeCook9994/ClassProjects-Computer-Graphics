@@ -1,24 +1,36 @@
-function Ground(objectAttributes, vertexShader, fragmentShader) {
+function Ground(objectAttributes, vertexShader, fragmentShader, textureImageSource) {
     let attributes = CreateGroundAttributes(objectAttributes);
     let uniformTemplate = CreateGroundUniformTemplate();
 
     this.entityCollection = new EntityCollection(objectAttributes, vertexShader, fragmentShader, attributes, uniformTemplate);
 
-    let entityCount = 60;
+    let entityCount = 1;
     for(let entityId = 0; entityId < entityCount; entityId++) {
         this.entityCollection.CreateEntity(entityId);
+        this.entityCollection.SetupTexture(entityId, textureImageSource);
     }
 }
 
 Ground.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     let entityId = 0;
-    for(let height = -1; height < 1; height++) {
-        for(let depth = -1; depth < 2; depth++) {
-            for(let width = -5; width < 5; width++) {
-                let modelTransform = m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) , 2.2 * (width)]), m4.scaling([10, 10, 10]));
+    // for(let height = -1; height < 1; height++) {
+    //     for(let depth = -5; depth < 5; depth++) {
+    //         for(let width = -1; width < 2; width++) {
+    //             let modelTransform = m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) , 2.2 * (width)]), m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.scaling([10, 10, 10])));
+    //             let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
+    //             let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
+    //             this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0]);
+    //             entityId++;
+    //         }
+    //     }
+    // }
+    for(let height = 0; height < 1; height++) {
+        for(let depth = 0; depth < 1; depth++) {
+            for(let width = 0; width < 1; width++) {
+                let modelTransform = m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) , 2.2 * (width)]), m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.scaling([10, 10, 10])));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.54, 0.27, 0.07])]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0]);
                 entityId++;
             }
         }
@@ -27,15 +39,18 @@ Ground.prototype.Draw = function(cameraMatrix, projectionMatrix) {
 }
 
 function CreateGroundUniformTemplate() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler"];
     let uniformMatrixSpecifier = [true, true, true, false];
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 
 function CreateGroundAttributes(objectAttributes) {
-    let attributeNames = ["position", "normal"];
-    let attributeValues = [new Float32Array(objectAttributes.vertices), new Float32Array(objectAttributes.vertexNormals)];
-    let attributeSizes = [3, 3];
+    let attributeNames = ["position", "normal", "textureCoordiantes"];
+    let attributeValues = [
+        new Float32Array(objectAttributes.vertices), 
+        new Float32Array(objectAttributes.vertexNormals),
+        new Float32Array(objectAttributes.vertexTextureCoordinates)];
+    let attributeSizes = [3, 3, 2];
     return CreateAttributes(attributeNames, attributeValues, attributeSizes);
 }

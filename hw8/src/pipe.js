@@ -6,7 +6,7 @@ function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
 }
 
 Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.translation([0.05, 0.5, 2.9]), m4.scaling([15, 15, 15]));
+    let modelTransform = m4.multiply(m4.translation([-2.9, 0.5, 0.58]), m4.scaling([15, 15, 15]));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 

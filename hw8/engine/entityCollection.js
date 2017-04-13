@@ -20,6 +20,10 @@ EntityCollection.prototype.CreateEntity = function(entityId) {
     this.entities[entityId] = new Entity(this.model, uniforms, this.attributes, this.shaderProgram, null, null);
 }
 
+EntityCollection.prototype.SetupTexture = function(entityId, textureImageSource) {
+    this.entities[entityId].SetupTexture(textureImageSource);
+}
+
 EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValueSet) {
     this.entities[entityId].UpdateUniformValues(uniformValueSet);
 }

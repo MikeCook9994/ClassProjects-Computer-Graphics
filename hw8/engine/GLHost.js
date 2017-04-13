@@ -67,7 +67,7 @@ GLHost.prototype.SpecifyAttributes = function(attributes) {
     });
 }
 
-GLHost.prototype.SetupTexture = function(textureImageSource, flipY) {
+GLHost.prototype.SetupTexture = function(textureImageSource) {
     let texture = this.gl.createTexture();
     this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
     this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);

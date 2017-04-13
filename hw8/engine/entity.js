@@ -35,5 +35,6 @@ Entity.prototype.Draw = function() {
             uniform.glCopyUniformFunction.call(glHost.gl, uniform.location, uniform.value);
         }
     });
+
     glHost.gl.drawArrays(glHost.gl.TRIANGLES, 0, this.modelAttributes.vertices.length / 3);
 }

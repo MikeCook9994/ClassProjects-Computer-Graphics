@@ -1,7 +1,7 @@
 (() => {
     function SetupCanvas() {
         glHost.ConfigureWebGL();
-        glHost.ColorCanvas(1.0, 1.0, 1.0, 1.0);
+        glHost.ColorCanvas(0.365, 0.58, 0.984, 1.0);
     }    
 
     function GetCameraTransform() {
@@ -30,17 +30,16 @@
 
     let marioTextureImageSource = "http://i.imgur.com/KxFBFbe.png?1";
     let groundBlockTextureImageSource = "http://i.imgur.com/53tE88X.png";
+    let undergroundBlockTextureImageSource = "http://i.imgur.com/w34IpSn.png";
 
     let scene = new Scene();
 
-    let pipe = new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader);
-    scene.AddEntity(pipe);
-
-    let mario = new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]);
-    scene.AddEntity(mario);
-
-    let ground = new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]);
-    scene.AddEntityCollection(ground);
+    scene.AddEntity(new AbovegroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    scene.AddEntity(new UndergroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
+    scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));
+    scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
 
     window.requestAnimationFrame(Draw);
 })();

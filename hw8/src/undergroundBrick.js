@@ -1,6 +1,6 @@
-function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSources) {
-    let attributes = CreateCoinAttributes(objectAttributes);
-    let uniformTemplate = CreateCoinUniformTemplate();
+function UndergroundBrick(objectAttributes, vertexShader, fragmentShader, textureImageSources) {
+    let attributes = CreateUndergroundBrickAttributes(objectAttributes);
+    let uniformTemplate = CreateUndergroundBrickUniformTemplate();
 
     this.entityCollection = new EntityCollection(objectAttributes, vertexShader, fragmentShader, attributes, uniformTemplate);
 
@@ -12,7 +12,7 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     this.entityCollection.SetupTextures(textureImageSources);        
 }
 
-Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
+UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     let entityId = 0;
     for(let height = -1; height < 1; height++) {
         for(let depth = -7; depth < 8; depth++) {
@@ -28,14 +28,14 @@ Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     this.entityCollection.Draw();
 }
 
-function CreateCoinUniformTemplate() {
+function CreateUndergroundBrickUniformTemplate() {
     let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler"];
     let uniformMatrixSpecifier = [true, true, true, false];
     let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 
-function CreateCoinAttributes(objectAttributes) {
+function CreateUndergroundBrickAttributes(objectAttributes) {
     let attributeNames = ["position", "normal", "textureCoordinates"];
     let attributeValues = [
         new Float32Array(objectAttributes.vertices), 

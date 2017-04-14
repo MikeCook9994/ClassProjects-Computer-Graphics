@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'brick.blend'
 # www.blender.org
-mtllib brick.mtl
+mtllib undergroundBrick.mtl
 v -1.000000 1.000000 1.000000
 v -1.000000 1.000000 -1.000000
 v 1.000000 1.000000 1.000000

@@ -31,18 +31,20 @@
     let marioTextureImageSource = "http://i.imgur.com/KxFBFbe.png?1";
     let groundBlockTextureImageSource = "http://i.imgur.com/53tE88X.png";
     let undergroundBlockTextureImageSource = "http://i.imgur.com/w34IpSn.png";
-    let aboveGroundBrickTextureImageSource = "http://i.imgur.com/VuAeSyH.png";
+    let brickTextureImageSource = "http://i.imgur.com/VuAeSyH.png";
     let undergroundBrickTextureImageSource = "http://i.imgur.com/5meN48n.png";
     let coinTextureImageSource = "http://i.imgur.com/xWPJ1tJ.png";
 
     let scene = new Scene();
 
-    scene.AddEntity(new AbovegroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
-    // scene.AddEntity(new UndergroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
     scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));
     scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
+    // scene.AddEntityCollection(new UndergroundBrick(brickBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
+    scene.AddEntityCollection(new Brick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [brickTextureImageSource]));
+    // scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
+    scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
 
     window.requestAnimationFrame(Draw);
 })();

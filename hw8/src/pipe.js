@@ -1,4 +1,4 @@
-function AbovegroundPipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
+function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
     let attributes = CreatePipeAttributes(objectAttributes);
     let uniformTemplate = CreatePipeUniformsTemplate();
     
@@ -10,7 +10,7 @@ function AbovegroundPipe(objectAttributes, vertexShaderSource, fragmentShaderSou
     }      
 }
 
-AbovegroundPipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
+Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelTransform = m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-140, 13.0, 9.5]));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));

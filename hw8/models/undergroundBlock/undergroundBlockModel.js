@@ -1,4 +1,4 @@
-let groundBlockObjectAttributes = 
+let undergroundBlockObjectAttributes = 
 {
     "vertices": [
         -1.17161, -0.488927, -0.202217,

@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'groundBlock.blend'
 # www.blender.org
-mtllib groundBlock.mtl
+mtllib undergroundBlock.mtl
 v -1.171610 -0.738927 -1.952217
 v -1.171610 -0.738927 0.047783
 v -1.171610 1.261073 -1.952217

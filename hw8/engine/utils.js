@@ -34,3 +34,9 @@ function PrintSliderValues() {
     console.log("cam y: " + document.getElementById("slider4").value);
     console.log("fov:" + document.getElementById("slider5").value);    
 } 
+
+function GetSunDirection() {
+    let timeOfDay = Number(document.getElementById("time-of-day").value);
+    let lightAngle = Math.PI * (timeOfDay-6)/12;
+    return lightVector = [Math.cos(lightAngle), Math.sin(lightAngle), 0];
+}

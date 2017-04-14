@@ -15,21 +15,21 @@ Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entityCollection.UpdateUniformValues(0, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0])]);
+    this.entityCollection.UpdateUniformValues(0, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0]), GetSunDirection()]);
 
     modelTransform = m4.multiply(m4.rotationZ(DegreesToRadians(270)), m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-125, -272, 9.5])));
     modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entityCollection.UpdateUniformValues(1, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0])]);
+    this.entityCollection.UpdateUniformValues(1, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0]), GetSunDirection()]);
 
     this.entityCollection.Draw();
 }
 
 function CreatePipeUniformsTemplate() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];
-    let uniformMatrixSpecifier = [true, true, true, false];
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color", "light"];
+    let uniformMatrixSpecifier = [true, true, true, false, false];
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv, glHost.gl.uniform3fv];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 

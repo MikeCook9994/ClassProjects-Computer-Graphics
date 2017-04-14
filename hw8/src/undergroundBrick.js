@@ -20,7 +20,7 @@ UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.translation([2.025 * (depth) + .5, 2.025 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10]));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
                 entityId++;
             }
         }
@@ -32,7 +32,7 @@ UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.multiply(m4.translation([2.025 * (depth) + .5, 2.025 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10])));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
                 entityId++;
             }
         }
@@ -41,9 +41,9 @@ UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
 }
 
 function CreateUndergroundBrickUniformTemplate() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler"];
-    let uniformMatrixSpecifier = [true, true, true, false];
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler", "light"];
+    let uniformMatrixSpecifier = [true, true, true, false, false];
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i, glHost.gl.uniform3fv];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 

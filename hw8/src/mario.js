@@ -11,14 +11,14 @@ Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, 0]);
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
     this.entity.Draw();
 }
 
 function CreateMarioUniforms(shaderProgram) {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler"];
-    let uniformMatrixSpecifier = [true, true, true, false]; 
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler", "light"];
+    let uniformMatrixSpecifier = [true, true, true, false, false]; 
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform1i, glHost.gl.uniform3fv];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 

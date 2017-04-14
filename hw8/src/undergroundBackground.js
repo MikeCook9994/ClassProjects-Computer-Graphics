@@ -10,14 +10,14 @@ UndergroundBackground.prototype.Draw = function(cameraTransform, projectionMatri
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.0, 0.0, 0.0])]);   
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.0, 0.0, 0.0]), GetSunDirection()]);   
     this.entity.Draw();
 }
 
 function CreateUndergroundBackgroundUniforms() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];
-    let uniformMatrixSpecifier = [true, true, true, false];
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color", "light"];
+    let uniformMatrixSpecifier = [true, true, true, false, false];
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv, glHost.gl.uniform3fv];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 

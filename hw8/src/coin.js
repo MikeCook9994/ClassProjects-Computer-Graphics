@@ -2,9 +2,10 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     let attributes = CreateCoinAttributes(objectAttributes);
     let uniformTemplate = CreateCoinUniformTemplate();
 
+    this.angle = 0;
     this.entityCollection = new EntityCollection(objectAttributes, vertexShader, fragmentShader, attributes, uniformTemplate);
 
-    let entityCount = 90;
+    let entityCount = 9;
     for(let entityId = 0; entityId < entityCount; entityId++) {
         this.entityCollection.CreateEntity(entityId);
     }
@@ -14,10 +15,10 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
 
 Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     let entityId = 0;
-    for(let height = -1; height < 1; height++) {
-        for(let depth = -7; depth < 8; depth++) {
+    for(let height = -12; height < -11; height++) {
+        for(let depth = 2; depth < 5; depth++) {
             for(let width = -1; width < 2; width++) {
-                let modelTransform = m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) , 2.2 * (width)]), m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.scaling([10, 10, 10])));
+                let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.multiply(m4.translation([2.025 * (depth) + .5, 2.00 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10])));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
                 this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0]);
@@ -26,6 +27,7 @@ Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
         }
     }
     this.entityCollection.Draw();
+    this.angle+=2;
 }
 
 function CreateCoinUniformTemplate() {

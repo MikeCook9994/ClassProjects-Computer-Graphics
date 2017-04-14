@@ -41,9 +41,9 @@
     scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));
     scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
-    // scene.AddEntityCollection(new UndergroundBrick(brickBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
+    scene.AddEntityCollection(new UndergroundBrick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
     scene.AddEntityCollection(new Brick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [brickTextureImageSource]));
-    // scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
+    scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
     scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
 
     window.requestAnimationFrame(Draw);

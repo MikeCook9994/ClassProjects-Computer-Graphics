@@ -10,6 +10,6 @@ UndergroundPipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.25, 0.6, .58])]);   
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0])]);   
     this.entity.Draw();
 }

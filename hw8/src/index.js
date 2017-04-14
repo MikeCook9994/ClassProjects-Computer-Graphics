@@ -38,7 +38,7 @@
     let scene = new Scene();
 
     scene.AddEntity(new AbovegroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
-    scene.AddEntity(new UndergroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    // scene.AddEntity(new UndergroundPipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
     scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));

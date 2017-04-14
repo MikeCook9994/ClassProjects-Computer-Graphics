@@ -1,6 +1,6 @@
 function UndergroundBackground(objectAttributes, vertexShaderSource, fragmentShaderSource) {
-    let attributes = CreatePipeAttributes(objectAttributes);
-    let uniforms = CreatePipeUniforms();
+    let attributes = CreateUndergroundBackgroundAttributes(objectAttributes);
+    let uniforms = CreateUndergroundBackgroundUniforms();
     
     this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
 }
@@ -14,7 +14,7 @@ UndergroundBackground.prototype.Draw = function(cameraTransform, projectionMatri
     this.entity.Draw();
 }
 
-function CreateUndergroundBackgroundUniformTemplate() {
+function CreateUndergroundBackgroundUniforms() {
     let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color"];
     let uniformMatrixSpecifier = [true, true, true, false];
     let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv];

@@ -29,7 +29,7 @@ Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
 function CreatePipeUniformsTemplate() {
     let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color", "light"];
     let uniformMatrixSpecifier = [true, true, true, false, false];
-    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv, glHost.gl.uniform3fv];
+    let uniformCopyFunctions = [webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniform3fv"), webglApp.GetGLProperty("uniform3fv")];
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 

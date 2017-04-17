@@ -1,9 +1,18 @@
-function GLHost(webGLContext) {
-    this.gl = webGLContext;
+function WebGLApp(htmlCanvasId) {
+    this.gl = document.getElementById(htmlCanvasId).getContext("webgl");
     this.textureCount = 0;
+    this.propertyCache = {};
 }
 
-GLHost.prototype.CreateAndCompileShader = function(shaderType, shaderSource) {
+WebGLApp.prototype.GetGLProperty = function(propertyName) {
+    if(this.propertyCache.hasOwnProperty(propertyName)) {
+        return this.propertyCache[propertyName];
+    }
+    this.propertyCache[propertyName] = eval("this.gl." + propertyName);
+    return this.propertyCache[propertyName];
+}
+
+WebGLApp.prototype.CreateAndCompileShader = function(shaderType, shaderSource) {
      let shader = this.gl.createShader(shaderType);
      this.gl.shaderSource(shader, shaderSource);
      this.gl.compileShader(shader);
@@ -14,7 +23,7 @@ GLHost.prototype.CreateAndCompileShader = function(shaderType, shaderSource) {
      return shader;
 }
 
-GLHost.prototype.CreateAndConfigureProgram = function(vertexShader, fragmentShader) {
+WebGLApp.prototype.CreateAndConfigureProgram = function(vertexShader, fragmentShader) {
     let shaderProgram = this.gl.createProgram();
     this.gl.attachShader(shaderProgram, vertexShader);
     this.gl.attachShader(shaderProgram, fragmentShader);
@@ -26,23 +35,23 @@ GLHost.prototype.CreateAndConfigureProgram = function(vertexShader, fragmentShad
     return shaderProgram;
 }
 
-GLHost.prototype.SetShaderProgram = function(shaderProgram) {
+WebGLApp.prototype.SetShaderProgram = function(shaderProgram) {
     this.gl.useProgram(shaderProgram);
 }
 
-GLHost.prototype.GetUniformLocations = function(shaderProgram, uniforms) {
+WebGLApp.prototype.GetUniformLocations = function(shaderProgram, uniforms) {
     Object.keys(uniforms).forEach((uniformName) => {
        uniforms[uniformName].location = this.gl.getUniformLocation(shaderProgram, uniformName);
     });
 }
 
-GLHost.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
+WebGLApp.prototype.GetAttributeLocations = function(shaderProgram, attributes) {
     Object.keys(attributes).forEach((attributeName) => {
         attributes[attributeName].location = this.gl.getAttribLocation(shaderProgram, attributeName);
     });
 }
 
-GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
+WebGLApp.prototype.BufferAttributeData = function(shaderProgram, attributes) {
     this.gl.useProgram(shaderProgram);
     Object.keys(attributes).forEach((attributeName, index) => {
         if(attributes[attributeName].location != -1) {
@@ -57,7 +66,7 @@ GLHost.prototype.BufferAttributeData = function(shaderProgram, attributes) {
     });
 }
 
-GLHost.prototype.SpecifyAttributes = function(attributes) {
+WebGLApp.prototype.SpecifyAttributes = function(attributes) {
     Object.keys(attributes).forEach((attributeName) => {
         if(attributes[attributeName].buffer !== null) {
             this.gl.bindBuffer(this.gl.ARRAY_BUFFER, attributes[attributeName].buffer);
@@ -68,7 +77,7 @@ GLHost.prototype.SpecifyAttributes = function(attributes) {
     });
 }
 
-GLHost.prototype.SetupTexture = function(textureImageSource) {
+WebGLApp.prototype.SetupTexture = function(textureImageSource) {
     let texture = this.gl.createTexture();
     let activeTextureProperty = eval("this.gl.TEXTURE" + this.textureCount);
     this.texureCount++
@@ -92,18 +101,22 @@ GLHost.prototype.SetupTexture = function(textureImageSource) {
     return new Texture(textureImageSource, activeTextureProperty, texture);
 }
 
-GLHost.prototype.EnableTextures = function(textures) {
+WebGLApp.prototype.EnableTextures = function(textures) {
     textures.forEach((texture) => {
         this.gl.activeTexture(texture.textureUnit);
         this.gl.bindTexture(this.gl.TEXTURE_2D, texture.webGLTexture);
     });
 }
 
-GLHost.prototype.ConfigureWebGL = function() {
+WebGLApp.prototype.ConfigureWebGL = function() {
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 }
 
-GLHost.prototype.ColorCanvas = function(red, green, blue, alpha) {
+WebGLApp.prototype.ColorCanvas = function(red, green, blue, alpha) {
     this.gl.clearColor(red, green, blue, alpha);
+}
+
+WebGLApp.prototype.Draw = function(length) {
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, length)
 }

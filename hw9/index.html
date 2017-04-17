@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Graphics Kingdom</title>
+    </header>
+    <body>
+        <canvas id="drawing-plane" height=1024 width=1024></canvas>
+        <div id="controls">
+            <p>Time of Day</p>
+            <input id="time-of-day" type="range" min="0" max="24" value="12"/>
+            <br>
+            <p>Camera Angle</p>
+            <input id="slider1" type="range" min="-100" max="100" value="-99"/>
+            <br>
+            <p>Lookat X</p>
+            <input id="slider2" type="range" min="-500" max="500" value="-8"/>
+            <br>
+            <p>Lookat Y</p>
+            <input id="slider3" type="range" min="-500" max="500" value="164"/>
+            <br>
+            <p>Camera Y</p>
+            <input id="slider4" type="range" min="-300" max="500" value="144"/>
+            <br>
+            <p>fov</p>
+            <input id="slider5" type="range" min="1" max="160" value="72"/>
+        </div>
+
+        <!-- libraries -->
+        <script type="text/javascript" defer="defer" src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/GLHost.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/utils.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/uniform.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/attribute.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/entity.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/entityCollection.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/scene.js"></script>
+        <script type="text/javascript" defer="defer" src="./engine/texture.js"></script>
+
+        <!-- object attributes -->
+        <script type="text/javascript" defer="defer" src="./models/mario/default/marioModel.js"></script>
+        <!--<script type="text/javascript" defer="defer" src="./models/mario/jumping/marioJumpingModel.js"></script>-->
+        <script type="text/javascript" defer="defer" src="./models/groundBlock/groundBlockModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/pipe/pipeModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/plane/planeModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/brick/brickModel.js"></script>
+        <script type="text/javascript" defer="defer" src="./models/coin/coinModel.js"></script>
+
+        <!-- shaders -->
+        <script type="text/javascript" defer="defer" src="./shaders/shading/shadingFragmentShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/shading/shadingVertexShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/texturing/texturingFragmentShader.js"></script>
+        <script type="text/javascript" defer="defer" src="./shaders/texturing/texturingVertexShader.js"></script>
+
+        <!-- script files -->
+        <script type="text/javascript" defer="defer" src="./src/ground.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/underground.js"></script>     
+        <script type="text/javascript" defer="defer" src="./src/undergroundBackground.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/undergroundBrick.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/brick.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/coin.js"></script>        
+        <script type="text/javascript" defer="defer" src="./src/mario.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/pipe.js"></script>
+        <script type="text/javascript" defer="defer" src="./src/index.js"></script>
+    </body>
+</html>

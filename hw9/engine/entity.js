@@ -19,6 +19,10 @@ Entity.prototype.SetupTextures = function(textureImageSources) {
     });
 }
 
+Entity.prototype.SetupSkybox = function(skyboxImageSource) {
+    this.textures.push(webglApp.SetupTexture(skyboxImageSource));
+}
+
 Entity.prototype.UpdateUniformValues = function(uniformValueSet) {
     Object.keys(this.uniforms).forEach((uniformName, uniformIndex) => {
         this.uniforms[uniformName].value = uniformValueSet[uniformIndex];

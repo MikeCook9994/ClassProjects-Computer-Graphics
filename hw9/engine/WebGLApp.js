@@ -101,6 +101,31 @@ WebGLApp.prototype.SetupTexture = function(textureImageSource) {
     return new Texture(textureImageSource, activeTextureProperty, texture);
 }
 
+WebGLApp.prototype.SetupSkybox = function(textureImageSource) {
+    let texture = this.gl.createTexture();
+    let activeTextureProperty = eval("this.gl.TEXTURE" + this.textureCount);
+    this.texureCount++
+
+    this.gl.activeTexture(activeTextureProperty);
+    this.gl.bindTexture(this.gl.TEXTURE_CUBE_MAP, texture);
+    this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+
+    let textureImage = new Image();
+    textureImage.onload = (() => {
+        this.gl.activeTexture(activeTextureProperty);
+        this.gl.bindTexture(this.gl.TEXTURE_CUBE_MAP, texture);
+        this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, textureImage);
+
+        this.gl.generateMipmap(this.gl.TEXTURE_CUBE_MAP);
+        this.gl.texParameteri(this.gl.TEXTURE_CUBE_MAP, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_CUBE_MAP, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+    });
+    textureImage.crossOrigin = "anonymous";
+    textureImage.src = textureImageSource;
+
+    return new Texture(textureImageSource, activeTextureProperty, texture);
+}
+
 WebGLApp.prototype.EnableTextures = function(textures) {
     textures.forEach((texture) => {
         this.gl.activeTexture(texture.textureUnit);

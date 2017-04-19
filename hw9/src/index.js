@@ -16,7 +16,7 @@
         SetupCanvas();
 
         let cameraTransform = GetCameraTransform();
-        let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 1000);
+        let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 10000);
 
         scene.Draw(cameraTransform, projectionTransform);
             window.requestAnimationFrame(Draw);
@@ -32,6 +32,7 @@
     scene.AddEntityCollection(new Brick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [brickTextureImageSource]));
     scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
     scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    scene.AddEntity(new Skybox(cubeObjectAttributes, skyboxVertexShader, skyboxFragmentShader, [skyboxImageSource]));
 
     window.requestAnimationFrame(Draw);
 })();

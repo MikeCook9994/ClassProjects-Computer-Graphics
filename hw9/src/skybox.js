@@ -8,7 +8,7 @@ function Skybox(objectAttributes, vertexShaderSource, fragmentShaderSource, skyb
 }
 
 Skybox.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.scaling([1000, 1000, 1000]));
+    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.scaling([10000, 10000, 10000]));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
     this.angle+=0.05;

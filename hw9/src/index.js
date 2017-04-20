@@ -16,7 +16,7 @@
         SetupCanvas();
 
         let cameraTransform = GetCameraTransform();
-        let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 10000);
+        let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 100000);
 
         scene.Draw(cameraTransform, projectionTransform);
             window.requestAnimationFrame(Draw);

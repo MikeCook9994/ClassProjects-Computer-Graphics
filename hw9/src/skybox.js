@@ -4,7 +4,7 @@ function Skybox(objectAttributes, vertexShaderSource, fragmentShaderSource, skyb
     
     this.angle = 0;
     this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
-    this.entity.SetupSkybox(skyboxImageSource);
+    this.textureSamplerNumbers = this.entity.SetupSkybox(skyboxImageSource);
 }
 
 Skybox.prototype.Draw = function(cameraTransform, projectionMatrix) {
@@ -13,7 +13,7 @@ Skybox.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
     this.angle+=0.05;
 
-    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], GetSunDirection()]);
     this.entity.Draw();
 }
 

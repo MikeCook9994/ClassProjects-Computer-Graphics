@@ -17,10 +17,22 @@ Entity.prototype.SetupTextures = function(textureImageSources) {
     textureImageSources.forEach((textureImageSource) => {
         this.textures.push(webglApp.SetupTexture(textureImageSource));
     });
+    
+    let samplerNumbers = [];
+    this.textures.forEach((texture) => {
+        samplerNumbers.push(texture.textureUnitNumber);
+    });
+    return samplerNumbers;
 }
 
 Entity.prototype.SetupSkybox = function(skyboxImageSource) {
     this.textures.push(webglApp.SetupTexture(skyboxImageSource));
+
+    let samplerNumbers = [];
+    this.textures.forEach((texture) => {
+        samplerNumbers.push(texture.textureUnitNumber);
+    });
+    return samplerNumbers;
 }
 
 Entity.prototype.UpdateUniformValues = function(uniformValueSet) {

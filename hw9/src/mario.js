@@ -3,7 +3,7 @@ function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textu
     let uniforms = CreateMarioUniforms();
 
     this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
-    this.entity.SetupTextures(textureImageSources);
+    this.textureSamplerNumbers = this.entity.SetupTextures(textureImageSources);
 }
 
 Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
@@ -11,7 +11,7 @@ Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
-    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
+    this.entity.UpdateUniformValues([normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], GetSunDirection()]);
     this.entity.Draw();
 }
 

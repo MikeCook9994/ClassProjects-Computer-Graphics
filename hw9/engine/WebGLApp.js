@@ -80,7 +80,7 @@ WebGLApp.prototype.SpecifyAttributes = function(attributes) {
 WebGLApp.prototype.SetupTexture = function(textureImageSource) {
     let texture = this.gl.createTexture();
     let activeTextureProperty = eval("this.gl.TEXTURE" + this.textureCount);
-    this.texureCount++
+    this.textureCount++;
 
     this.gl.activeTexture(activeTextureProperty);
     this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
@@ -98,13 +98,13 @@ WebGLApp.prototype.SetupTexture = function(textureImageSource) {
     textureImage.crossOrigin = "anonymous";
     textureImage.src = textureImageSource;
 
-    return new Texture(textureImageSource, activeTextureProperty, texture);
+    return new Texture(textureImageSource, this.textureCount - 1, activeTextureProperty, texture);
 }
 
 WebGLApp.prototype.SetupSkybox = function(textureImageSource) {
     let texture = this.gl.createTexture();
     let activeTextureProperty = eval("this.gl.TEXTURE" + this.textureCount);
-    this.texureCount++
+    this.textureCount++
 
     this.gl.activeTexture(activeTextureProperty);
     this.gl.bindTexture(this.gl.TEXTURE_CUBE_MAP, texture);
@@ -123,7 +123,7 @@ WebGLApp.prototype.SetupSkybox = function(textureImageSource) {
     textureImage.crossOrigin = "anonymous";
     textureImage.src = textureImageSource;
 
-    return new Texture(textureImageSource, activeTextureProperty, texture);
+    return new Texture(textureImageSource, this.textureCount - 1, activeTextureProperty, texture);
 }
 
 WebGLApp.prototype.EnableTextures = function(textures) {

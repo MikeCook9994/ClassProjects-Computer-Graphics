@@ -30,6 +30,12 @@ EntityCollection.prototype.SetupTextures = function(textureImageSources) {
     textureImageSources.forEach((textureImageSource) => {
         this.textures.push(webglApp.SetupTexture(textureImageSource));
     });
+
+    let samplerNumbers = [];
+    this.textures.forEach((texture) => {
+        samplerNumbers.push(texture.textureUnitNumber);
+    });
+    return samplerNumbers;
 }
 
 EntityCollection.prototype.UpdateUniformValues = function(entityId, uniformValueSet) {

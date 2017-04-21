@@ -29,7 +29,7 @@
     scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));
     scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
     scene.AddEntityCollection(new UndergroundBrick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
-    scene.AddEntityCollection(new Brick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [brickTextureImageSource, brickBumpMap]));
+    scene.AddEntityCollection(new Brick(brickObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [brickTextureImageSource, brickBumpMap]));
     scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
     scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntity(new Skybox(cubeObjectAttributes, skyboxVertexShader, skyboxFragmentShader, skyboxImageSource));

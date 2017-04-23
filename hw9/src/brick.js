@@ -36,6 +36,7 @@ function CreateBrickUniformTemplate() {
 }
 
 function CreateBrickAttributes(objectAttributes) {
+    ComputeTangentBasis(objectAttributes);
     let attributeNames = ["position", "normal", "textureCoordinates"];
     let attributeValues = [
         new Float32Array(objectAttributes.vertices), 

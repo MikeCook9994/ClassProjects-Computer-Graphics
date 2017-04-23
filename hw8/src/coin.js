@@ -8,9 +8,7 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     let entityCount = 9;
     for(let entityId = 0; entityId < entityCount; entityId++) {
         this.entityCollection.CreateEntity(entityId);
-    }
-
-    this.entityCollection.SetupTextures(textureImageSources);        
+    }   
 }
 
 Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
@@ -21,7 +19,7 @@ Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.multiply(m4.translation([2.025 * (depth) + .5, 2.00 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10])));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 0, GetSunDirection()]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([.973, .314, .040]), GetSunDirection()]);
                 entityId++;
             }
         }
@@ -31,19 +29,22 @@ Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
 }
 
 function CreateCoinUniformTemplate() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler", "light"];
+    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "color", "light"];
     let uniformMatrixSpecifier = [true, true, true, false, false];
+<<<<<<< Updated upstream
     let uniformCopyFunctions = [webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniform1i"), webglApp.GetGLProperty("uniform3fv")];
+=======
+    let uniformCopyFunctions = [glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniformMatrix4fv, glHost.gl.uniform3fv, glHost.gl.uniform3fv];
+>>>>>>> Stashed changes
     return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
 }
 
 function CreateCoinAttributes(objectAttributes) {
-    let attributeNames = ["position", "normal", "textureCoordinates"];
+    let attributeNames = ["position", "normal"];
     let attributeValues = [
         new Float32Array(objectAttributes.vertices), 
-        new Float32Array(objectAttributes.vertexNormals),
-        new Float32Array(objectAttributes.vertexTextureCoordinates)
+        new Float32Array(objectAttributes.vertexNormals)
     ];
-    let attributeSizes = [3, 3, 2];
+    let attributeSizes = [3, 3];
     return CreateAttributes(attributeNames, attributeValues, attributeSizes);
 }

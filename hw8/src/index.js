@@ -22,6 +22,21 @@
             window.requestAnimationFrame(Draw);
     }
 
+<<<<<<< Updated upstream
+=======
+    let angleSlider = document.getElementById("slider1");
+    let lookatXSlider = document.getElementById("slider2");
+    let lookatYSlider = document.getElementById("slider3");  
+    let cameraYSlider = document.getElementById("slider4");
+    let fovSlider = document.getElementById("slider5");
+
+    let marioTextureImageSource = "http://i.imgur.com/KxFBFbe.png?1";
+    let groundBlockTextureImageSource = "http://i.imgur.com/53tE88X.png";
+    let undergroundBlockTextureImageSource = "http://i.imgur.com/w34IpSn.png";
+    let brickTextureImageSource = "http://i.imgur.com/VuAeSyH.png";
+    let undergroundBrickTextureImageSource = "http://i.imgur.com/5meN48n.png";
+
+>>>>>>> Stashed changes
     let scene = new Scene();
 
     scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
@@ -30,7 +45,7 @@
     scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
     scene.AddEntityCollection(new UndergroundBrick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
     scene.AddEntityCollection(new Brick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [brickTextureImageSource]));
-    scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
+    scene.AddEntityCollection(new Coin(coinObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
 
     window.requestAnimationFrame(Draw);

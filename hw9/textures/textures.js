@@ -5,4 +5,4 @@ let brickTextureImageSource = "http://i.imgur.com/VuAeSyH.png";
 let undergroundBrickTextureImageSource = "http://i.imgur.com/5meN48n.png";
 let coinTextureImageSource = "http://i.imgur.com/xWPJ1tJ.png";
 let skyboxImageSource = "http://i.imgur.com/kwuC3Tc.png";
-let brickBumpMap = "http://i.imgur.com/9iLyyjM.png";
+let brickBumpMap = "http://i.imgur.com/PDjY6YD.png";

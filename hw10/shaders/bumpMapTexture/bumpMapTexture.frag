@@ -2,11 +2,11 @@ precision highp float;
 
 varying vec2 fTextureCoordinate;	
 varying vec3 fPos;
+varying vec3 fLight;
 
 uniform mat4 normalMatrix;
 uniform sampler2D textureSampler;
 uniform sampler2D bumpMapSampler;
-uniform vec3 light;
 
 vec2 BlinnPhongShading(vec3 surfaceNormal, float intensity, float ambientColor, float diffuseConstant, float specularConstant, float specularExp);
 
@@ -30,7 +30,7 @@ void main()
 
 vec2 BlinnPhongShading(vec3 surfaceNormal, float intensity, float ambientColor, float diffuseConstant, float specularConstant, float specularExp) {
 	vec3 eye = normalize(-fPos);
-	vec3 lightVector = normalize(light);
+	vec3 lightVector = normalize(fLight);
 	vec3 normal = normalize(surfaceNormal);
 	vec3 halfVec = normalize((eye + lightVector) / length(eye + lightVector));
 

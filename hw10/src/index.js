@@ -19,7 +19,7 @@
         let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 100000);
 
         scene.Draw(cameraTransform, projectionTransform);
-            window.requestAnimationFrame(Draw);
+        window.requestAnimationFrame(Draw);
     }
 
     let scene = new Scene();

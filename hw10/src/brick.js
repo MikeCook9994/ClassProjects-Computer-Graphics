@@ -37,12 +37,14 @@ function CreateBrickUniformTemplate() {
 
 function CreateBrickAttributes(objectAttributes) {
     ComputeTangentBasis(objectAttributes);
-    let attributeNames = ["position", "normal", "textureCoordinates"];
+    let attributeNames = ["position", "normal", "tangent", "bitangent", "textureCoordinates"];
     let attributeValues = [
         new Float32Array(objectAttributes.vertices), 
         new Float32Array(objectAttributes.vertexNormals),
+        new Float32Array(objectAttributes.vertexTangents),
+        new Float32Array(objectAttributes.vertexBitangents),
         new Float32Array(objectAttributes.vertexTextureCoordinates)
     ];
-    let attributeSizes = [3, 3, 2];
+    let attributeSizes = [3, 3, 3, 3, 2];
     return CreateAttributes(attributeNames, attributeValues, attributeSizes);
 }

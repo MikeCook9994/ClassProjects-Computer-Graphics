@@ -17,7 +17,7 @@ void main()
 	float specularConstant = 2.0; 
 	float diffuseConstant = 0.1;
 	float specularExp = 50.0;
-	float intensity = 5.0;
+	float intensity = 6.0;
 
 	vec3 normal = normalize(((texture2D(bumpMapSampler, fTextureCoordinate).rgb) * 2.0) - 1.0);
 	

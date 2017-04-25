@@ -54,18 +54,19 @@ function ComputeTangentBasis(objectAttributes) {
     objectAttributes.vertexBitangents = [];
 
     for(let i = 0; i < objectAttributes.vertices.length / 3; i+=3) {
+    //for(let i = 0; i < 1; i+=3) {
         let vertex0 = [objectAttributes.vertices[(i * 3)], objectAttributes.vertices[(i * 3) + 1], objectAttributes.vertices[(i * 3) + 2]];
         let vertex1 = [objectAttributes.vertices[(i * 3) + 3], objectAttributes.vertices[(i * 3) + 4], objectAttributes.vertices[(i * 3) + 5]];
         let vertex2 = [objectAttributes.vertices[(i * 3) + 6], objectAttributes.vertices[(i * 3) + 7], objectAttributes.vertices[(i * 3) + 8]];  
 
-        let uv0 = [objectAttributes.vertices[(i * 2)], objectAttributes.vertices[(i * 3) + 1]];
-        let uv1 = [objectAttributes.vertices[(i * 2) + 2], objectAttributes.vertices[(i * 3) + 3]];
-        let uv2 = [objectAttributes.vertices[(i * 2) + 4], objectAttributes.vertices[(i * 3) + 5]];
+        let uv0 = [objectAttributes.vertexTextureCoordinates[(i * 2)], objectAttributes.vertexTextureCoordinates[(i * 2) + 1]];
+        let uv1 = [objectAttributes.vertexTextureCoordinates[(i * 2) + 2], objectAttributes.vertexTextureCoordinates[(i * 2) + 3]];
+        let uv2 = [objectAttributes.vertexTextureCoordinates[(i * 2) + 4], objectAttributes.vertexTextureCoordinates[(i * 2) + 5]];
 
         let deltaPos1 = [vertex1[0] - vertex0[0], vertex1[1] - vertex0[1], vertex1[2] - vertex0[2]]; 
         let deltaPos2 = [vertex2[0] - vertex0[0], vertex2[1] - vertex0[1], vertex2[2] - vertex0[2]];
 
-        let deltaUV1 = [uv1[0] - uv0[0], uv2[1] - uv0[1]];
+        let deltaUV1 = [uv1[0] - uv0[0], uv1[1] - uv0[1]];
         let deltaUV2 = [uv2[0] - uv0[0], uv2[1] - uv0[1]];
 
         let r = 1.0 / ((deltaUV1[0] * deltaUV2[1]) - (deltaUV1[1] * deltaUV2[0]));

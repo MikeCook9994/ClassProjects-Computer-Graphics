@@ -1,6 +1,6 @@
 function UndergroundBrick(objectAttributes, vertexShader, fragmentShader, textureImageSources) {
-    let attributes = CreateUndergroundBrickAttributes(objectAttributes);
-    let uniformTemplate = CreateUndergroundBrickUniformTemplate();
+    let attributes = CreateBrickAttributes(objectAttributes);
+    let uniformTemplate = CreateBrickUniformTemplate();
 
     this.entityCollection = new EntityCollection(objectAttributes, vertexShader, fragmentShader, attributes, uniformTemplate);
 
@@ -20,7 +20,7 @@ UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.translation([2.025 * (depth) + .5, 2.025 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10]));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], GetSunDirection()]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], this.textureSamplerNumbers[1], GetSunDirection()]);
                 entityId++;
             }
         }
@@ -32,28 +32,10 @@ UndergroundBrick.prototype.Draw = function(cameraMatrix, projectionMatrix) {
                 let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.multiply(m4.translation([2.025 * (depth) + .5, 2.025 * (height), 2.025 * (width) + .55]), m4.scaling([10, 10, 10])));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
-                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, 3, GetSunDirection()]);
+                this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], this.textureSamplerNumbers[1], GetSunDirection()]);
                 entityId++;
             }
         }
     }
     this.entityCollection.Draw();
-}
-
-function CreateUndergroundBrickUniformTemplate() {
-    let uniformNames = ["normalMatrix", "modelViewMatrix", "projectionMatrix", "textureSampler", "light"];
-    let uniformMatrixSpecifier = [true, true, true, false, false];
-    let uniformCopyFunctions = [webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniformMatrix4fv"), webglApp.GetGLProperty("uniform1i"), webglApp.GetGLProperty("uniform3fv")];
-    return CreateUniforms(uniformNames, uniformMatrixSpecifier, uniformCopyFunctions);
-}
-
-function CreateUndergroundBrickAttributes(objectAttributes) {
-    let attributeNames = ["position", "normal", "textureCoordinates"];
-    let attributeValues = [
-        new Float32Array(objectAttributes.vertices), 
-        new Float32Array(objectAttributes.vertexNormals),
-        new Float32Array(objectAttributes.vertexTextureCoordinates)
-    ];
-    let attributeSizes = [3, 3, 2];
-    return CreateAttributes(attributeNames, attributeValues, attributeSizes);
 }

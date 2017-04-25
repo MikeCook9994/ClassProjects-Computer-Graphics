@@ -26,13 +26,14 @@
 
     scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
     scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
-    scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [groundBlockTextureImageSource]));
-    scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBlockTextureImageSource]));
-    scene.AddEntityCollection(new UndergroundBrick(brickObjectAttributes, texturingVertexShader, texturingFragmentShader, [undergroundBrickTextureImageSource]));
-    scene.AddEntityCollection(new Brick(brickObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [brickTextureImageSource, brickBumpMap]));
-    scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
-    scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
+    scene.AddEntity(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntity(new Skybox(cubeObjectAttributes, skyboxVertexShader, skyboxFragmentShader, skyboxImageSource));
+
+    scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
+    scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [groundBlockTextureImageSource, groundBumpMap]));
+    scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [undergroundBlockTextureImageSource, groundBumpMap]));
+    scene.AddEntityCollection(new UndergroundBrick(brickObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [undergroundBrickTextureImageSource, brickBumpMap]));
+    scene.AddEntityCollection(new Brick(brickObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [brickTextureImageSource, brickBumpMap]));
 
     window.requestAnimationFrame(Draw);
 })();

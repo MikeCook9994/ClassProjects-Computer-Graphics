@@ -2,21 +2,13 @@
     function SetupCanvas() {
         webglApp.ConfigureWebGL();
         webglApp.ColorCanvas(0.365, 0.58, 0.984, 1.0);
-    }    
-
-    function GetCameraTransform() {
-        let angle1 = angleSlider.value*0.01*Math.PI;
-        let eye = [300*Math.sin(angle1), cameraYSlider.value, 300*Math.cos(angle1)];
-        let target = [lookatXSlider.value, lookatYSlider.value, 0];
-        let up = [0,1,0];
-        return m4.inverse(m4.lookAt(eye,target,up));
     }
 
     function Draw() {
         SetupCanvas();
 
-        let cameraTransform = GetCameraTransform();
-        let projectionTransform = m4.perspective(DegreesToRadians(fovSlider.value), 1, 10, 100000);
+        let cameraTransform = camera.GetCameraTransform();
+        let projectionTransform = camera.GetProjectionTransform();
 
         scene.Draw(cameraTransform, projectionTransform);
         window.requestAnimationFrame(Draw);

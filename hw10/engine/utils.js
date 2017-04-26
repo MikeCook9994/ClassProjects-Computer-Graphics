@@ -1,5 +1,6 @@
 let m4 = twgl.m4;
 let webglApp = new WebGLApp("drawing-plane");
+let camera = new Camera();
 
 let timeOfDaySlider = document.getElementById("time-of-day");
 let angleSlider = document.getElementById("camera-angle");

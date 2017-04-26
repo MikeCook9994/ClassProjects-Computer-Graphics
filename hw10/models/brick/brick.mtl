@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd C:\Users\Mike\Documents\projects\cs559\hw9\textures\brick\texture.png
+map_Kd D:\cook\Documents\projects\cs559-Computer-Graphics\hw10\textures\brick\texture.png
 
 newmtl Material.002
 Ns 96.078431
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd C:\Users\Mike\Documents\projects\cs559\hw9\textures\brick\texture.png
+map_Kd D:\cook\Documents\projects\cs559-Computer-Graphics\hw10\textures\brick\texture.png
 
 newmtl Material.003
 Ns 96.078431
@@ -32,4 +32,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd C:\Users\Mike\Documents\projects\cs559\hw9\textures\brick\texture.png
+map_Kd D:\cook\Documents\projects\cs559-Computer-Graphics\hw10\textures\brick\texture.png

@@ -7,7 +7,7 @@ function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textu
 }
 
 Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.multiply(m4.scaling([2.5, 2.5, 2.5]), m4.translation([89.0, 23.25, 11.0])));
+    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.multiply(m4.scaling([2.5, 2.5, 2.5]), m4.translation([89.0, 21, 0])));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 

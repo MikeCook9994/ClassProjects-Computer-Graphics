@@ -6,7 +6,7 @@ function UndergroundBackground(objectAttributes, vertexShaderSource, fragmentSha
 }
 
 UndergroundBackground.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.scaling([135, 112, 1]), m4.translation([13, -185, 43]));
+    let modelTransform = m4.multiply(m4.scaling([135, 120, 1]), m4.translation([13, -185, 32]));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 

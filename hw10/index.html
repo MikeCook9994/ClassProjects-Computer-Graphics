@@ -4,25 +4,36 @@
         <title>Graphics Kingdom</title>
     </header>
     <body>
-        <canvas style="float:left; margin: 0px 50px 0px 0px; border: 10px black solid" id="drawing-plane" height=1024 width=1024></canvas>
+        <canvas style="float:left; margin: 0px 50px 0px 0px; border: 10px black solid" id="drawing-plane" height=1024 width=1024 tabindex="0"></canvas>
         <div id="controls">
-            <p>Time of Day</p>
+            <p>
+                Camera controls:
+                <br>
+                <strong>w</strong> &#8594; move camera target up
+                <br>
+                <strong>s</strong> &#8594; move camera target down
+                <br>
+                <strong>a</strong> &#8594; move camera target left
+                <br>
+                <strong>d</strong> &#8594; move camera target right
+                <br>
+                <strong>q</strong> &#8594; rotate camera left
+                <br>
+                <strong>e</strong> &#8594; rotate camera right
+                <br>
+                <strong>mouse wheel up</strong> &#8594; decrease field of view
+                <br>
+                <strong>mouse wheel down</strong> &#8594; increase field of view
+                <br>
+                <strong>click and drag on canvas</strong> &#8594; adjust camera height
+                <br>
+            </p>
+            <p style="display:inline-block; margin: 0px 5px 10px 0px;">Time of Day</p>
             <input id="time-of-day" type="range" min="0" max="24" value="12"/>
             <br>
-            <p>Camera Angle</p>
-            <input id="camera-angle" type="range" min="-100" max="100" value="-99"/>
-            <br>
-            <p>Lookat X</p>
-            <input id="lookat-x" type="range" min="-500" max="500" value="-8"/>
-            <br>
-            <p>Lookat Y</p>
-            <input id="lookat-y" type="range" min="-500" max="500" value="164"/>
-            <br>
-            <p>Camera Y</p>
-            <input id="camera-y" type="range" min="-300" max="500" value="144"/>
-            <br>
-            <p>fov</p>
-            <input id="fov" type="range" min="1" max="160" value="72"/>
+            <input id="reset-view" type="button" value="reset view"/>
+
+
         </div>
 
         <!-- libraries -->
@@ -36,7 +47,6 @@
         <script type="text/javascript" defer="defer" src="./engine/texture.js"></script>
         <script type="text/javascript" defer="defer" src="./engine/camera.js"></script>
         <script type="text/javascript" defer="defer" src="./engine/utils.js"></script>
-
 
         <!-- object attributes -->
         <script type="text/javascript" defer="defer" src="./models/mario/default/marioModel.js"></script>

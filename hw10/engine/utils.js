@@ -1,13 +1,10 @@
 let m4 = twgl.m4;
+
 let webglApp = new WebGLApp("drawing-plane");
-let camera = new Camera();
+let camera = new Camera("drawing-plane");
 
 let timeOfDaySlider = document.getElementById("time-of-day");
-let angleSlider = document.getElementById("camera-angle");
-let lookatXSlider = document.getElementById("lookat-x");
-let lookatYSlider = document.getElementById("lookat-y");  
-let cameraYSlider = document.getElementById("camera-y");
-let fovSlider = document.getElementById("fov");
+document.getElementById("reset-view").onclick = (() => { camera.ResetView() });
 
 function DegreesToRadians(degrees) {
     return degrees * (Math.PI / 180);

@@ -11,13 +11,13 @@ function Pipe(objectAttributes, vertexShaderSource, fragmentShaderSource) {
 }
 
 Pipe.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-140, 13.0, 0]));
+    let modelTransform = m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-140, 12.0, 0]));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
     this.entityCollection.UpdateUniformValues(0, [normalMatrix, modelViewMatrix, projectionMatrix, new Float32Array([0.282, 0.69, 0.0]), GetSunDirection()]);
 
-    modelTransform = m4.multiply(m4.rotationZ(DegreesToRadians(270)), m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-125, -272, 9.5])));
+    modelTransform = m4.multiply(m4.rotationZ(DegreesToRadians(270)), m4.multiply(m4.scaling([15, 15, 15]), m4.translation([-127, -272, 0])));
     modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 

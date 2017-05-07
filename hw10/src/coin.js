@@ -11,14 +11,22 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     }
 
     this.textureSamplerNumbers = this.entityCollection.SetupTextures(textureImageSources);        
+
+    let controlPoints = [];
+    controlPoints[0] = [[0, 0, 0], [0, 1, 0], [0, 10, 0], [0, -1, 0]];
+    controlPoints[1] = [[0, 10, 0], [0, -1, 0], [0, 0, 0], [0, 1, 0]];
+    this.curve = new Curve(hermiteBasisMatrix, controlPoints);
 }
 
-Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
+Coin.prototype.Draw = function(cameraMatrix, projectionMatrix, frameCount) {
+    let unitParameter = (frameCount % 100) * 0.02;
+    let curvePosition = this.curve.GetTranslation(unitParameter);
+
     let entityId = 0;
     for(let height = -11; height < -10; height++) {
         for(let depth = 2; depth < 5; depth++) {
             for(let width = -1; width < 2; width++) {
-                let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) + .5, 2.2 * (width)]), m4.scaling([10, 10, 10])));
+                let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(this.angle)), m4.multiply(curvePosition, m4.multiply(m4.translation([2.2 * (depth), 2.2 * (height) + .5, 2.2 * (width)]), m4.scaling([10, 10, 10]))));
                 let modelViewMatrix = m4.multiply(modelTransform, cameraMatrix);
                 let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
                 this.entityCollection.UpdateUniformValues(entityId, [normalMatrix, modelViewMatrix, projectionMatrix, this.textureSamplerNumbers[0], GetSunDirection()]);

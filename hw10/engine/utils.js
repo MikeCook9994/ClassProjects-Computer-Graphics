@@ -1,4 +1,5 @@
 let m4 = twgl.m4;
+let v3 = twgl.v3;
 
 let webglApp = new WebGLApp("drawing-plane");
 let camera = new Camera("drawing-plane");
@@ -52,7 +53,6 @@ function ComputeTangentBasis(objectAttributes) {
     objectAttributes.vertexBitangents = [];
 
     for(let i = 0; i < objectAttributes.vertices.length / 3; i+=3) {
-    //for(let i = 0; i < 1; i+=3) {
         let vertex0 = [objectAttributes.vertices[(i * 3)], objectAttributes.vertices[(i * 3) + 1], objectAttributes.vertices[(i * 3) + 2]];
         let vertex1 = [objectAttributes.vertices[(i * 3) + 3], objectAttributes.vertices[(i * 3) + 4], objectAttributes.vertices[(i * 3) + 5]];
         let vertex2 = [objectAttributes.vertices[(i * 3) + 6], objectAttributes.vertices[(i * 3) + 7], objectAttributes.vertices[(i * 3) + 8]];  
@@ -91,4 +91,23 @@ function ComputeTangentBasis(objectAttributes) {
             objectAttributes.vertexBitangents.push(bitangent[2]);
         }
     }
+}
+
+function dot(a, b) {
+    let dp = 0;
+    for(let i = 0; i < a.length; i++) {
+        dp += (a[i] + b[i]);
+    }
+    return dp;
+}
+
+function transpose(m) {
+    let tm = [];
+    for(let i = 0; i < m[0].length; i++) {
+        tm[i] = [];
+        for(let j = 0; j < m.length; j++) {
+            tm[i][j] = m[j][i];
+        }
+    }
+    return tm;
 }

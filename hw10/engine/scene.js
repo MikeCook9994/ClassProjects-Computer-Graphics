@@ -1,5 +1,6 @@
 function Scene() {
     this.objects = [];
+    this.frameCount = 0;
 }
 
 Scene.prototype.AddEntity = function(entity) {
@@ -12,6 +13,7 @@ Scene.prototype.AddEntityCollection = function(entity) {
 
 Scene.prototype.Draw = function(cameraTransform, projectionTransform) {
     this.objects.forEach((object) => {
-        object.Draw(cameraTransform, projectionTransform);
+        object.Draw(cameraTransform, projectionTransform, this.frameCount);
     });
+    this.frameCount++;
 }

@@ -18,9 +18,9 @@
 
     scene.AddEntity(new Mario(marioObjectAttributes, texturingVertexShader, texturingFragmentShader, [marioTextureImageSource]));
     scene.AddEntity(new UndergroundBackground(planeObjectAttributes, shadingVertexShader, shadingFragmentShader));
-    scene.AddEntity(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntity(new Skybox(cubeObjectAttributes, skyboxVertexShader, skyboxFragmentShader, skyboxImageSource));
 
+    scene.AddEntityCollection(new Pipe(pipeObjectAttributes, shadingVertexShader, shadingFragmentShader));
     scene.AddEntityCollection(new Coin(coinObjectAttributes, texturingVertexShader, texturingFragmentShader, [coinTextureImageSource]));
     scene.AddEntityCollection(new Ground(groundBlockObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [groundBlockTextureImageSource, groundBumpMap, groundSpecularMap]));
     scene.AddEntityCollection(new Underground(groundBlockObjectAttributes, bumpMapTextureVertexShader, bumpMapTextureFragmentShader, [undergroundBlockTextureImageSource, groundBumpMap, groundSpecularMap]));

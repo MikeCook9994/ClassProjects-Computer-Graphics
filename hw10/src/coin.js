@@ -13,14 +13,15 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     this.textureSamplerNumbers = this.entityCollection.SetupTextures(textureImageSources);        
 
     let controlPoints = [];
-    controlPoints[0] = [[0, 0, 0], [0, 1, 0], [0, 10, 0], [0, -1, 0]];
-    controlPoints[1] = [[0, 10, 0], [0, -1, 0], [0, 0, 0], [0, 1, 0]];
+    controlPoints[0] = [[0, 0, 0], [10, -1, 0], [0, 10, 0], [-10, 1, 0]];
+    controlPoints[1] = [[0, 10, 0], [-10, 1, 0], [0, 0, 0], [10, -1, 0]];
     this.curve = new Curve(hermiteBasisMatrix, controlPoints);
 }
 
 Coin.prototype.Draw = function(cameraMatrix, projectionMatrix, frameCount) {
-    let unitParameter = (frameCount % 100) * 0.02;
+    let unitParameter = (frameCount % 101) * 0.02;
     let curvePosition = this.curve.GetTranslation(unitParameter);
+    // let curvePosition = this.curve.GetTranslation(0.0);    
 
     let entityId = 0;
     for(let height = -11; height < -10; height++) {

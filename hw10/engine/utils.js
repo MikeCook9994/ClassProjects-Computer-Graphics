@@ -96,8 +96,8 @@ function ComputeTangentBasis(objectAttributes) {
 function dot(a, b) {
     let dp = 0;
     for(let i = 0; i < a.length; i++) {
-        dp += (a[i] + b[i]);
-    }
+        dp += (a[i] * b[i]);
+    }   
     return dp;
 }
 

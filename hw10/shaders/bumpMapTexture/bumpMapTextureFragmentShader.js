@@ -22,7 +22,7 @@ void main()
 	float specularConstant = 2.0; 
 	float diffuseConstant = 0.1;
 	float specularExp = specularDetails.a;
-	float intensity = 3.0;
+	float intensity = 1.0;
 
 	vec2 lightingModifiers = BlinnPhongShading(normal, intensity, ambientColor, diffuseConstant, specularConstant, specularExp);
 

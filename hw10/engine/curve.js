@@ -29,12 +29,18 @@ function Curve(basis, controlPoints) {
 
 Curve.prototype.GetTranslation = function(t) {
     let uB = this.ResolveBlendingFunctions(NormalizeValue(t));
+    if(Math.trunc(t) == t && t != 0) {
+        t -= 1;
+    }
     let transposedCurveControlPoints = transpose(this.controlPoints[Math.trunc(t)]);
     return m4.translation([dot(uB, transposedCurveControlPoints[0]), dot(uB, transposedCurveControlPoints[1]), dot(uB, transposedCurveControlPoints[2])]);
 }
 
 Curve.prototype.GetRotation = function(t) {
     let uB = this.ResolveBlendingPrimeFunctions(NormalizeValue(t));
+    if(Math.trunc(t) == t && t != 0) {
+        t -= 1;
+    }
     let transposedCurveControlPoints = transpose(this.controlPoints[Math.trunc(t)]);
     return m4.lookat([0,0,0], [dot(uB, transposedCurveControlPoints[0]), dot(uB, transposedCurveControlPoints[1]), dot(uB, transposedCurveControlPoints[2])], [0, 1, 0]);
 }

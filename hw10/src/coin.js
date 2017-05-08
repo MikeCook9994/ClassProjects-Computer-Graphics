@@ -13,7 +13,7 @@ function Coin(objectAttributes, vertexShader, fragmentShader, textureImageSource
     this.textureSamplerNumbers = this.entityCollection.SetupTextures(textureImageSources);        
 }
 
-Coin.prototype.Draw = function(cameraMatrix, projectionMatrix, frameCount) {
+Coin.prototype.Draw = function(cameraMatrix, projectionMatrix) {
     let entityId = 0;
     for(let height = -11; height < -10; height++) {
         for(let depth = 1; depth < 4; depth++) {

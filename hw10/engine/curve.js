@@ -42,7 +42,7 @@ Curve.prototype.GetRotation = function(t) {
         t -= 1;
     }
     let transposedCurveControlPoints = transpose(this.controlPoints[Math.trunc(t)]);
-    return m4.lookat([0,0,0], [dot(uB, transposedCurveControlPoints[0]), dot(uB, transposedCurveControlPoints[1]), dot(uB, transposedCurveControlPoints[2])], [0, 1, 0]);
+    return m4.lookAt([0,0,0], [dot(uB, transposedCurveControlPoints[0]), dot(uB, transposedCurveControlPoints[1]), dot(uB, transposedCurveControlPoints[2])], [0, 1, 0]);
 }
 
 function NormalizeValue(t) {

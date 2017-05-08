@@ -4,10 +4,21 @@ function Mario(objectAttributes, vertexShaderSource, fragmentShaderSource, textu
 
     this.entity = new Entity(objectAttributes, uniforms, attributes, null, vertexShaderSource, fragmentShaderSource);
     this.textureSamplerNumbers = this.entity.SetupTextures(textureImageSources);
+
+    let controlPoints = [];
+    controlPoints[0] = [[89.0, 21.0, 0.0], [26.0, 21.0, 0], [-37.0, 21.0, 0.0], [-100.0, 21.0, 0.0]];
+    controlPoints[1] = [[-100.0, 21.0, 0.0], [-180.0, 200.0, 0], [-180.0, 200.0, 0.0], [-260.0, 50, 0.0]];
+    controlPoints[2] = [[-260.0, 50, 0.0], [-180.0, 200.0, 0.0], [-180.0, 200.0, 0], [-100.0, 21.0, 0.0]];
+    controlPoints[3] = [[-100.0, 21.0, 0.0], [-37.0, 21.0, 0.0], [26.0, 21.0, 0], [89.0, 21.0, 0.0]];
+    this.curve = new Curve(bezierBasisMatrix, controlPoints);
 }
 
-Mario.prototype.Draw = function(cameraTransform, projectionMatrix) {
-    let modelTransform = m4.multiply(m4.rotationY(DegreesToRadians(180)), m4.multiply(m4.scaling([2.5, 2.5, 2.5]), m4.translation([89.0, 21, 0])));
+Mario.prototype.Draw = function(cameraTransform, projectionMatrix, frameCount) {
+    let t = (frameCount % 101) * 0.04;
+    let curvePosition = this.curve.GetTranslation(t);
+    let curveOrientation = this.curve.GetRotation(t);
+
+    let modelTransform = m4.multiply(m4.multiply(m4.rotationY(DegreesToRadians(90)), curveOrientation), m4.multiply(m4.scaling([2.5, 2.5, 2.5]), curvePosition));
     let modelViewMatrix = m4.multiply(modelTransform, cameraTransform);
     let normalMatrix = m4.transpose(m4.inverse(modelViewMatrix));
 
